@@ -19,15 +19,23 @@ if (isset($_POST['submit'])) {
 // Selecting Database
         $db = mysql_select_db("csystem", $connection);
 // SQL query to fetch information of registerd users and finds user match.
-        $query = mysql_query("select * from login where password='$password' AND username='$username'", $connection);
+        $query = mysql_query("select * from user where password='$password' AND username='$username'", $connection);
         $rows = mysql_num_rows($query);
         if ($rows == 1) {
             $_SESSION['login_user'] = $username; // Initializing Session
-            header("location: profile.php"); // Redirecting To Other Page
+            
+            $res = mysql_fetch_array($query, MYSQL_ASSOC);
+            $rol = $res['rol'];
+            $_SESSION['rol_user'] = $rol;
+            if ($rol == 0) {
+                header("location: application/views/up_contenido.php"); // Redirecting To Other Page
+            }else if ($rol == 1) {
+                header("location: application/views/down_contenido.php"); // Redirecting To Other Page
+            }
+            
         } else {
             $error = "Username or Password is invalid";
         }
         mysql_close($connection); // Closing Connection
     }
 }
-?>

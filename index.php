@@ -1,15 +1,21 @@
 <?php
-include('login.php'); // Includes Login Script
+include('application/controllers/login.php'); // Includes Login Script
 
 if (isset($_SESSION['login_user'])) {
-    header("location: profile.php");
+    if (isset($_SESSION['rol_user'])) {
+        if ($_SESSION['rol_user'] == 1) {
+            header("location: application/views/down_contenido.php");
+        }else {
+            header("location: application/views/up_contenido.php");
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Login</title>
-        <link href="style.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div id="main">
