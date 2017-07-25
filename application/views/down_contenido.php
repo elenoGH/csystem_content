@@ -9,7 +9,7 @@ include('../../application/models/session.php');
     </head>
     <body>
         <div id="profile">
-            <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
+            <b id="welcome">Bienvenido : <i><?php echo $login_session; ?></i></b>
             <b id="logout"><a href="../../application/controllers/logout.php">Log Out</a></b>
         </div>
     </body>
