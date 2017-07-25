@@ -1,82 +1,64 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 24/07/2017, 04:51:12 PM
-    Author     : Design
-*/
+/***diseño imagenes redes sociales***/
 
-@import http://fonts.googleapis.com/css?family=Raleway;
-/*----------------------------------------------
-CSS Settings For HTML Div ExactCenter
-------------------------------------------------*/
-#main {
-width:960px;
-margin:50px auto;
-font-family:raleway
+ul {
+    list-style-type: none;
 }
-span {
-color:red
+
+li {
+    display: inline-block;
 }
-h2 {
-background-color:#FEFFED;
-text-align:center;
-border-radius:10px 10px 0 0;
-margin:-10px -40px;
-padding:15px
+
+input[type="checkbox"][id^="cb"] {
+    display: none;
 }
-hr {
-border:0;
-border-bottom:1px solid #ccc;
-margin:10px -40px;
-margin-bottom:30px
+
+label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
 }
-#login {
-width:300px;
-float:left;
-border-radius:10px;
-font-family:raleway;
-border:2px solid #ccc;
-padding:10px 40px 25px;
-margin-top:70px
+
+label:before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
 }
-input[type=text],input[type=password] {
-width:99.5%;
-padding:10px;
-margin-top:8px;
-border:1px solid #ccc;
-padding-left:5px;
-font-size:16px;
-font-family:raleway
+
+label img {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
 }
-input[type=submit] {
-width:100%;
-background-color:#FFBC00;
-color:#fff;
-border:2px solid #FFCB00;
-padding:10px;
-font-size:20px;
-cursor:pointer;
-border-radius:5px;
-margin-bottom:15px
+
+:checked + label {
+    border-color: #ddd;
 }
-#profile {
-padding:50px;
-border:1px dashed grey;
-font-size:20px;
-background-color:#DCE6F7
+
+:checked + label:before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
 }
-#logout {
-float:right;
-padding:5px;
-border:dashed 1px gray
+
+:checked + label img {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
 }
-a {
-text-decoration:none;
-color:#6495ed
-}
-i {
-color:#6495ed
-}
+/***end diseño imagenes redes sociales***/
