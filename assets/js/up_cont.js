@@ -10,17 +10,30 @@ $(document).on("ready", up_c);
 function up_c()
 {
     $('form').on('submit', function (e) {
-
+        
         e.preventDefault();
-        console.log($('form').serialize());
-
+        var data = new FormData();
+        data.append('data_up', true);
+        data.append('description_content', $('#description_content').val());
+        data.append('file_update', $('input[type=file]')[0].files[0]);
+        
+        var checkbox = $(this).find("input[type=checkbox]");
+        $.each(checkbox, function(key, val){
+           if($(this).is(":checked")){
+               data.append($(val).attr('name'), true);
+            }else{
+              data.append($(val).attr('name'), false);
+            }
+        });
         $.ajax({
-            type: 'post',
             url: '../controllers/up_cont.php',
-            data: {data_up: 1},
+            type: "POST",             
+            data: data,
+            contentType: false,       
+            cache: false,             
+            processData:false,
             success: function (respuesta) {
                 console.log(respuesta);
-                alert('form was submitted');
             }
         });
 

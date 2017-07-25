@@ -22,14 +22,18 @@ if (isset($_POST['submit'])) {
         $query = mysql_query("select * from tbl_usuario where password='$password' AND email='$username'", $connection);
         $rows = mysql_num_rows($query);
         if ($rows == 1) {
+            
             $_SESSION['login_user'] = $username; // Initializing Session
             
             $res = mysql_fetch_array($query, MYSQL_ASSOC);
-            $rol = $res['rol'];
-            $_SESSION['rol_user'] = $rol;
-            if ($rol == 0) {
+            $_SESSION['rol_user'] = $res['rol'];
+            $_SESSION['id_user'] = $res['id'];
+            $_SESSION['name_user'] = $res['username'];
+            $_SESSION['rol_user'] = $res['rol'];
+            
+            if ($_SESSION['rol_user'] == 0) {
                 header("location: application/views/up_contenido.php"); // Redirecting To Other Page
-            }else if ($rol == 1) {
+            }else if ($_SESSION['rol_user'] == 1) {
                 header("location: application/views/down_contenido.php"); // Redirecting To Other Page
             }
             
