@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+
+input#inputEmail.form-control, input#inputPassword.form-control{  
+    background: none;
+    color: #fff;
+    font-size: 24px;
+    height: 55px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    width: 60%;
+	box-shadow: none;
+	border-radius: 0px;
+	margin:auto;
+}
+
+.btnRed{
+	width:44px;
+	height:44px;
+	float:left;
+	display:block;
+	margin-left:70px;
+	
+	
+}
+.redes{
+	border:1px solid red;
+	text-align:center;
+}
+.fb{
+	background:url(../images/icon-fb.png) no-repeat;
+	width:44px;
+	height:44px;
+	display:block;
+	
+	
+}
+.tw{
+	background:url(../images/icon-twitter.png) no-repeat;
+	width:44px;
+	height:44px;
+	display:block;
+}
+.int{
+	background:url(../images/icon-instagram.png) no-repeat;
+	width:44px;
+	height:44px;
+	
+	display:block;
+}
+button{
+	border:none;
+}
