@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 require '../models/session.php';
 
 if (isset($_POST['data_up'])) {
@@ -51,6 +46,7 @@ if (isset($_POST['data_up'])) {
     }
 
     $id_usuario = $_SESSION['id_user'];
+    $titulo_cont = $_POST['titulo_content'];
     $descripcion = $_POST['description_content'];
     $url = 'http://php.net';
     $path_source = $data_file['image_path'] . $data_file['image_name'];
@@ -59,14 +55,38 @@ if (isset($_POST['data_up'])) {
     $categoria = 'Social';
     $etiquetas = json_encode(array('biologia'=>'bilogia', 'hurbanismo'=>'hurbanismo', 'tecnologi'=>'tecnologia'));
     
-    $q = "INSERT INTO `tbl_contenido` (`id_usuario`, `descripcion`, `url`, `path_source`, `red_social`, `tipo_source`, `categoria`, `etiquetas`) "
-            . " VALUES ('$id_usuario', '$descripcion','$url','$path_source','$red_social','$tipo_source','$categoria','$etiquetas')";
+    $q = "INSERT INTO `tbl_contenido` (`id_usuario`, `titulo`, `descripcion`, `url`, `path_source`, `red_social`, `tipo_source`, `categoria`, `etiquetas`) "
+            . " VALUES ('$id_usuario','$titulo_cont', '$descripcion','$url','$path_source','$red_social','$tipo_source','$categoria','$etiquetas')";
     
     //Run Query
-    $result = mysql_query($q) or die(mysql_error());
+    $result_insert = mysql_query($q) or die(mysql_error());
+    /**
+     * obtener datos una ves insertado
+     */
+    $resultado = '';
+    if ($result_insert == 1) {
+        $data_content_by_user = getDataByUser($connection, $_SESSION);
+        foreach ($data_content_by_user as $key => $itemArray) {
+            $resultado = $resultado.'<p align="center">'.$itemArray['tipo_source']
+                    .$itemArray['descripcion'].'</p><br>';
+        }
+    }
     
-    echo $result;
+    echo $resultado;
     die;
+}
+
+function getDataByUser($connection, $SESSION)
+{
+    $query = mysql_query("select * from tbl_usuario tu "
+            . "inner join tbl_contenido tc on tu.id = tc.id_usuario "
+            . "where tu.id =".$SESSION['id_user'], $connection);
+    $array_resultado = array();
+    while($data_array = mysql_fetch_array($query, MYSQL_ASSOC)){
+        $array_resultado[] = $data_array;
+    }
+    
+    return $array_resultado;
 }
 
 function createSource($file, $param_array) {

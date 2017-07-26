@@ -9,11 +9,13 @@ $(document).on("ready", up_c);
 
 function up_c()
 {
-    $('form').on('submit', function (e) {
+    $("#loading").hide();
+    $('form').on('submit', function (event) {
         
-        e.preventDefault();
+        event.preventDefault();
         var data = new FormData();
         data.append('data_up', true);
+        data.append('titulo_content', $('#titulo_content').val());
         data.append('description_content', $('#description_content').val());
         data.append('file_update', $('input[type=file]')[0].files[0]);
         
@@ -34,6 +36,19 @@ function up_c()
             processData:false,
             success: function (respuesta) {
                 console.log(respuesta);
+                setTimeout(function(){ $("#loading").hide(); 
+                    //location.reload();
+                    $('#recargar-nuevos-datos').html(respuesta);
+                }, 1000);
+            },
+            error: function (result)
+            {
+                alert(JSON.stringify(result));
+            },
+            fail: function (status) {
+            },
+            beforeSend: function (d) {
+                $("#loading").show();
             }
         });
 

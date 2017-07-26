@@ -10,6 +10,22 @@ include('../../application/models/session.php');
         <script src="../../assets/js/up_cont.js"></script>
     </head>
     <body>
+        <div id="loading" class="hide">
+            <div id="loading-content">
+                <!--div class="loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div-->
+                <div class="load">
+                    <div  class="bar"></div>
+                    <div  class="bar"></div>
+                    <div  class="bar"></div>
+                </div>
+            </div>
+        </div>
         <div id="profile">
             <b id="welcome">Bienvenido : <i><?php echo $login_session; ?></i></b>
             <b id="logout"><a href="../../application/controllers/logout.php">Log Out</a></b>
@@ -32,12 +48,18 @@ include('../../application/models/session.php');
                     </li>
                 </ul>
                 <br>
-                    <span id="count-caracter" class="">140</span>
-                    <textarea rows="4" cols="50" name="description_content" id="description_content">
-                    </textarea>
-                    Archivo: <input type="file" name="file_up" id="file_up"><br>
-                    <input type="submit" value="Submit">
+                <label class="btn btn-default btn-file">
+                    Titulo
+                </label>
+                <input type="text" id="titulo_content" name="titulo_content">
+                <span id="count-caracter" class="">140</span>
+                <textarea rows="4" cols="50" name="description_content" id="description_content">
+                </textarea>
+                Archivo: <input type="file" name="file_up" id="file_up"><br>
+                <input type="submit" value="Submit">
             </form>
+        </div>
+        <div id="recargar-nuevos-datos">
         </div>
     </body>
 </html>
