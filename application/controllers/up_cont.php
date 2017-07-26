@@ -7,12 +7,33 @@
  */
 require '../models/session.php';
 
-if (isset($_POST['data_up'])) 
-{
-    
+if (isset($_POST['data_up'])) {
+
     $data_file = null;
-    
+
     if (isset($_FILES["file_update"])) {
+        //tipo de archivo
+        //x = mime_content_type($_FILES["file_update"]);
+//        $finfo = new finfo(FILEINFO_MIME_TYPE);
+//        if (false === $ext = array_search(
+//                $finfo->file($_FILES['file_update']['tmp_name']), array(
+//            'jpg' => 'image/jpeg',
+//            'png' => 'image/png',
+//            'gif' => 'image/gif',
+//                ), true
+//                )) {
+//            throw new RuntimeException('Invalid file format.');
+//        }
+
+        if (isset($_FILES['file_update']['tmp_name'])) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $_FILES['file_update']['tmp_name']);
+            if ($mime == 'application/msword') {
+                //Its a doc format do something
+            }
+            finfo_close($finfo);
+        }
+        
         if (!is_dir('../../assets/media/dir_source')) {
             mkdir('../../assets/media/dir_source', 0755, true);
             if (is_dir('../../assets/media/dir_source')) {
@@ -28,20 +49,23 @@ if (isset($_POST['data_up']))
             $data_file = createSource($_FILES["file_update"], $param_array);
         }
     }
-    
+
     $id_usuario = $_SESSION['id_user'];
     $descripcion = $_POST['description_content'];
     $url = 'http://php.net';
-    $path_source = $data_file['image_path'].$data_file['image_name'];
+    $path_source = $data_file['image_path'] . $data_file['image_name'];
     $red_social = json_encode($_POST['red_social']);
-
-    $q = "INSERT INTO `tbl_contenido` (`id_usuario`, `descripcion`, `url`, `path_source`, `red_social`) VALUES ('$id_usuario', '$descripcion','$url','$path_source','$red_social')";
-
+    $tipo_source = 'Imagen';
+    $categoria = 'Social';
+    $etiquetas = json_encode(array('biologia'=>'bilogia', 'hurbanismo'=>'hurbanismo', 'tecnologi'=>'tecnologia'));
+    
+    $q = "INSERT INTO `tbl_contenido` (`id_usuario`, `descripcion`, `url`, `path_source`, `red_social`, `tipo_source`, `categoria`, `etiquetas`) "
+            . " VALUES ('$id_usuario', '$descripcion','$url','$path_source','$red_social','$tipo_source','$categoria','$etiquetas')";
+    
     //Run Query
     $result = mysql_query($q) or die(mysql_error());
-
-    echo $result;
     
+    echo $result;
     die;
 }
 
@@ -49,7 +73,7 @@ function createSource($file, $param_array) {
     $dataComent = array();
 
     $target_dir = "../../assets/media/dir_source/";
-    $name_image_candidato = 'img_source_' .$param_array['user'].'_'. time();
+    $name_image_candidato = 'img_source_' . $param_array['user'] . '_' . time();
     $imageFileTypeextension = pathinfo($target_dir . basename($file["name"]), PATHINFO_EXTENSION);
 
     $dataComent['image_path'] = $target_dir;
