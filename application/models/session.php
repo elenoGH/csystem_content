@@ -13,6 +13,6 @@ $row = mysql_fetch_assoc($ses_sql);
 $login_session = $row['email'];
 if (!isset($login_session)) {
     mysql_close($connection); // Closing Connection
-    header('Location: index.php'); // Redirecting To Home Page
+    header('Location: ../../index.php'); // Redirecting To Home Page
 }
 ?>

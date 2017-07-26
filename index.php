@@ -58,11 +58,12 @@ if (isset($_SESSION['login_user'])) {
                         <input type="password" id="inputPassword" name="inputPassword"
                                class="form-control" placeholder="Contraseña" 
                                required>
-                        <div class="checkbox">
+                        <!--div class="checkbox">
                             <label>
                                 <input type="checkbox" value="remember-me"> Recuérdame
                             </label>
-                        </div>
+                        </div-->
+                        <br>
                         <p class="lead">
                             <input name="submit" type="submit" value="Iniciar" class="btn btn-lg btn-default">
                         </p>

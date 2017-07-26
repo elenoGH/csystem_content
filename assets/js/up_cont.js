@@ -1,44 +1,82 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 $(document).on("ready", up_c);
 
-function up_c()
+function up_c(event)
 {
     $("#loading").hide();
+
+    get_data_tendencias();
+
+    function get_data_tendencias()
+    {
+        event.preventDefault();
+        var data = new FormData();
+        data.append('get_data_tendencias', true);
+
+        $.ajax({
+            url: '../controllers/down_cont.php',
+            type: "POST",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (respuesta) {
+//            console.log(respuesta);
+                setTimeout(function () {
+                    $("#loading").hide();
+                    //location.reload();
+                    var obj = JSON.parse(respuesta);
+
+                    $('#load-datos-tendencias').html(obj.tendencia_con_desc);
+                    $('#load-datos-tendencias-nodescripcion').html(obj.tendencia_sin_desc);
+                    
+                }, 1000);
+            },
+            error: function (result)
+            {
+                alert(JSON.stringify(result));
+            },
+            fail: function (status) {
+            },
+            beforeSend: function (d) {
+                $("#loading").show();
+            }
+        });
+    }
+
     $('form').on('submit', function (event) {
-        
+
         event.preventDefault();
         var data = new FormData();
         data.append('data_up', true);
         data.append('titulo_content', $('#titulo_content').val());
         data.append('description_content', $('#description_content').val());
         data.append('file_update', $('input[type=file]')[0].files[0]);
-        
+
         var checkbox = $(this).find("input[type=checkbox]");
-        $.each(checkbox, function(key, val){
-           if($(this).is(":checked")){
-               data.append($(val).attr('name'), true);
-            }else{
-              data.append($(val).attr('name'), false);
+        $.each(checkbox, function (key, val) {
+            if ($(this).is(":checked")) {
+                data.append($(val).attr('name'), true);
+            } else {
+                data.append($(val).attr('name'), false);
             }
         });
         $.ajax({
             url: '../controllers/up_cont.php',
-            type: "POST",             
+            type: "POST",
             data: data,
-            contentType: false,       
-            cache: false,             
-            processData:false,
+            contentType: false,
+            cache: false,
+            processData: false,
             success: function (respuesta) {
                 console.log(respuesta);
-                setTimeout(function(){ $("#loading").hide(); 
+                setTimeout(function () {
+                    $("#loading").hide();
                     //location.reload();
-                    $('#recargar-nuevos-datos').html(respuesta);
+                    var obj = JSON.parse(respuesta);
+
+                    $('#load-datos-tendencias').html(obj.tendencia_con_desc);
+                    $('#load-datos-tendencias-nodescripcion').html(obj.tendencia_sin_desc);
                 }, 1000);
             },
             error: function (result)
