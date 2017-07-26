@@ -109,14 +109,14 @@ label:before {
   width: 25px;
   height: 25px;
   text-align: center;
-  line-height: 28px;
+  line-height: 25px;
   transition-duration: 0.4s;
   transform: scale(0);
 }
 
 label img {
-  height: 44px;
-  width: 44px;
+  height: 45px;
+  width: 48px;
   transition-duration: 0.2s;
   transform-origin: 50% 50%;
 }

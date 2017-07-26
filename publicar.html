@@ -53,74 +53,206 @@
 </nav>
 <!-- /Fixed navbar --> 
 <!--Titulo-->
-<div class="container">
-  <div class="starter-template">
-    <h1>Bienvenidos a Sistema de contenidos</h1>
-    <p class="lead">En esta sección puedes encontrar <br>
-      Usuarios destacados con más de 30 documentos.<br>
-    </p>
-    <h3><span class="label label-default mt-20">Filtra por redes sociales</span></h3>
+<div class="jumbotron">
+  <div class="container">
+    <div class="col-md-4">
+      <div class="thumbnail text-center ">
+        <div class="col-md-12 mb-20 well-sm well "><img src="assets/images/avatar.jpg" alt="avatar" class="img-circle" width="100" height="100" style="margin-bottom: -30px;"></div>
+        <div class="clearfix">...</div>
+        <h3 class="mb-40">Jesús Santoveña</h3>
+        <div class="container text-center mb-40">
+          <div class="col-md-4"><b>Contendio </b><br/>
+            32</div>
+          <div class="col-md-4"><b>Ventas</b><br/>
+            32</div>
+          <div class="col-md-4"><b>Clientes</b><br/>
+            32</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div> 
+        
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> <img src="assets/images/fb.png" width="21" height="21" style="margin-right:10px;">Facebook</a></li>
+          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"> <img src="assets/images/tw.png" width="21" height="21" style="margin-right:10px;">Twitter</a></li>
+          <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"> <img src="assets/images/in.png" width="21" height="21" style="margin-right:10px;">Instagram</a></li>
+        </ul>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Título de la publicación para Facebook">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <textarea class="form-control" rows="5" placeholder="Escribe el contenido para Facebook"></textarea>
+              <div class="checkbox ">
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Foto</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Video</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Gif</div>
+              </div>
+            </div>
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Añadir etiquetas separadas con comas">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <div class="col-md-4 mt-15 text-left">
+                <select class="form-control input-sm">
+                  <option value="">Seleccionar</option>
+                  <option value="">Política</option>
+                  <option value="">Educación</option>
+                  <option value="">Planeta</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  Político </label>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  Explícito </label>
+              </div>
+              <div class="col-md-4 mt-15">
+                <button type="button" class="btn btn-default btn-sm active">Añadir</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="profile">
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Título de la publicación para Twitter">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <textarea class="form-control" rows="5" placeholder="Escribe el contenido para Twitter"></textarea>
+              <div class="checkbox ">
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Foto</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Video</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Gif</div>
+              </div>
+            </div>
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Añadir etiquetas separadas con comas">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <div class="col-md-4 mt-15 text-left">
+                <select class="form-control input-sm">
+                  <option value="">Seleccionar</option>
+                  <option value="">Política</option>
+                  <option value="">Educación</option>
+                  <option value="">Planeta</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  Político </label>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  Explícito </label>
+              </div>
+              <div class="col-md-4 mt-15">
+                <button type="button" class="btn btn-default btn-sm active">Añadir</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="messages">
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Título de la publicación">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <textarea class="form-control" rows="5" placeholder="Escribe el contenido"></textarea>
+              <div class="checkbox ">
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Foto</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Video</div>
+                <div class="col-lg-2 text-center">
+                  <input type="checkbox">
+                  Gif</div>
+              </div>
+            </div>
+            <div class="container mt-20"> 
+              <!--etiquetas-->
+              <input type="text" class="form-control" placeholder="Añadir etiquetas separadas con comas">
+              <!--end etiquetas--> 
+              
+            </div>
+            <div class="container mt-20">
+              <div class="col-md-4 mt-15 text-left">
+                <select class="form-control input-sm">
+                  <option value="">Seleccionar</option>
+                  <option value="">Política</option>
+                  <option value="">Educación</option>
+                  <option value="">Planeta</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  Político </label>
+              </div>
+              <div class="col-md-2">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  Explícito </label>
+              </div>
+              <div class="col-md-4 mt-15">
+                <button type="button" class="btn btn-default btn-sm active">Añadir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <!--end título --> 
 
 <!--iconos de redes-->
-<div class="container">
-  <div class="col-md-7">
-    <ul>
-      <li>
-        <input type="checkbox" id="cb1" />
-        <label for="cb1"><img src="assets/images/filtro-fb.png" width="48" height="45"></label>
-      </li>
-      <li>
-        <input type="checkbox" id="cb2" />
-        <label for="cb2"><img src="assets/images/filtro-in.png" width="48" height="45"></label>
-      </li>
-      <li>
-        <input type="checkbox" id="cb3" />
-        <label for="cb3"><img src="assets/images/filtro-tw.png" width="48" height="45"></label>
-      </li>
-      l
-      <li>
-        <input type="checkbox" id="cb4" />
-        <label for="cb4"><img src="assets/images/filtro-gif.png" width="48" height="45"></label>
-      </li>
-      <li>
-        <input type="checkbox" id="cb5" />
-        <label for="cb5"><img src="assets/images/filtro-img.png" width="48" height="45"></label>
-      </li>
-      <li>
-        <input type="checkbox" id="cb6" />
-        <label for="cb6"><img src="assets/images/filtro-video.png" width="48" height="45"></label>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-5">
-    <form class="form-inline mt-25">
-      <div class="form-group">
-        <input type="text" class="form-control" id="exampleInputName2" placeholder="Buscar...">
-      </div>
-      <button type="submit" class="btn btn-default">Buscar</button>
-    </form>
-  </div>
-  <!--end iconos de redes--> 
-</div>
+
 <section>
   <div class="container mt-20">
     <div class="col-md-6 text-uppercase">
       <h4>tendencias</h4>
     </div>
-    <div class="col-md-6">
-    
-
-    </div>
-
+    <div class="col-md-6"> </div>
     <div class="clearfix">...</div>
-    
-    <span class="label label-info pull-right" style="margin-left:5px">Educación</span>
-    <span class="label label-info pull-right" style="margin-left:5px">México</span>
-    <span class="label label-info pull-right" style="margin-left:5px">Duarte</span>
-<hr />
+    <span class="label label-info pull-right" style="margin-left:5px">Educación</span> <span class="label label-info pull-right" style="margin-left:5px">México</span> <span class="label label-info pull-right" style="margin-left:5px">Duarte</span>
+    <hr />
   </div>
   <!--noticias pekes-->
   <div class="container">
