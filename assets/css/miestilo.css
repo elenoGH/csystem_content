@@ -144,3 +144,10 @@ blockquote .small, blockquote footer, blockquote small {
     line-height: 1.42857143;
     color: #777;
 }
+
+/*-----------estilo para color menu en movil------*/
+@media (max-width: 767px){
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #fbf8f8;
+}
+}
