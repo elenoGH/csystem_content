@@ -124,14 +124,15 @@ function get_data_tendencias($connection, $SESSION) {
 function getStructureContentNoDesc($itemArray2)
 {
     $structureCINoDesc = 
-    '<div class="col-md-3"><img  src="'.$itemArray2['path_source'].'" width="100%" ></div>';
+    '<div class="col-md-3"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><img  src="'.$itemArray2['path_source'].'" width="100%" ></div>';
     return $structureCINoDesc;
 }
 function getStructureContentInfo($itemArray)
 {
     $structureCI = 
     '<div class="col-lg-2">'
-        . '<img src="'.$itemArray['path_source'].'" class="img-thumbnail" width="100%" height="100%">'
+        . '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> 
+		   <img src="'.$itemArray['path_source'].'" class="img-thumbnail" width="100%" height="100%">'
     . '</div>'
     . '<div class="col-lg-4 ">'
         . '<h4>'.$itemArray['titulo'].'</h4>'
