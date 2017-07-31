@@ -25,7 +25,6 @@ include('../../application/models/session.php');
         <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css">
         <!-- Custom styles for this template -->
         <link href="../../assets/css/cover2.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../../assets/css/miestilo.css">
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
         <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
@@ -102,18 +101,18 @@ include('../../application/models/session.php');
                     <li>
                         <input type="checkbox" id="cb3" />
                         <label for="cb3"><img src="../../assets/images/icon-twitter2.png" width="44" height="44"></label>
-                    </li>
+                    </li>|
                     <li>
                         <input type="checkbox" id="cb4" />
-                        <label for="cb4"><img src="../../assets/images/icon-fb2.png" width="44" height="44"></label>
+                        <label for="cb4"><img src="../../assets/images/filtro-img.png" width="44" height="44"></label>
                     </li>
                     <li>
                         <input type="checkbox" id="cb5" />
-                        <label for="cb5"><img src="../../assets/images/icon-instagram2.png" width="44" height="44"></label>
+                        <label for="cb5"><img src="../../assets/images/filtro-video.png" width="44" height="44"></label>
                     </li>
                     <li>
                         <input type="checkbox" id="cb6" />
-                        <label for="cb6"><img src="../../assets/images/icon-twitter2.png" width="44" height="44"></label>
+                        <label for="cb6"><img src="../../assets/images/filtro-gif.png" width="44" height="44"></label>
                     </li>
                 </ul>
             </div>
@@ -189,5 +188,6 @@ include('../../application/models/session.php');
         <script src="../../assets/js/bootstrap.min.js"></script> 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../../assets/js/bootbox.min.js"></script>
     </body>
 </html>

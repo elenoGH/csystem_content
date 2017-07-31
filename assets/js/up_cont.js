@@ -3,7 +3,7 @@ $(document).on("ready", up_c);
 
 function up_c(event)
 {
-    $("#loading").hide();
+    $("#loading").addClass('hide');
 
     get_data_tendencias();
 
@@ -23,7 +23,7 @@ function up_c(event)
             success: function (respuesta) {
 //            console.log(respuesta);
                 setTimeout(function () {
-                    $("#loading").hide();
+                    $("#loading").addClass('hide');
                     //location.reload();
                     var obj = JSON.parse(respuesta);
 
@@ -39,12 +39,13 @@ function up_c(event)
             fail: function (status) {
             },
             beforeSend: function (d) {
-                $("#loading").show();
+                $("#loading").removeClass('hide');
             }
         });
     }
 
-    $('form').on('submit', function (event) {
+    $('form').on('submit', function (event) 
+    {
 
         event.preventDefault();
         var data = new FormData();
@@ -71,12 +72,15 @@ function up_c(event)
             success: function (respuesta) {
                 console.log(respuesta);
                 setTimeout(function () {
-                    $("#loading").hide();
+                    $("#loading").addClass('hide');
                     //location.reload();
                     var obj = JSON.parse(respuesta);
 
                     $('#load-datos-tendencias').html(obj.tendencia_con_desc);
                     $('#load-datos-tendencias-nodescripcion').html(obj.tendencia_sin_desc);
+                    bootbox.alert("Acción Satisfactoria!", function(){
+                        console.log('This was logged in the callback!'); 
+                    });
                 }, 1000);
             },
             error: function (result)
@@ -86,7 +90,7 @@ function up_c(event)
             fail: function (status) {
             },
             beforeSend: function (d) {
-                $("#loading").show();
+                $("#loading").removeClass('hide');
             }
         });
 
@@ -102,5 +106,5 @@ function up_c(event)
         } else {
             $('#count-caracter').html(result).append('&nbsp;<i class="fa fa-times" aria-hidden="true"></i>').css('color', 'green');
         }
-    })
+    }):
 }

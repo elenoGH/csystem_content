@@ -26,7 +26,6 @@ include('../../application/models/session.php');
         <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css">
         <!-- Custom styles for this template -->
         <link href="../../assets/css/cover2.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../../assets/css/miestilo.css">
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="../../../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
         <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
@@ -98,15 +97,15 @@ include('../../application/models/session.php');
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li>
-                                    <input type="checkbox" id="cb1" name="red_social[facebook]" value="facebook">
+                                    <input type="radio" id="cb1" name="red_social" value="facebook">
                                     <label for="cb1"><img src="../../assets/images/icon-fb2.png" width="44" height="44"></label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="cb2" name="red_social[twitter]" value="twitter">
+                                    <input type="radio" id="cb2" name="red_social" value="twitter">
                                     <label for="cb2"><img src="../../assets/images/icon-instagram2.png" width="44" height="44"></label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="cb3" name="red_social[instagram]" value="instagram">
+                                    <input type="radio" id="cb3" name="red_social" value="instagram">
                                     <label for="cb3"><img src="../../assets/images/icon-twitter2.png" width="44" height="44"></label>
                                 </li>
                             </ul>
@@ -209,5 +208,6 @@ include('../../application/models/session.php');
         <script src="../../assets/js/bootstrap.min.js"></script> 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../../assets/js/bootbox.min.js"></script>
     </body>
 </html>

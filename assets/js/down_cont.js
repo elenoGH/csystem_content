@@ -3,7 +3,7 @@ $(document).on("ready", down_c);
 
 function down_c(event)
 {
-    $("#loading").hide();
+    $("#loading").addClass('hide');
     /**
      * get all data
      */
@@ -21,7 +21,7 @@ function down_c(event)
         success: function (respuesta) {
 //            console.log(respuesta);
             setTimeout(function () {
-                $("#loading").hide();
+                $("#loading").addClass('hide');
                 //location.reload();
                 var obj = JSON.parse(respuesta);
                 
@@ -42,7 +42,7 @@ function down_c(event)
         fail: function (status) {
         },
         beforeSend: function (d) {
-            $("#loading").show();
+            $("#loading").removeClass('hide');
         }
     });
 }
