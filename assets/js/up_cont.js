@@ -106,5 +106,5 @@ function up_c(event)
         } else {
             $('#count-caracter').html(result).append('&nbsp;<i class="fa fa-times" aria-hidden="true"></i>').css('color', 'green');
         }
-    }):
+    });
 }
