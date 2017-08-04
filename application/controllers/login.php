@@ -10,7 +10,7 @@ if (isset($_POST['submit'])) {
         $username = $_POST['inputEmail'];
         $password = $_POST['inputPassword'];
 // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-        $connection = mysql_connect("localhost", "csystem", "csystem");
+        $connection = mysql_connect("localhost", "root", "");
 // To protect MySQL injection for Security purpose
         $username = stripslashes($username);
         $password = stripslashes($password);
@@ -31,11 +31,12 @@ if (isset($_POST['submit'])) {
             $_SESSION['name_user'] = $res['username'];
             $_SESSION['rol_user'] = $res['rol'];
             
-            if ($_SESSION['rol_user'] == 0) {
-                header("location: application/views/up_contenido.php"); // Redirecting To Other Page
-            }else if ($_SESSION['rol_user'] == 1) {
-                header("location: application/views/down_contenido.php"); // Redirecting To Other Page
+            if ($_SESSION['rol_user'] == 1) {
+                header("location: application/views/escritor.php"); // Redirecting To Other Page
             }
+//            else if ($_SESSION['rol_user'] == 1) {
+//                header("location: application/views/down_contenido.php"); // Redirecting To Other Page
+//            }
             
         } else {
             $error = "Usuario o contraseña Invalida";

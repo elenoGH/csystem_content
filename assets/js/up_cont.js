@@ -53,15 +53,8 @@ function up_c(event)
         data.append('titulo_content', $('#titulo_content').val());
         data.append('description_content', $('#description_content').val());
         data.append('file_update', $('input[type=file]')[0].files[0]);
-
-        var checkbox = $(this).find("input[type=checkbox]");
-        $.each(checkbox, function (key, val) {
-            if ($(this).is(":checked")) {
-                data.append($(val).attr('name'), true);
-            } else {
-                data.append($(val).attr('name'), false);
-            }
-        });
+        data.append('red_social', $(this).find('input[name=red_social]:checked').val());
+        
         $.ajax({
             url: '../controllers/up_cont.php',
             type: "POST",

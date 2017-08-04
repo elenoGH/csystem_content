@@ -2,7 +2,8 @@
 
 require '../models/session.php';
 
-if (isset($_POST['data_up'])) {
+if (isset($_POST['data_up']))
+{
 
     $data_file = null;
 
@@ -50,7 +51,7 @@ if (isset($_POST['data_up'])) {
     $descripcion = $_POST['description_content'];
     $url = 'http://php.net';
     $path_source = $data_file['image_path'] . $data_file['image_name'];
-    $red_social = json_encode($_POST['red_social']);
+    $red_social = $_POST['red_social'];
     $tipo_source = 'Imagen';
     $categoria = 'Social';
     $etiquetas = json_encode(array('biologia'=>'bilogia', 'hurbanismo'=>'hurbanismo', 'tecnologi'=>'tecnologia'));
@@ -72,7 +73,8 @@ if (isset($_POST['data_up'])) {
     die;
 }
 
-function get_data_tendencias($connection, $SESSION) {
+function get_data_tendencias($connection, $SESSION)
+{
     
     $resultado_desc = '';
     $resultado_nodesc = '';
@@ -121,6 +123,7 @@ function get_data_tendencias($connection, $SESSION) {
     );
     return json_encode($resultado_array);
 }
+
 function getStructureContentNoDesc($itemArray2)
 {
     $structureCINoDesc = 
