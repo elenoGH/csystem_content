@@ -55,7 +55,7 @@ function scripts_escritor(event)
                     var obj = JSON.parse(respuesta);
                     $('#load-datos-contenido').html(obj.contenido_con_desc);
                     $('#count-contenido').html(obj.total_contenido);
-                    
+
                 }, 1000);
             },
             error: function (result)
@@ -98,7 +98,7 @@ function scripts_escritor(event)
 
                     $('#load-datos-contenido').html(obj.contenido_con_desc);
                     $('#count-contenido').html(obj.total_contenido);
-                    
+
                     bootbox.alert("Acción Satisfactoria!", function () {
                         console.log('This was logged in the callback!');
                     });
@@ -193,4 +193,9 @@ function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function deleteContenido(x)
+{
+    bootbox.alert('Esta seguro de eliminar este contenido? No se puede deshacer la accion.', () => location.reload());
 }

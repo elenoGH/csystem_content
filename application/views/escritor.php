@@ -186,7 +186,7 @@ include('../../application/models/session.php');
                                                     class="btn btn-default btn-sm active">
                                                 Añadir
                                             </button>&nbsp;
-                                            <button type="" value="" 
+                                            <button type="button" value="0" 
                                                     class="btn btn-default btn-sm active">
                                                 Preview
                                             </button>

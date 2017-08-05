@@ -172,7 +172,7 @@ function getDataEscritor($connection, $SESSION)
 
 function getDataContenidoEscritor($connection, $SESSION)
 {
-    $query = mysql_query("select tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias"
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias"
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.nombre as nametopico "
             . "from tbl_usuario tu "
@@ -191,7 +191,9 @@ function getStructureContentInfo($itemArray)
 {
     $structureCI = 
     '<div class="col-lg-2">'
-        . '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+        . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido('.$itemArray['id_contenido'].')" aria-label="Close">'
+            . '<span aria-hidden="true">&times;</span>'
+        . '</button>'
         . '<img src="'.$itemArray['path_source'].'" class="img-thumbnail" width="100%" height="100%">'
     . '</div>'
     . '<div class="col-lg-4 ">'
@@ -214,7 +216,8 @@ function getStructureContentInfo($itemArray)
                 . '<b>Estatus: &nbsp;</b>'
                 . '<a href="#">'.$itemArray['estatus_cont'].'</a>'
             . '</cite><br>'
-            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer"></i>&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer"></i>'
+            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer"></i>'
+            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer"></i>'
             . '&nbsp;<a href="'.$itemArray['referencias'].'" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
         . '</footer>'
     . '</div>';
