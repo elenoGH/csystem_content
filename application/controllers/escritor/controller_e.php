@@ -3,29 +3,29 @@
 require '../../models/session.php';
 
 if (isset($_POST['editContent'])) {
-    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias"
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.id as id_topico, tto.nombre as nametopico "
             . "from tbl_usuario tu "
             . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
             . "right join tbl_topicos tto on tc.id_topico = tto.id "
-            . "where tc.id = ".$_POST['value_edit']
-            . " and tu.id =".$_SESSION['id_user'], $connection) or die(mysql_error());
+            . "where tc.id = " . $_POST['value_edit']
+            . " and tu.id =" . $_SESSION['id_user'], $connection) or die(mysql_error());
     $array_resultado = array();
-    while($data_array = mysql_fetch_array($query, MYSQL_ASSOC)){
+    while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
         $array_resultado[] = $data_array;
     }
-    
+
     echo json_encode($array_resultado);
     die;
 }
 
 if (isset($_POST['deleteContent'])) {
-    
+
     $q = "delete "
-    . "from tbl_contenido_escritor "
-    . "where id= ".$_POST['value_delete'];
-    
+            . "from tbl_contenido_escritor "
+            . "where id= " . $_POST['value_delete'];
+
     //Run Query
     $result_insert = mysql_query($q) or die(mysql_error());
     /**
@@ -42,25 +42,23 @@ if (isset($_POST['get_topicos'])) {
     $query = mysql_query("select * from tbl_topicos top "
             . "where top.id > 0 ", $connection);
     $array_resultado = array();
-    while($data_array = mysql_fetch_array($query, MYSQL_ASSOC)){
+    while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
         $array_resultado[] = $data_array;
     }
     echo json_encode($array_resultado);
     die;
 }
-        
-if (isset($_POST['get_data']))
-{
+
+if (isset($_POST['get_data'])) {
     echo getDataEscritor($connection, $_SESSION);
     die;
 }
 
-if (isset($_POST['data_up']))
-{
+if (isset($_POST['data_up'])) {
     $data_file = null;
 
     if (isset($_FILES["file_update"])) {
-        
+
         if (isset($_FILES['file_update']['tmp_name'])) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime = finfo_file($finfo, $_FILES['file_update']['tmp_name']);
@@ -69,7 +67,7 @@ if (isset($_POST['data_up']))
             }
             finfo_close($finfo);
         }
-        
+
         if (!is_dir('../../../assets/media/dir_source')) {
             mkdir('../../../assets/media/dir_source', 0755, true);
             if (is_dir('../../../assets/media/dir_source')) {
@@ -90,8 +88,8 @@ if (isset($_POST['data_up']))
     } else {
         $path_source = $_POST['url_other_image'];
     }
-    
-    
+
+
     $id_usuario = $_SESSION['id_user'];
     $titulo_cont = $_POST['titulo_content'];
     $post_to_enmbedded_text = $_POST['post_to_enmbedded_text'];
@@ -99,37 +97,41 @@ if (isset($_POST['data_up']))
     $red_social = $_POST['red_social'];
     $tipo_source = 'Imagen';
     $categoria = 'Social';
-    $etiquetas = json_encode(array('biologia'=>'bilogia', 'hurbanismo'=>'hurbanismo', 'tecnologi'=>'tecnologia'));
+    $etiquetas = json_encode(array('biologia' => 'bilogia', 'hurbanismo' => 'hurbanismo', 'tecnologi' => 'tecnologia'));
     $id_topico = $_POST['id_topico'];
     $referencias = $_POST['referencias'];
     //al generar el contenido del escritor queda por primera ves en espera para la venta
     $estatus = 'espera';
-    
+
     $id_contenido = $_POST['id_contenido'];
-    
+
     if (!empty($id_contenido)) {
+        $modified_date = time();
         $q = " update tbl_contenido_escritor "
-                . " set id_topico = ".$id_topico
-                . " , titulo = '".$titulo_cont."'"
-                . " , post_to_enmbedded_text = '".$post_to_enmbedded_text."'"
-                . " , url = '".$url."'"
-                . " , path_source = '".$path_source."'"
-                . " , red_social = '".$red_social."'"
-                . " , tipo_source = '".$tipo_source."'"
-                . " , categoria = '".$categoria."'"
-                . " , etiquetas = '".$etiquetas."'"
-                . " , referencias = '".$referencias."'"
-                . " , estatus = '".$estatus."'"
-                . " where id = ".$id_contenido;
+                . " set id_topico = " . $id_topico
+                . " , titulo = '" . $titulo_cont . "'"
+                . " , post_to_enmbedded_text = '" . $post_to_enmbedded_text . "'"
+                . " , url = '" . $url . "'"
+                . " , path_source = '" . $path_source . "'"
+                . " , red_social = '" . $red_social . "'"
+                . " , tipo_source = '" . $tipo_source . "'"
+                . " , categoria = '" . $categoria . "'"
+                . " , etiquetas = '" . $etiquetas . "'"
+                . " , referencias = '" . $referencias . "'"
+                . " , estatus = '" . $estatus . "'"
+                . " , modified_date = '" . $modified_date . "'"
+                . " where id = " . $id_contenido;
     } else {
+        $created_date = time();
+        $modified_date = time();
         $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
-        . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-        . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`) "
-        . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
-        . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-        . ",'$tipo_source','$categoria','$etiquetas','$referencias','$estatus')";
+                . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
+                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
+                . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
+                . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
+                . ",'$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
     }
-    
+
     //Run Query
     $result_insert = mysql_query($q) or die(mysql_error());
     /**
@@ -139,7 +141,7 @@ if (isset($_POST['data_up']))
     if ($result_insert) {
         $resultado = getDataEscritor($connection, $_SESSION);
     }
-    
+
     echo $resultado;
     die;
 }
@@ -199,96 +201,104 @@ function createSource($file, $param_array) {
     return $dataComent;
 }
 
-function getDataEscritor($connection, $SESSION)
-{
+function getDataEscritor($connection, $SESSION) {
     $resultado_desc = '';
-    $ini_container = '<div class="container">';    
+    $ini_container = '<div class="container">';
     $end_container = '</div><!--separar--><div class="clearfix">...</div>';
     $count = 0;
     $count_contenido = 0;
     $data_content_tendencias = getDataContenidoEscritor($connection, $SESSION);
     foreach ($data_content_tendencias as $key => $itemArray) {
         if ($count == 0) {
-            $resultado_desc = $resultado_desc.$ini_container
+            $resultado_desc = $resultado_desc . $ini_container
                     . getStructureContentInfo($itemArray);
             $count++;
-        } else  {
+        } else {
             $resultado_desc = $resultado_desc
                     . getStructureContentInfo($itemArray)
                     . '<hr />'
-                    .$end_container;
+                    . $end_container;
             $count--;
         }
         $count_contenido++;
     }
-    
+
     $resultado_array = array(
         'contenido_con_desc' => $resultado_desc
-            , 'total_contenido' => '<b>Contendio </b><br/>'.$count_contenido
+        , 'total_contenido' => '<b>Contendio </b><br/>' . $count_contenido
     );
     return json_encode($resultado_array);
 }
 
-function getDataContenidoEscritor($connection, $SESSION)
-{
-    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias"
+function getDataContenidoEscritor($connection, $SESSION) {
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.nombre as nametopico "
             . "from tbl_usuario tu "
             . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
             . "right join tbl_topicos tto on tc.id_topico = tto.id "
             . "where tc.id > 0 "
-            . "and tu.id =".$SESSION['id_user'], $connection);
+            . "and tu.id =" . $SESSION['id_user'], $connection);
     $array_resultado = array();
-    while($data_array = mysql_fetch_array($query, MYSQL_ASSOC)){
+    while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
         $array_resultado[] = $data_array;
     }
-    
+
     return $array_resultado;
 }
-function getStructureContentInfo($itemArray)
-{
-    $json = md5(json_encode($itemArray));
-    $structureCI = 
-    '<div class="col-lg-2">'
-        . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido('.$itemArray['id_contenido'].')" aria-label="Close">'
+
+function getStructureContentInfo($itemArray) {
+    $json = encriptar(json_encode($itemArray));
+    $structureCI = '<div class="col-lg-2">'
+            . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido(' . $itemArray['id_contenido'] . ')" aria-label="Close">'
             . '<span aria-hidden="true">&times;</span>'
-        . '</button>'
-        . '<img src="'.$itemArray['path_source'].'" class="img-thumbnail" width="100%" height="100%">'
-    . '</div>'
-    . '<div class="col-lg-4 ">'
-        . '<h4>'.$itemArray['titulo'].'</h4>'
-        . $itemArray['post_to_enmbedded_text']
-        . '<footer class="mt-20">'
+            . '</button>'
+            . '<img src="' . $itemArray['path_source'] . '" class="img-thumbnail" width="100%" height="100%">'
+            . '</div>'
+            . '<div class="col-lg-4 ">'
+            . '<h4>' . $itemArray['titulo'] . '</h4>'
+            . $itemArray['post_to_enmbedded_text']
+            . '<footer class="mt-20">'
             . '<cite title="Source Title">'
-                . '<b>Autor: &nbsp;</b>'
-                . '<a href="#">'.$itemArray['nameuser'].' '.$itemArray['apellidouser'].'</a>'
+            . '<b>Autor: &nbsp;</b>'
+            . '<a href="#">' . $itemArray['nameuser'] . ' ' . $itemArray['apellidouser'] . '</a>'
             . '</cite><br>'
             . '<cite title="Source Topico">'
-                . '<b>Topico: &nbsp;</b>'
-                . '<a href="#">'.$itemArray['nametopico'].'</a>'
+            . '<b>Topico: &nbsp;</b>'
+            . '<a href="#">' . $itemArray['nametopico'] . '</a>'
             . '</cite><br>'
             . '<cite title="Source Red Social">'
-                . '<b>Red Social: &nbsp;</b>'
-                . '<a href="#">'.$itemArray['red_social'].'</a>'
+            . '<b>Red Social: &nbsp;</b>'
+            . '<a href="#">' . $itemArray['red_social'] . '</a>'
             . '</cite><br>'
             . '<cite title="Source Estatus">'
-                . '<b>Estatus: &nbsp;</b>'
-                . '<a href="#">'.$itemArray['estatus_cont'].'</a>'
+            . '<b>Estatus: &nbsp;</b>'
+            . '<a href="#">' . $itemArray['estatus_cont'] . '</a>'
             . '</cite><br>'
             . '<a class="gototop gototop-button" href="#">'
-                . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent('.$itemArray['id_contenido'].')"></i>'
+            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent(' . $itemArray['id_contenido'] . ')"></i>'
             . '</a>'
-            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\''.$json.'\')"></i>'
-            . '&nbsp;<a href="'.$itemArray['referencias'].'" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
-        . '</footer>'
-    . '</div>';
+            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\'' . $json . '\')"></i>'
+            . '&nbsp;<a href="' . $itemArray['referencias'] . '" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
+            . '</footer>'
+            . '</div>';
     return $structureCI;
 }
 
-if (isset($_POST['getMD5info']))
-{
+if (isset($_POST['getMD5info'])) {
     $md5enc = $_POST['md5info'];
-    echo $md5enc;
+    echo desencriptar($md5enc);
     die;
+}
+
+function encriptar($cadena) {
+    $key = '';  // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
+    $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $cadena, MCRYPT_MODE_CBC, md5(md5($key))));
+    return $encrypted; //Devuelve el string encriptado
+}
+
+function desencriptar($cadena) {
+    $key = '';  // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
+    $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($cadena), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
+    return $decrypted;  //Devuelve el string desencriptado
 }

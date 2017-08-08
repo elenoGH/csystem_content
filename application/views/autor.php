@@ -40,6 +40,7 @@ include('../../application/models/session.php');
     </head>
 
     <body>
+        <div id="fb-root"></div>
         <div id="loading" class="hide">
             <div id="loading-content">
                 <div class="load">
@@ -69,7 +70,7 @@ include('../../application/models/session.php');
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img class="avatar"  src="../../assets/images/user.png" width="34" height="34"> Hola <?php echo $login_session; ?>
+                                <img class="avatar"  src="../../assets/images/autor_avatar.jpg" width="34" height="34"> Hola <?php echo $login_session; ?>
                                 <span class="badge alert-danger">42</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Publicar</a></li>
@@ -89,12 +90,12 @@ include('../../application/models/session.php');
                 <div class="col-md-4">
                     <div class="thumbnail text-center ">
                         <div class="col-md-12 mb-20 well-sm well ">
-                            <img src="../../assets/images/avatar.jpg" alt="avatar" 
+                            <img src="../../assets/images/autor_avatar.jpg" alt="avatar" 
                                  class="img-circle" width="100" height="100" 
                                  style="margin-bottom: -30px;">
                         </div>
                         <div class="clearfix">...</div>
-                        <h3 class="mb-40">Autor Sin Nombre</h3>
+                        <h3 class="mb-40"><?php echo $login_session; ?></h3>
                         <div class="container text-center mb-40">
                             <div class="col-md-4" id="count-contenido">
                                 <b>Contendio </b><br/>0
@@ -194,10 +195,10 @@ include('../../application/models/session.php');
                                                     class="btn btn-default btn-sm active button-agregar">
                                                 Añadir
                                             </button>&nbsp;
-                                            <button type="button" value="0" 
+                                            <!--button type="button" value="0" 
                                                     class="btn btn-default btn-sm active" data-toggle="modal" data-target=".preview-redsocial">
                                                 Preview
-                                            </button>&nbsp;
+                                            </button-->
                                             <button type="button" value=""  data-id="" id="nuevo-clean"
                                                     class="btn btn-default btn-sm active button-nuevo">
                                                 Nuevo
@@ -237,12 +238,20 @@ include('../../application/models/session.php');
                     <div class="wrapper">
                         <div class="card radius shadowDepth1">
                             <div class="card__image border-tlr-radius">
-                                
+                                <!--put the image via ajax-->
                             </div>
                             <div class="card__content card__padding">
                                 <div class="card__share">
                                     <div class="card__social">  
-                                        <a class="share-icon facebook" href="#"><span class="fa fa-facebook"></span></a>
+                                        <!--div class="fb-share-button" 
+                                             data-href="https://developers.facebook.com/docs/plugins/" 
+                                             data-layout="button_count" data-size="small" 
+                                             data-mobile-iframe="true">
+                                        </div-->
+                                        <a class="share-icon facebook fb-xfbml-parse-ignore" target="_blank"
+                                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
+                                            <span class="fa fa-facebook"></span>
+                                        </a>
                                         <a class="share-icon twitter" href="#"><span class="fa fa-twitter"></span></a>
                                         <a class="share-icon googleplus" href="#"><span class="fa fa-google-plus"></span></a>
                                     </div>
@@ -250,13 +259,10 @@ include('../../application/models/session.php');
                                     <a id="share" class="share-toggle share-icon" href="#"></a>
                                 </div>
                                 <div class="card__meta">
-                                    <a href="#">Web Design</a>
-                                    <time>17th March</time>
+                                    <!--add time and reference-->
                                 </div>
                                 <article class="card__article">
-                                    <h2><a href="#">Material Design Card - For Blog Post Article</a></h2>
-
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus harum...</p>
+                                    <!--this put title and description of content-->
                                 </article>
                             </div>
                             <div class="card__action">

@@ -25,6 +25,14 @@
 //  return t;
 //}(document, "script", "twitter-wjs"));
 
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.10";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
 $(document).on("ready", scripts_escritor);
 
 function scripts_escritor(event)
@@ -359,7 +367,15 @@ function modalPreview(json)
         processData: false,
         success: function (respuesta) {
             var obj = JSON.parse(respuesta);
-            $('.border-tlr-radius').html('<img src="http://lorempixel.com/400/200/sports/" alt="image" class="border-tlr-radius">');
+            var dt = new Date(obj.created_date*1000);
+            var date_format = dt.getDay() + '/' + dt.getMonth() + '/' + dt.getFullYear();
+            $('.border-tlr-radius').html('<img src="'+obj.path_source+'" alt="image" class="border-tlr-radius">');
+            $('.card__article').html('<h2><a href="#">'+obj.titulo+'</a></h2>\n\
+                                    <p>'+obj.post_to_enmbedded_text+'</p>');
+            $('.card__meta').html('<a href="'+obj.referencias+'" target="_blank">Referencia</a>\n\
+                                    <time>'+date_format+'</time>');
+            
+
         },
         error: function (result)
         {
@@ -368,7 +384,7 @@ function modalPreview(json)
         fail: function (status) {
         },
         beforeSend: function (d) {
-            $("#loading").removeClass('hide');
+//            $("#loading").removeClass('hide');
         }
     });
 }
