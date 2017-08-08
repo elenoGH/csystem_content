@@ -4,7 +4,7 @@ include('application/controllers/login.php'); // Includes Login Script
 if (isset($_SESSION['login_user'])) {
     if (isset($_SESSION['rol_user'])) {
         if ($_SESSION['rol_user'] == 1) {
-            header("location: application/views/escritor.php");
+            header("location: application/views/autor.php");
         }
     }
 }

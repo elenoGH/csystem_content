@@ -88,9 +88,13 @@ include('../../application/models/session.php');
             <div class="container">
                 <div class="col-md-4">
                     <div class="thumbnail text-center ">
-                        <div class="col-md-12 mb-20 well-sm well "><img src="../../assets/images/avatar.jpg" alt="avatar" class="img-circle" width="100" height="100" style="margin-bottom: -30px;"></div>
+                        <div class="col-md-12 mb-20 well-sm well ">
+                            <img src="../../assets/images/avatar.jpg" alt="avatar" 
+                                 class="img-circle" width="100" height="100" 
+                                 style="margin-bottom: -30px;">
+                        </div>
                         <div class="clearfix">...</div>
-                        <h3 class="mb-40">Jesús Santoveña</h3>
+                        <h3 class="mb-40">Autor Sin Nombre</h3>
                         <div class="container text-center mb-40">
                             <div class="col-md-4" id="count-contenido">
                                 <b>Contendio </b><br/>0
@@ -126,7 +130,7 @@ include('../../application/models/session.php');
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li>
-                                    <input type="radio" id="cb1" name="red_social" value="facebook" checked="checked">
+                                    <input type="radio" id="cb1" name="red_social" value="facebook">
                                     <label for="cb1"><img src="../../assets/images/icon-fb2.png" width="44" height="44"></label>
                                 </li>
                                 <li>
@@ -181,14 +185,22 @@ include('../../application/models/session.php');
                                                id="referencias" name="referencias">
                                     </div>
                                     <div class="container mt-20">
-                                        <div class="col-md-4 mt-15">
+                                        <div class="col-md-6 mt-15">
                                             <button type="submit" value="Submit" 
-                                                    class="btn btn-default btn-sm active">
+                                                    class="btn btn-default btn-sm active button-actualizar" data-id="">
+                                                Actualizar
+                                            </button>&nbsp;
+                                            <button type="submit" value="Submit" 
+                                                    class="btn btn-default btn-sm active button-agregar">
                                                 Añadir
                                             </button>&nbsp;
                                             <button type="button" value="0" 
-                                                    class="btn btn-default btn-sm active">
+                                                    class="btn btn-default btn-sm active" data-toggle="modal" data-target=".preview-redsocial">
                                                 Preview
+                                            </button>&nbsp;
+                                            <button type="button" value=""  data-id="" id="nuevo-clean"
+                                                    class="btn btn-default btn-sm active button-nuevo">
+                                                Nuevo
                                             </button>
                                         </div>
                                     </div>
@@ -218,6 +230,50 @@ include('../../application/models/session.php');
             <!--div id="load-datos-contenido-nodescripcion">
             </div-->
         </section>
+        <div class="modal fade preview-redsocial" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <!---->
+                    <div class="wrapper">
+                        <div class="card radius shadowDepth1">
+                            <div class="card__image border-tlr-radius">
+                                
+                            </div>
+                            <div class="card__content card__padding">
+                                <div class="card__share">
+                                    <div class="card__social">  
+                                        <a class="share-icon facebook" href="#"><span class="fa fa-facebook"></span></a>
+                                        <a class="share-icon twitter" href="#"><span class="fa fa-twitter"></span></a>
+                                        <a class="share-icon googleplus" href="#"><span class="fa fa-google-plus"></span></a>
+                                    </div>
+
+                                    <a id="share" class="share-toggle share-icon" href="#"></a>
+                                </div>
+                                <div class="card__meta">
+                                    <a href="#">Web Design</a>
+                                    <time>17th March</time>
+                                </div>
+                                <article class="card__article">
+                                    <h2><a href="#">Material Design Card - For Blog Post Article</a></h2>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus harum...</p>
+                                </article>
+                            </div>
+                            <div class="card__action">
+
+                                <div class="card__author">
+                                    <img src="http://lorempixel.com/40/40/sports/" alt="user">
+                                    <div class="card__author-content">
+                                        Creado por <a href="#">Eleno</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+        </div>
         <footer class="footer pleca mt-80">
             <div class="container ">
                 <p class="mt-20"  style="color:#FFF;">Aureacode</p>

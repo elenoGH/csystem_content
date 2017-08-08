@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['rol_user'] = $res['rol'];
             
             if ($_SESSION['rol_user'] == 1) {
-                header("location: application/views/escritor.php"); // Redirecting To Other Page
+                header("location: application/views/autor.php"); // Redirecting To Other Page
             }
 //            else if ($_SESSION['rol_user'] == 1) {
 //                header("location: application/views/down_contenido.php"); // Redirecting To Other Page

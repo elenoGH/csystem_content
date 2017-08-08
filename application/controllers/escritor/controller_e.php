@@ -2,6 +2,42 @@
 
 require '../../models/session.php';
 
+if (isset($_POST['editContent'])) {
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias"
+            . ", tu.nombre as nameuser, tu.apellido as apellidouser"
+            . ", tto.id as id_topico, tto.nombre as nametopico "
+            . "from tbl_usuario tu "
+            . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
+            . "right join tbl_topicos tto on tc.id_topico = tto.id "
+            . "where tc.id = ".$_POST['value_edit']
+            . " and tu.id =".$_SESSION['id_user'], $connection) or die(mysql_error());
+    $array_resultado = array();
+    while($data_array = mysql_fetch_array($query, MYSQL_ASSOC)){
+        $array_resultado[] = $data_array;
+    }
+    
+    echo json_encode($array_resultado);
+    die;
+}
+
+if (isset($_POST['deleteContent'])) {
+    
+    $q = "delete "
+    . "from tbl_contenido_escritor "
+    . "where id= ".$_POST['value_delete'];
+    
+    //Run Query
+    $result_insert = mysql_query($q) or die(mysql_error());
+    /**
+     * obtener datos una ves insertado
+     */
+    $resultado = '';
+    if ($result_insert) {
+        echo getDataEscritor($connection, $_SESSION);
+    }
+    die;
+}
+
 if (isset($_POST['get_topicos'])) {
     $query = mysql_query("select * from tbl_topicos top "
             . "where top.id > 0 ", $connection);
@@ -49,12 +85,17 @@ if (isset($_POST['data_up']))
             $data_file = createSource($_FILES["file_update"], $param_array);
         }
     }
-
+    if (isset($data_file) && !empty($data_file)) {
+        $path_source = $data_file['image_path'] . $data_file['image_name'];
+    } else {
+        $path_source = $_POST['url_other_image'];
+    }
+    
+    
     $id_usuario = $_SESSION['id_user'];
     $titulo_cont = $_POST['titulo_content'];
     $post_to_enmbedded_text = $_POST['post_to_enmbedded_text'];
     $url = 'http://php.net';
-    $path_source = $data_file['image_path'] . $data_file['image_name'];
     $red_social = $_POST['red_social'];
     $tipo_source = 'Imagen';
     $categoria = 'Social';
@@ -64,12 +105,30 @@ if (isset($_POST['data_up']))
     //al generar el contenido del escritor queda por primera ves en espera para la venta
     $estatus = 'espera';
     
-    $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
-            . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-            . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`) "
-            . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
-            . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-            . ",'$tipo_source','$categoria','$etiquetas','$referencias','$estatus')";
+    $id_contenido = $_POST['id_contenido'];
+    
+    if (!empty($id_contenido)) {
+        $q = " update tbl_contenido_escritor "
+                . " set id_topico = ".$id_topico
+                . " , titulo = '".$titulo_cont."'"
+                . " , post_to_enmbedded_text = '".$post_to_enmbedded_text."'"
+                . " , url = '".$url."'"
+                . " , path_source = '".$path_source."'"
+                . " , red_social = '".$red_social."'"
+                . " , tipo_source = '".$tipo_source."'"
+                . " , categoria = '".$categoria."'"
+                . " , etiquetas = '".$etiquetas."'"
+                . " , referencias = '".$referencias."'"
+                . " , estatus = '".$estatus."'"
+                . " where id = ".$id_contenido;
+    } else {
+        $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
+        . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
+        . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`) "
+        . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
+        . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
+        . ",'$tipo_source','$categoria','$etiquetas','$referencias','$estatus')";
+    }
     
     //Run Query
     $result_insert = mysql_query($q) or die(mysql_error());
@@ -77,7 +136,7 @@ if (isset($_POST['data_up']))
      * obtener datos una ves insertado
      */
     $resultado = '';
-    if ($result_insert == 1) {
+    if ($result_insert) {
         $resultado = getDataEscritor($connection, $_SESSION);
     }
     
@@ -189,6 +248,7 @@ function getDataContenidoEscritor($connection, $SESSION)
 }
 function getStructureContentInfo($itemArray)
 {
+    $json = md5(json_encode($itemArray));
     $structureCI = 
     '<div class="col-lg-2">'
         . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido('.$itemArray['id_contenido'].')" aria-label="Close">'
@@ -216,10 +276,19 @@ function getStructureContentInfo($itemArray)
                 . '<b>Estatus: &nbsp;</b>'
                 . '<a href="#">'.$itemArray['estatus_cont'].'</a>'
             . '</cite><br>'
-            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer"></i>'
-            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer"></i>'
+            . '<a class="gototop gototop-button" href="#">'
+                . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent('.$itemArray['id_contenido'].')"></i>'
+            . '</a>'
+            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\''.$json.'\')"></i>'
             . '&nbsp;<a href="'.$itemArray['referencias'].'" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
         . '</footer>'
     . '</div>';
     return $structureCI;
+}
+
+if (isset($_POST['getMD5info']))
+{
+    $md5enc = $_POST['md5info'];
+    echo $md5enc;
+    die;
 }
