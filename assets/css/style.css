@@ -2,7 +2,9 @@
 @charset "utf-8";
 /* CSS Document */
 
-input#inputEmail.form-control, input#inputPassword.form-control{  
+input#inputEmail.form-control, input#nombreCompleto.form-control
+, input#nombreUsuario.form-control, input#inputPassword.form-control
+, select#selectTypeUser.form-control{  
     background: none;
     color: #fff;
     font-size: 24px;

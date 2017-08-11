@@ -46,31 +46,87 @@ if (isset($_SESSION['login_user'])) {
         <div class="site-wrapper" style="background:url(assets/images/bg.jpg) no-repeat;">
             <div class="site-wrapper-inner">
                 <div class="cover-container ">
-                    <form class="form-signin" action="" method="post">
-                        <label for="inputEmail" class="sr-only">Correo electrónico</label>
-                        <input type="email" id="inputEmail" name="inputEmail" 
-                               class="form-control" placeholder="Correo electrónico" 
-                               required autofocus>
-                        <br />
-                        <label for="inputPassword" class="sr-only">Contraseña</label>
-                        <input type="password" id="inputPassword" name="inputPassword"
-                               class="form-control" placeholder="Contraseña" 
-                               required>
-                        <!--div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="remember-me"> Recuérdame
-                            </label>
-                        </div-->
-                        <br>
-                        <p class="lead">
-                            <input name="submit" type="submit" value="Iniciar" class="btn btn-lg btn-default">
-                        </p>
-                        <span><?php echo $error; ?></span>
-                    </form>
-                    
+
+
+                    <!---->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#login" aria-controls="login" role="tab" data-toggle="tab">
+                                Iniciar sesión
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#registrate" aria-controls="registrate" role="tab" data-toggle="tab">
+                                Regístrate
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="login">
+                            <form class="form-signin" action="" method="post">
+                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
+                                <input type="email" id="inputEmail" name="inputEmail" 
+                                       class="form-control" placeholder="Correo electrónico" 
+                                       required autofocus>
+                                <br />
+                                <label for="inputPassword" class="sr-only">Contraseña</label>
+                                <input type="password" id="inputPassword" name="inputPassword"
+                                       class="form-control" placeholder="Contraseña" 
+                                       required>
+                                <br/>
+                                <select class="form-control" name="selectTypeUser" id="selectTypeUser">
+                                    <option value="">Tipo de Usuario</option>
+                                    <option value="autor">Autor</option>
+                                    <option value="cliente">Cliente</option>
+                                </select>
+                                <br/>
+                                <p class="lead">
+                                    <input name="submit" type="submit" value="Iniciar" class="btn btn-lg btn-default">
+                                </p>
+                                <span><?php echo $error; ?></span>
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="registrate">
+                            <form class="form-signin" action="" method="post">
+                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
+                                <input type="email" id="inputEmail" name="inputEmail" 
+                                       class="form-control" placeholder="Correo electrónico" 
+                                       required autofocus>
+                                <br />
+                                <label for="nombreCompleto" class="sr-only">Nombre completo</label>
+                                <input type="text" id="nombreCompleto" name="nombreCompleto" 
+                                       class="form-control" placeholder="Nombre Completo" 
+                                       required autofocus>
+                                <br />
+                                <label for="nombreUsuario" class="sr-only">Nombre de usuario</label>
+                                <input type="text" id="nombreUsuario" name="nombreUsuario" 
+                                       class="form-control" placeholder="Nombre de usuario" 
+                                       required autofocus>
+                                <br />
+                                <label for="inputPassword" class="sr-only">Contraseña</label>
+                                <input type="password" id="inputPassword" name="inputPassword"
+                                       class="form-control" placeholder="Contraseña" 
+                                       required>
+                                <select class="form-control" name="selectTypeUser" id="selectTypeUser">
+                                    <option value="">Tipo de Usuario</option>
+                                    <option value="autor">Autor</option>
+                                    <option value="cliente">Cliente</option>
+                                </select>
+                                <br />
+                                
+                                <p class="lead">
+                                    <input name="" type="" value="Registrar" class="btn btn-lg btn-default">
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <!---->
+
+
                     <div class="inner cover">
                         <h1 class="cover-heading">Sistema de contenido.</h1>
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae diam lobortis, imperdiet libero non, faucibus velit. Donec ullamcorper dictum nibh vel tincidunt.</p>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae diam lobortis
+                            , imperdiet libero non, faucibus velit. Donec ullamcorper dictum nibh vel tincidunt.</p>
                         <hr />
 
                     </div>

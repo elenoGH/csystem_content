@@ -102,34 +102,49 @@ if (isset($_POST['data_up'])) {
     $referencias = $_POST['referencias'];
     //al generar el contenido del escritor queda por primera ves en espera para la venta
     $estatus = 'espera';
-
     $id_contenido = $_POST['id_contenido'];
-
-    if (!empty($id_contenido)) {
-        $modified_date = time();
-        $q = " update tbl_contenido_escritor "
-                . " set id_topico = " . $id_topico
-                . " , titulo = '" . $titulo_cont . "'"
-                . " , post_to_enmbedded_text = '" . $post_to_enmbedded_text . "'"
-                . " , url = '" . $url . "'"
-                . " , path_source = '" . $path_source . "'"
-                . " , red_social = '" . $red_social . "'"
-                . " , tipo_source = '" . $tipo_source . "'"
-                . " , categoria = '" . $categoria . "'"
-                . " , etiquetas = '" . $etiquetas . "'"
-                . " , referencias = '" . $referencias . "'"
-                . " , estatus = '" . $estatus . "'"
-                . " , modified_date = '" . $modified_date . "'"
-                . " where id = " . $id_contenido;
-    } else {
-        $created_date = time();
-        $modified_date = time();
-        $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
-                . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
-                . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
-                . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-                . ",'$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
+    $id_contenido_escritor = $_POST['id_contenido_escritor'];
+    $id_serie = $_POST['id_serie'];
+            
+    if ($id_serie == '') {
+        if (!empty($id_contenido)) {
+            $modified_date = time();
+            $q = " update tbl_contenido_escritor "
+                    . " set id_topico = " . $id_topico
+                    . " , titulo = '" . $titulo_cont . "'"
+                    . " , post_to_enmbedded_text = '" . $post_to_enmbedded_text . "'"
+                    . " , url = '" . $url . "'"
+                    . " , path_source = '" . $path_source . "'"
+                    . " , red_social = '" . $red_social . "'"
+                    . " , tipo_source = '" . $tipo_source . "'"
+                    . " , categoria = '" . $categoria . "'"
+                    . " , etiquetas = '" . $etiquetas . "'"
+                    . " , referencias = '" . $referencias . "'"
+                    . " , estatus = '" . $estatus . "'"
+                    . " , modified_date = '" . $modified_date . "'"
+                    . " where id = " . $id_contenido;
+        } else {
+            $created_date = time();
+            $modified_date = time();
+            $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
+                    . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
+                    . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`"
+                    . ", `id_serie`) "
+                    . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
+                    . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
+                    . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date'"
+                    . ", '$id_serie')";
+        }
+    }
+    else {
+//        $created_date = time();
+//        $modified_date = time();
+//        $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
+//                . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
+//                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
+//                . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
+//                . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
+//                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
     }
 
     //Run Query

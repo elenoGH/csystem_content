@@ -1,29 +1,3 @@
-//(function (d, s, id) {
-//    var js, fjs = d.getElementsByTagName(s)[0];
-//    if (d.getElementById(id))
-//        return;
-//    js = d.createElement(s);
-//    js.id = id;
-//    js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.10";
-//    fjs.parentNode.insertBefore(js, fjs);
-//}(document, 'script', 'facebook-jssdk'));
-//
-//window.twttr = (function(d, s, id) {
-//  var js, fjs = d.getElementsByTagName(s)[0],
-//    t = window.twttr || {};
-//  if (d.getElementById(id)) return t;
-//  js = d.createElement(s);
-//  js.id = id;
-//  js.src = "https://platform.twitter.com/widgets.js";
-//  fjs.parentNode.insertBefore(js, fjs);
-//
-//  t._e = [];
-//  t.ready = function(f) {
-//    t._e.push(f);
-//  };
-//
-//  return t;
-//}(document, "script", "twitter-wjs"));
 
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -37,6 +11,16 @@ $(document).on("ready", scripts_escritor);
 
 function scripts_escritor(event)
 {
+    //$(".series-escritor").addClass("hide");
+    
+    $('.tab-pane-type-action').click(function () {
+        if($(this).attr('data-id') == 1){
+            $('.series-escritor').removeClass('hide');
+        } else {
+            $('.series-escritor').addClass('hide');
+        }
+    });
+    
     $('.card__share > a').on('click', function (e) {
         e.preventDefault() // prevent default action - hash doesn't appear in url
         $(this).parent().find('div').toggleClass('card__social--active');
@@ -113,7 +97,7 @@ function scripts_escritor(event)
         data.append('referencias', $('#referencias').val());
         data.append('id_contenido', $('.button-actualizar').attr('data-id'));
         data.append('url_other_image', $("#idImagenPerfil").attr("src"));
-
+        data.append('id_serie', $('#id_serie').val());
 
         $.ajax({
             url: '../controllers/escritor/controller_e.php',
@@ -133,6 +117,14 @@ function scripts_escritor(event)
                     $('#count-contenido').html(obj.total_contenido);
 
                     bootbox.alert("Acción Satisfactoria!", function () {
+                        $('#titulo_content').val('');
+                        $('#post_to_enmbedded_text').val('');
+                        $("#idImagenPerfil").attr("src", 'https://placehold.it/400x400');
+                        $('#id_topico').val('');
+                        $('#referencias').val('');
+                        $('.button-actualizar').attr('data-id', '');
+                        $(".button-actualizar").addClass("hide");
+                        $(".button-agregar").removeClass("hide");
                         console.log('This was logged in the callback!');
                     });
                 }, 1000);

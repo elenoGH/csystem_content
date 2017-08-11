@@ -71,12 +71,10 @@ include('../../application/models/session.php');
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img class="avatar"  src="../../assets/images/autor_avatar.jpg" width="34" height="34"> Hola <?php echo $login_session; ?>
-                                <span class="badge alert-danger">42</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Publicar</a></li>
-                                <li><a href="#">Notificaciones <span class="badge alert-danger">42</span></a></li>
-                                <li><a href="../../application/controllers/logout.php">Cerrar</a></li>
-                            </ul>
+                                <!--span class="badge alert-danger">42</span></a-->
+                                <ul class="dropdown-menu">
+                                    <li><a href="../../application/controllers/logout.php">Cerrar</a></li>
+                                </ul>
                         </li>
                     </ul>
                 </div>
@@ -104,24 +102,6 @@ include('../../application/models/session.php');
                                 0</div>
                             <div class="col-md-4"><b>Clientes</b><br/>
                                 0</div>
-                        </div>
-                    </div>
-                    <div class="thumbnail">
-                        <h3 class="mb-40 text-center">Solicitar Editor</h3>
-                        <div class="container mb-40">
-                            <div class="col-md-10"><b>Empresa</b>
-                                <br/>
-                                Aureacode<br/>
-                                Gestor de Contenidos S.A. de C.V.<br/>
-                            </div>
-                            <!--div class="col-md-3"><b>Ventas</b><br/>
-                                32<br/>
-                            </div-->
-                            <div class="col-md-2"><b></b>
-                                <br/>
-                                <i class="fa fa-address-book" aria-hidden="true" style="cursor: pointer"></i><br/>
-                                <i class="fa fa-address-book" aria-hidden="true" style="cursor: pointer"></i><br/>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,29 +143,48 @@ include('../../application/models/session.php');
                                     </div>
                                     <div class="container mt-20">
                                         <div id="previewImgPerfil">
-                                            <img id="idImagenPerfil" src="https://placehold.it/300x200" alt="Imagen" style="height: 200px; width: 300px;">
+                                            <img id="idImagenPerfil" src="https://placehold.it/400x400" 
+                                                 alt="Imagen" style="height: 400px; width: 400px;">
                                         </div>
                                     </div>
                                     <div class="container mt-20">
-                                        <div class="col-sm-6">
-                                            <label for="" class="" style="">Tamaño maximo recomendado 300 por 200 pixeles.</label>
-                                            <label class="btn btn-default btn-file">
-                                                Examinar
-                                                <input type="file" name="file_up" id="file_up" style="display: none;">
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <select class="form-control" id="id_topico"
-                                                    name="id_topico" required>
-                                                <option value="">-- Topicos</option>
-                                            </select>
-                                        </div>
+                                        <label class="btn btn-default btn-file">
+                                            Examinar
+                                            <input type="file" name="file_up" id="file_up" style="display: none;">
+                                        </label>
+                                        <label for="" class="" style="">Tamaño recomendado 400 por 400 pixeles.</label>                                        
                                     </div>
                                     <div class="container mt-20">
-                                        <input type="text" class="form-control" placeholder="Referencias" 
+                                        <select class="form-control" id="id_topico"
+                                                name="id_topico" required>
+                                            <option value="">-- Topicos</option>
+                                        </select>
+                                    </div>
+                                    <div class="container mt-20 series-escritor" hide>
+                                        <select class="form-control" id="id_serie"
+                                                name="id_serie" required>
+                                            <option value="">--Series</option>
+                                            <option value="1">Serie x1</option>
+                                            <option value="2">Serie x2</option>
+                                            <option value="3">Serie x3</option>
+                                            <option value="4">Serie n..</option>
+                                        </select>
+                                    </div>
+                                    <div class="container mt-20">
+                                        <label class="">Referencias</label>
+                                        <input type="text" class="form-control" placeholder="URL" 
                                                id="referencias" name="referencias">
+
                                     </div>
-                                    <div class="container mt-20">
+                                    <!--div class="container mt-20">
+                                        <div class="row">
+                                        <label class="btn btn-default btn-file">
+                                            Agregar
+                                            <input type="" name="files_updates" id="files_updates" style="display: none;">
+                                        </label>
+                                          </div>
+                                    </div-->
+                                    <div class="container mt-20 pull-right">
                                         <div class="col-md-6 mt-15">
                                             <button type="submit" value="Submit" 
                                                     class="btn btn-default btn-sm active button-actualizar" data-id="">
@@ -193,16 +192,16 @@ include('../../application/models/session.php');
                                             </button>&nbsp;
                                             <button type="submit" value="Submit" 
                                                     class="btn btn-default btn-sm active button-agregar">
-                                                Añadir
+                                                Publicar
                                             </button>&nbsp;
                                             <!--button type="button" value="0" 
                                                     class="btn btn-default btn-sm active" data-toggle="modal" data-target=".preview-redsocial">
                                                 Preview
                                             </button-->
-                                            <button type="button" value=""  data-id="" id="nuevo-clean"
+                                            <!--button type="button" value=""  data-id="" id="nuevo-clean"
                                                     class="btn btn-default btn-sm active button-nuevo">
                                                 Nuevo
-                                            </button>
+                                            </button-->
                                         </div>
                                     </div>
                                 </div>
@@ -216,68 +215,63 @@ include('../../application/models/session.php');
         <!--iconos de redes-->
         <section>
             <div class="container mt-20">
-                <div class="col-md-6 text-uppercase">
-                    <h4>Mis articulos</h4>
+                <!---->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="tab-pane-type-action active" data-id="1">
+                        <a href="#misarticulos" aria-controls="misarticulos" role="tab" data-toggle="tab">
+                            Mis artículos
+                        </a>
+                    </li>
+                    <li role="presentation" class="tab-pane-type-action" data-id="2">
+                        <a href="#misseries" aria-controls="misseries" role="tab" data-toggle="tab">
+                            Mis series
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="misarticulos">
+                        <div id="load-datos-contenido">
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="misseries">
+                        <div id="load-datos-series">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6"></div>
-                <div class="clearfix">...</div>
-                <hr />
+                <!---->
             </div>
-            <!--noticias pekes-->
-            <!--ini modulo-->
-            <div id="load-datos-contenido">
-            </div>
-            <!--end modulo-->
-            <!--div id="load-datos-contenido-nodescripcion">
-            </div-->
         </section>
         <div class="modal fade preview-redsocial" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <!---->
-                    <div class="wrapper">
-                        <div class="card radius shadowDepth1">
-                            <div class="card__image border-tlr-radius">
-                                <!--put the image via ajax-->
-                            </div>
-                            <div class="card__content card__padding">
-                                <div class="card__share">
-                                    <div class="card__social">  
-                                        <!--div class="fb-share-button" 
-                                             data-href="https://developers.facebook.com/docs/plugins/" 
-                                             data-layout="button_count" data-size="small" 
-                                             data-mobile-iframe="true">
-                                        </div-->
-                                        <a class="share-icon facebook fb-xfbml-parse-ignore" target="_blank"
-                                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
-                                            <span class="fa fa-facebook"></span>
-                                        </a>
-                                        <a class="share-icon twitter" href="#"><span class="fa fa-twitter"></span></a>
-                                        <a class="share-icon googleplus" href="#"><span class="fa fa-google-plus"></span></a>
-                                    </div>
+            <div class="modal-dialog modal-dialog" role="">
+                <!---->
+                <div class="wrapper">
+                    <div class="card radius shadowDepth1">
+                        <div class="card__action">
 
-                                    <a id="share" class="share-toggle share-icon" href="#"></a>
-                                </div>
-                                <div class="card__meta">
-                                    <!--add time and reference-->
-                                </div>
-                                <article class="card__article">
-                                    <!--this put title and description of content-->
-                                </article>
-                            </div>
-                            <div class="card__action">
-
-                                <div class="card__author">
-                                    <img src="http://lorempixel.com/40/40/sports/" alt="user">
-                                    <div class="card__author-content">
-                                        Creado por <a href="#">Eleno</a>
-                                    </div>
+                            <div class="card__author">
+                                <img src="http://lorempixel.com/40/40/sports/" alt="user">
+                                <div class="card__author-content">
+                                    Creado por <a href="#"><?php echo $login_session; ?></a>
                                 </div>
                             </div>
                         </div>
+                        <div class="card__image border-tlr-radius">
+                            <!--put the image via ajax-->
+                        </div>
+                        <div class="card__content card__padding">
+                            <!--div class="card__share">
+                                <a id="share" class="share-toggle share-icon" href="#"></a>
+                            </div-->
+                            <article class="card__article">
+                                <!--this put title and description of content-->
+                            </article>
+                            <div class="card__meta">
+                                <!--add time and reference-->
+                            </div>
+                        </div>
                     </div>
-                    <!---->
                 </div>
+                <!---->
             </div>
         </div>
         <footer class="footer pleca mt-80">
