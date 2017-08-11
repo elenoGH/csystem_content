@@ -9,6 +9,7 @@ if (isset($_POST['submit'])) {
 // Define $username and $password
         $username = $_POST['inputEmail'];
         $password = $_POST['inputPassword'];
+        $tipoUser = $_POST['selectTypeUser'];
 // Establishing Connection with Server by passing server_name, user_id and password as a parameter
         $connection = mysql_connect("localhost", "root", "");
         //$connection = mysql_connect("localhost", "csystem", "csystem");
@@ -31,9 +32,14 @@ if (isset($_POST['submit'])) {
             $_SESSION['id_user'] = $res['id'];
             $_SESSION['name_user'] = $res['username'];
             $_SESSION['rol_user'] = $res['rol'];
+            $_SESSION['tipoUserx'] = $tipoUser;
             
             if ($_SESSION['rol_user'] == 1) {
-                header("location: application/views/autor.php"); // Redirecting To Other Page
+                if ($tipoUser == 'autor') {
+                    header("location: application/views/autor.php"); // Redirecting To Other Page
+                } else {
+                    header("location: application/views/cliente.php"); // Redirecting To Other Page
+                }
             }
 //            else if ($_SESSION['rol_user'] == 1) {
 //                header("location: application/views/down_contenido.php"); // Redirecting To Other Page

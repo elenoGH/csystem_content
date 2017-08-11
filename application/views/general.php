@@ -1,5 +1,5 @@
 <?php
-include('../../application/models/session.php');
+//include('../../application/models/session.php');
 ?>
 
 <!DOCTYPE html>

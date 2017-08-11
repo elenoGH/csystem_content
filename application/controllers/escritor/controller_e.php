@@ -2,6 +2,12 @@
 
 require '../../models/session.php';
 
+if (isset($_POST['get_series'])) {
+    
+    echo json_encode(getDataSeriesEscritor($connection, $_SESSION));
+    die;
+}
+
 if (isset($_POST['editContent'])) {
     $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
@@ -103,10 +109,10 @@ if (isset($_POST['data_up'])) {
     //al generar el contenido del escritor queda por primera ves en espera para la venta
     $estatus = 'espera';
     $id_contenido = $_POST['id_contenido'];
-    $id_contenido_escritor = $_POST['id_contenido_escritor'];
     $id_serie = $_POST['id_serie'];
+    $es_articulo = $_POST['esarticulo'];
             
-    if ($id_serie == '') {
+    if ($es_articulo == 'true') {
         if (!empty($id_contenido)) {
             $modified_date = time();
             $q = " update tbl_contenido_escritor "
@@ -122,6 +128,7 @@ if (isset($_POST['data_up'])) {
                     . " , referencias = '" . $referencias . "'"
                     . " , estatus = '" . $estatus . "'"
                     . " , modified_date = '" . $modified_date . "'"
+                    . " , id_serie_escritor = '" . $id_serie . "'"
                     . " where id = " . $id_contenido;
         } else {
             $created_date = time();
@@ -129,7 +136,7 @@ if (isset($_POST['data_up'])) {
             $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
                     . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
                     . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`"
-                    . ", `id_serie`) "
+                    . ", `id_serie_escritor`) "
                     . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
                     . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
                     . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date'"
@@ -137,14 +144,14 @@ if (isset($_POST['data_up'])) {
         }
     }
     else {
-//        $created_date = time();
-//        $modified_date = time();
-//        $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
-//                . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-//                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
-//                . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
-//                . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-//                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
+        $created_date = time();
+        $modified_date = time();
+        $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
+                . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
+                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
+                . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
+                . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
+                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
     }
 
     //Run Query
@@ -238,11 +245,54 @@ function getDataEscritor($connection, $SESSION) {
         $count_contenido++;
     }
 
+    $data_series_escritor = getDataSeriesEscritor($connection, $SESSION);
+    
     $resultado_array = array(
         'contenido_con_desc' => $resultado_desc
         , 'total_contenido' => '<b>Contendio </b><br/>' . $count_contenido
+        , 'series_escritor' => $data_series_escritor
     );
     return json_encode($resultado_array);
+}
+
+function getDataSeriesEscritor($connection, $SESSION)
+{
+    $query = mysql_query("select s.* "
+            . "from tbl_serie_escritor s "
+            . "where s.id > 0 "
+            . "and s.id_usuario =" . $SESSION['id_user']
+            , $connection) or die(mysql_error());
+    
+    $array_resultado = array();
+    while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
+        $array_resultado[] = $data_array;
+    }
+    
+//    $array_resultado = getContenidoSeries($connection, $SESSION, $array_resultado);
+    
+    return $array_resultado;
+}
+
+function getContenidoSeries($connection, $SESSION, $array_resultado)
+{
+    $array_data_ret = array();
+    foreach ($array_resultado as $key => $obj_item) {
+//        $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
+//                . ", tu.nombre as nameuser, tu.apellido as apellidouser"
+//                . ", tto.nombre as nametopico "
+//                . "from tbl_usuario tu "
+//                . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
+//                . "right join tbl_topicos tto on tc.id_topico = tto.id "
+//                . "where tc.id > 0 "
+//                . " and tu.id =" . $SESSION['id_user']
+//                . " and tc.id_sere = ".$obj_item['id'], $connection);
+//        $array_resultado_x = array();
+//        while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
+//            $array_resultado_x[] = $data_array;
+//        }
+        $array_data_ret[$key] = $obj_item;
+    }
+    return $array_data_ret;
 }
 
 function getDataContenidoEscritor($connection, $SESSION) {
@@ -265,38 +315,38 @@ function getDataContenidoEscritor($connection, $SESSION) {
 function getStructureContentInfo($itemArray) {
     $json = encriptar(json_encode($itemArray));
     $structureCI = '<div class="col-lg-2">'
-            . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido(' . $itemArray['id_contenido'] . ')" aria-label="Close">'
-            . '<span aria-hidden="true">&times;</span>'
-            . '</button>'
-            . '<img src="' . $itemArray['path_source'] . '" class="img-thumbnail" width="100%" height="100%">'
-            . '</div>'
-            . '<div class="col-lg-4 ">'
-            . '<h4>' . $itemArray['titulo'] . '</h4>'
-            . $itemArray['post_to_enmbedded_text']
-            . '<footer class="mt-20">'
-            . '<cite title="Source Title">'
-            . '<b>Autor: &nbsp;</b>'
-            . '<a href="#">' . $itemArray['nameuser'] . ' ' . $itemArray['apellidouser'] . '</a>'
-            . '</cite><br>'
-            . '<cite title="Source Topico">'
-            . '<b>Topico: &nbsp;</b>'
-            . '<a href="#">' . $itemArray['nametopico'] . '</a>'
-            . '</cite><br>'
-            . '<cite title="Source Red Social">'
-            . '<b>Red Social: &nbsp;</b>'
-            . '<a href="#">' . $itemArray['red_social'] . '</a>'
-            . '</cite><br>'
-            . '<cite title="Source Estatus">'
-            . '<b>Estatus: &nbsp;</b>'
-            . '<a href="#">' . $itemArray['estatus_cont'] . '</a>'
-            . '</cite><br>'
-            . '<a class="gototop gototop-button" href="#">'
-            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent(' . $itemArray['id_contenido'] . ')"></i>'
-            . '</a>'
-            . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\'' . $json . '\')"></i>'
-            . '&nbsp;<a href="' . $itemArray['referencias'] . '" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
-            . '</footer>'
-            . '</div>';
+                    . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido(' . $itemArray['id_contenido'] . ')" aria-label="Close">'
+                        . '<span aria-hidden="true">&times;</span>'
+                    . '</button>'
+                    . '<img src="' . $itemArray['path_source'] . '" class="img-thumbnail" width="100%" height="100%">'
+                . '</div>'
+                . '<div class="col-lg-4 ">'
+                    . '<h4>' . $itemArray['titulo'] . '</h4>'
+                    . $itemArray['post_to_enmbedded_text']
+                    . '<footer class="mt-20">'
+                        . '<cite title="Source Title">'
+                            . '<b>Autor: &nbsp;</b>'
+                            . '<a href="#">' . $itemArray['nameuser'] . ' ' . $itemArray['apellidouser'] . '</a>'
+                        . '</cite><br>'
+                        . '<cite title="Source Topico">'
+                            . '<b>Topico: &nbsp;</b>'
+                            . '<a href="#">' . $itemArray['nametopico'] . '</a>'
+                        . '</cite><br>'
+                        . '<cite title="Source Red Social">'
+                            . '<b>Red Social: &nbsp;</b>'
+                            . '<a href="#">' . $itemArray['red_social'] . '</a>'
+                        . '</cite><br>'
+                        . '<cite title="Source Estatus">'
+                            . '<b>Estatus: &nbsp;</b>'
+                            . '<a href="#">' . $itemArray['estatus_cont'] . '</a>'
+                        . '</cite><br>'
+                        . '<a class="gototop gototop-button" href="#">'
+                            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent(' . $itemArray['id_contenido'] . ')"></i>'
+                        . '</a>'
+                        . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\'' . $json . '\')"></i>'
+                        . '&nbsp;<a href="' . $itemArray['referencias'] . '" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
+                    . '</footer>'
+                . '</div>';
     return $structureCI;
 }
 

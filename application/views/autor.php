@@ -129,14 +129,14 @@ include('../../application/models/session.php');
                                     <div class="container mt-20"> 
                                         <!--etiquetas-->
                                         <input type="text" class="form-control" 
-                                               placeholder="Título de la publicación" 
+                                               placeholder="Título" 
                                                id="titulo_content" name="titulo_content"
                                                required>
                                         <!--end etiquetas--> 
                                     </div>
                                     <div class="container mt-20 collapse" id="div-textarea-id">
                                         <textarea class="form-control" rows="3" 
-                                                  placeholder="Escribe la idea principal de tu post"
+                                                  placeholder="post"
                                                   name="post_to_enmbedded_text" id="post_to_enmbedded_text"
                                                   maxlength="140"></textarea>
                                         <span id="count-caracter" class=""><strong>250</strong></span>
@@ -163,11 +163,6 @@ include('../../application/models/session.php');
                                     <div class="container mt-20 series-escritor" hide>
                                         <select class="form-control" id="id_serie"
                                                 name="id_serie" required>
-                                            <option value="">--Series</option>
-                                            <option value="1">Serie x1</option>
-                                            <option value="2">Serie x2</option>
-                                            <option value="3">Serie x3</option>
-                                            <option value="4">Serie n..</option>
                                         </select>
                                     </div>
                                     <div class="container mt-20">

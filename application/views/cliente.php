@@ -40,21 +40,42 @@ include('../../application/models/session.php');
     </head>
 
     <body>
+        <div id="fb-root"></div>
+        <div id="loading" class="hide">
+            <div id="loading-content">
+                <div class="load">
+                    <div  class="bar"></div>
+                    <div  class="bar"></div>
+                    <div  class="bar"></div>
+                </div>
+            </div>
+        </div>
+        <!--div id="fb-root">para facebook</div>
+        <div class="fb-post" data-href="https://www.facebook.com/20531316728/posts/10154009990506729/" data-width="500" data-show-text="true">
+            <blockquote cite="https://www.facebook.com/20531316728/posts/10154009990506729/" class="fb-xfbml-parse-ignore">
+                Publicado por <a href="https://www.facebook.com/facebook/">Facebook</a> 
+                en&nbsp;<a href="https://www.facebook.com/20531316728/posts/10154009990506729/">
+                    Jueves, 27 de agosto de 2015
+                </a>
+            </blockquote>
+        </div-->
         <!-- Fixed navbar -->
         <nav class="navbar pleca navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only"> </span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"> </span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <!--a class="navbar-brand" href="#">Project name</a--> 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img class="avatar"  src="assets/images/user.png" width="34" height="34"> Hola Jesús <span class="badge alert-danger">42</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="publicar.html">Publicar</a></li>
-                                <li><a href="#">Notificaciones <span class="badge alert-danger">42</span></a></li>
-                                <li><a href="index.html">Cerrar</a></li>
-                            </ul>
+                        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img class="avatar"  src="../../assets/images/autor_avatar.jpg" width="34" height="34"> Hola <?php echo $login_session; ?>
+                                <a href="../../application/controllers/logout.php">Cerrar</a>
+                                <!--span class="badge alert-danger">42</span></a-->
+                                <ul class="dropdown-menu">
+                                    
+                                </ul>
                         </li>
                     </ul>
                 </div>
