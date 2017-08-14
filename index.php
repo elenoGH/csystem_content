@@ -3,8 +3,10 @@ include('application/controllers/login.php'); // Includes Login Script
 
 if (isset($_SESSION['login_user'])) {
     if (isset($_SESSION['rol_user'])) {
-        if ($_SESSION['rol_user'] == 1) {
+        if ($_SESSION['tipoUserx'] == 'autor') {
             header("location: application/views/autor.php");
+        }else {
+            header("location: application/views/cliente.php"); // Redirecting To Other Page
         }
     }
 }
