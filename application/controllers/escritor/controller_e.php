@@ -44,6 +44,39 @@ if (isset($_POST['deleteContent'])) {
     die;
 }
 
+if (isset($_POST['deleteContentSerie'])) {
+    $q = "delete "
+        . "from tbl_contenido_escritor "
+        . "where id_serie_escritor= " . $_POST['id_serie_delete'];
+
+    //Run Query
+    $result_insert = mysql_query($q) or die(mysql_error());
+    /**
+     * obtener datos una ves insertado
+     */
+    $resultado = '';
+    if ($result_insert) {
+        deleteSerie($connection, $_SESSION, $_POST['id_serie_delete']);
+    }
+    echo getDataEscritor($connection, $_SESSION);
+    die;
+}
+
+function deleteSerie($connection, $SESSION, $idSerie)
+{
+    $q = "delete "
+        . "from tbl_serie_escritor "
+        . "where id= " . $idSerie;
+
+    //Run Query
+    $result = mysql_query($q) or die(mysql_error());
+    /**
+     * obtener datos una ves insertado
+     */
+    
+    return $result;
+}
+
 if (isset($_POST['get_topicos'])) {
     $query = mysql_query("select * from tbl_topicos top "
             . "where top.id > 0 ", $connection);
@@ -167,7 +200,12 @@ if (isset($_POST['data_up'])) {
     echo $resultado;
     die;
 }
-
+/**
+ * 
+ * @param type $file
+ * @param type $param_array
+ * @return string
+ */
 function createSource($file, $param_array) {
     $dataComent = array();
 
@@ -223,10 +261,16 @@ function createSource($file, $param_array) {
     return $dataComent;
 }
 
+/**
+ * 
+ * @param type $connection
+ * @param type $SESSION
+ * @return type
+ */
 function getDataEscritor($connection, $SESSION) {
     $resultado_desc = '';
     $ini_container = '<div class="container">';
-    $end_container = '</div><!--separar--><div class="clearfix">...</div>';
+    $end_container = '</div>';
     $count = 0;
     $count_contenido = 0;
     $data_content_tendencias = getDataContenidoEscritor($connection, $SESSION);
@@ -255,12 +299,23 @@ function getDataEscritor($connection, $SESSION) {
     return json_encode($resultado_array);
 }
 
+/**
+ * 
+ * @param type $connection
+ * @param type $SESSION
+ * @return type
+ */
 function getDataSeriesEscritor($connection, $SESSION)
 {
-    $query = mysql_query("select s.* "
-            . "from tbl_serie_escritor s "
-            . "where s.id > 0 "
-            . "and s.id_usuario =" . $SESSION['id_user']
+    $query = mysql_query("select ts.id as id_serie, ts.id_usuario, ts.id_topico, ts.titulo as titulo_serie, ts.post_to_enmbedded_text as desc_serie, ts.url as url_serie, ts.path_source, ts.red_social, ts.tipo_source "
+            . " , ts.categoria, ts.etiquetas, ts.referencias, ts.estatus, ts.created_date, ts.modified_date "
+            . " , tu.nombre as nombreUser, tu.apellido as apUser, tu.email "
+            . " , tto.nombre as nameTopico "
+            . " from tbl_serie_escritor ts "
+            . " inner join tbl_usuario tu on tu.id = ts.id_usuario "
+            . " right join tbl_topicos tto on ts.id_topico = tto.id "
+            . " where ts.id > 0 "
+            . " and ts.id_usuario = " . $SESSION['id_user']
             , $connection) or die(mysql_error());
     
     $array_resultado = array();
@@ -268,31 +323,41 @@ function getDataSeriesEscritor($connection, $SESSION)
         $array_resultado[] = $data_array;
     }
     
-//    $array_resultado = getContenidoSeries($connection, $SESSION, $array_resultado);
+    $array_resultado = getContenidoSeries($connection, $SESSION, $array_resultado);
     
     return $array_resultado;
 }
 
+/**
+ * 
+ * @param type $connection
+ * @param type $SESSION
+ * @param type $array_resultado
+ * @return type
+ */
 function getContenidoSeries($connection, $SESSION, $array_resultado)
 {
     $array_data_ret = array();
     foreach ($array_resultado as $key => $obj_item) {
-//        $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
-//                . ", tu.nombre as nameuser, tu.apellido as apellidouser"
-//                . ", tto.nombre as nametopico "
-//                . "from tbl_usuario tu "
-//                . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
-//                . "right join tbl_topicos tto on tc.id_topico = tto.id "
-//                . "where tc.id > 0 "
-//                . " and tu.id =" . $SESSION['id_user']
-//                . " and tc.id_sere = ".$obj_item['id'], $connection);
-//        $array_resultado_x = array();
-//        while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
-//            $array_resultado_x[] = $data_array;
-//        }
-        $array_data_ret[$key] = $obj_item;
+        $array_resultado_by_serie = array();
+        $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
+                . ", tu.nombre as nameuser, tu.apellido as apellidouser"
+                . ", tto.nombre as nametopico "
+                . "from tbl_usuario tu "
+                . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
+                . "right join tbl_topicos tto on tc.id_topico = tto.id "
+                . "where tc.id > 0 "
+                . " and tu.id =" . $SESSION['id_user']
+                . " and tc.id_serie_escritor = ".$obj_item['id_serie'], $connection);
+        $temp_cont = 0;
+        while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
+            $array_resultado_by_serie[] = $data_array;
+            $array_resultado_by_serie[$temp_cont]['json_by_series_content'] = encriptar(json_encode($data_array));
+            $temp_cont++;
+        }
+        $array_resultado[$key]['data_by_serie'] = $array_resultado_by_serie;
     }
-    return $array_data_ret;
+    return $array_resultado;
 }
 
 function getDataContenidoEscritor($connection, $SESSION) {
@@ -303,7 +368,8 @@ function getDataContenidoEscritor($connection, $SESSION) {
             . "inner join tbl_contenido_escritor tc on tu.id = tc.id_usuario "
             . "right join tbl_topicos tto on tc.id_topico = tto.id "
             . "where tc.id > 0 "
-            . "and tu.id =" . $SESSION['id_user'], $connection);
+            . " and id_serie_escritor = 0 "
+            . " and tu.id =" . $SESSION['id_user'], $connection);
     $array_resultado = array();
     while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
         $array_resultado[] = $data_array;

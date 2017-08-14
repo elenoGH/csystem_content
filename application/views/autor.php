@@ -143,16 +143,17 @@ include('../../application/models/session.php');
                                     </div>
                                     <div class="container mt-20">
                                         <div id="previewImgPerfil">
-                                            <img id="idImagenPerfil" src="https://placehold.it/400x400" 
-                                                 alt="Imagen" style="height: 400px; width: 400px;">
+                                            <img id="idImagenPerfil" src="" 
+                                                 alt="" style="height: 400px; width: 400px;">
                                         </div>
                                     </div>
                                     <div class="container mt-20">
                                         <label class="btn btn-default btn-file">
                                             Examinar
                                             <input type="file" name="file_up" id="file_up" style="display: none;">
+                                            <i class="fa fa-camera" aria-hidden="true" style="cursor: pointer"></i>
                                         </label>
-                                        <label for="" class="" style="">Tamaño recomendado 400 por 400 pixeles.</label>                                        
+                                        <label for="" class="" style="">Agregar Imagen.</label>
                                     </div>
                                     <div class="container mt-20">
                                         <select class="form-control" id="id_topico"

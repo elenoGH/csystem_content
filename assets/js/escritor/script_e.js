@@ -36,7 +36,7 @@ function scripts_escritor(event)
                 $('#id_serie').append($("<option></option>").attr("value",0).text("--Series"));
                 
                 $.each(obj, function(key, val){
-                    $('#id_serie').append($("<option></option>").attr("value",val.id).text(val.titulo));
+                    $('#id_serie').append($("<option></option>").attr("value",val.id_serie).text(val.titulo_serie));
                 });
             },
             error: function (result)
@@ -60,8 +60,8 @@ function scripts_escritor(event)
             globalEsArticuloEscritor = false;
             $('.series-escritor').addClass('hide');
         }
-    });
-    
+    });    
+
     $('.card__share > a').on('click', function (e) {
         e.preventDefault() // prevent default action - hash doesn't appear in url
         $(this).parent().find('div').toggleClass('card__social--active');
@@ -112,6 +112,13 @@ function scripts_escritor(event)
                     $('#count-contenido').html(obj.total_contenido);
                     var str_series = renderViewSeries(obj.series_escritor);
                     $('#load-datos-series').html(str_series);
+                    $('[data-toggle="tooltip"]').tooltip();
+                        $('.add-cont-to-serie').click(function () {
+                            $('a[href="#misarticulos"]').tab('show');
+                            $('.series-escritor').removeClass('hide');
+                            globalEsArticuloEscritor = true;
+                            $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                        });
                 }, 1000);
             },
             error: function (result)
@@ -163,11 +170,17 @@ function scripts_escritor(event)
                     $('#count-contenido').html(obj.total_contenido);
                     var str_series = renderViewSeries(obj.series_escritor);
                     $('#load-datos-series').html(str_series);
-                    
+                    $('[data-toggle="tooltip"]').tooltip();
+                        $('.add-cont-to-serie').click(function () {
+                            $('a[href="#misarticulos"]').tab('show');
+                            $('.series-escritor').removeClass('hide');
+                            globalEsArticuloEscritor = true;
+                            $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                        });
                     bootbox.alert("Acción Satisfactoria!", function () {
                         $('#titulo_content').val('');
                         $('#post_to_enmbedded_text').val('');
-                        $("#idImagenPerfil").attr("src", 'https://placehold.it/400x400');
+                        $("#idImagenPerfil").attr("src", '');
                         $('#id_topico').val('');
                         $('#referencias').val('');
                         $('.button-actualizar').attr('data-id', '');
@@ -340,6 +353,67 @@ function editContent(value)
     });
 }
 
+function deleteSerie (idSerie)
+{
+        bootbox.confirm({
+        message: "Esta seguro de eliminar esta serie? Todos Los Contenidos Asociados en esta Serie Serán Borrados!.",
+        buttons: {
+            confirm: {
+                label: '<i class="fa fa-check"></i> Confirm'
+            },
+            cancel: {
+                label: '<i class="fa fa-times"></i> Cancel'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                var data = new FormData();
+                data.append('deleteContentSerie', true);
+                data.append('id_serie_delete', idSerie);
+
+                $.ajax({
+                    url: '../controllers/escritor/controller_e.php',
+                    type: "POST",
+                    data: data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (respuesta) {
+                        setTimeout(function () {
+                            $("#loading").addClass('hide');
+                            var obj = JSON.parse(respuesta);
+
+                            $('#load-datos-contenido').html(obj.contenido_con_desc);
+                            $('#count-contenido').html(obj.total_contenido);
+                            var str_series = renderViewSeries(obj.series_escritor);
+                            $('#load-datos-series').html(str_series);
+                            $('[data-toggle="tooltip"]').tooltip();
+                                $('.add-cont-to-serie').click(function () {
+                                    $('a[href="#misarticulos"]').tab('show');
+                                    $('.series-escritor').removeClass('hide');
+                                    globalEsArticuloEscritor = true;
+                                    $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                                });
+                            bootbox.alert("Sontenido eliminado!", function(){
+//                                console.log('This was logged in the callback!')
+                            });
+                        }, 100);
+                    },
+                    error: function (result)
+                    {
+                        alert(JSON.stringify(result));
+                    },
+                    fail: function (status) {
+                    },
+                    beforeSend: function (d) {
+                        $("#loading").removeClass('hide');
+                    }
+                });
+            }
+        }
+    });
+}
+
 function deleteContenido(value)
 {
     bootbox.confirm({
@@ -374,7 +448,7 @@ function deleteContenido(value)
                             $('#count-contenido').html(obj.total_contenido);
 //                            var str_series = renderViewSeries(obj.series_escritor);
 //                            $('#load-datos-series').html(str_series);
-                            bootbox.alert("contenido eliminado!", function(){
+                            bootbox.alert("Contenido eliminado!", function(){
 //                                console.log('This was logged in the callback!')
                             });
                         }, 100);
@@ -438,6 +512,18 @@ function renderViewSeries(arrayObj)
     var findivrow = '';
     var count = 0;
     $.each(arrayObj, function (key, val) {
+        var lis_string = '';
+        $.each(val.data_by_serie, function (k1, v1) {
+            lis_string = lis_string
+                + '<li>'
+                    + 'Nombre: <a href="#">'+v1.titulo+'</a>'
+                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
+                             + 'style="cursor: pointer" '
+                             + 'data-toggle="modal" '
+                             + 'data-target=".preview-redsocial" '
+                             + 'onclick="modalPreview(\'' + v1.json_by_series_content + '\')"></i>'
+                + '</li>';
+        });
         if (count == 1) {
              inirow = '';
              findivrow = '</div>';
@@ -448,79 +534,45 @@ function renderViewSeries(arrayObj)
             count++;
         }
         str_series = str_series+inirow+'<div class="col-md-3">'
-            + '<button type="button" class="close" data-dismiss="modal" onclick="deleteSerie('+val.id+')" aria-label="Close">'
+            + '<button type="button" class="close" data-dismiss="modal" onclick="deleteSerie('+val.id_serie+')" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
             + '</button>'
             + '<img  src="'+val.path_source+'" width="100%" >'
         + '</div>'
         + '<div class="col-md-3">'
-            + '<h4>'+val.titulo+'</h4>'
-            + '<p>'+val.post_to_enmbedded_text+'</p>'
+            + '<h4>'+val.titulo_serie+'</h4>'
+            + '<p>'+val.desc_serie+'</p>'
+            + '<br/>'
+            + '<h6>Agregar Contenido</h6>'
+            + '&nbsp;<a href="#"><i class="fa fa-plus add-cont-to-serie" aria-hidden="true" \n\
+               style="cursor: pointer" data-toggle="tooltip" data-placement="right" title="Agregar Contenido" data-id="'+val.id_serie+'"></i></a>'
             + '<ul>'
-                + '<li>'
-                    + 'Nombre: <a href="#">Serie nombre de la serie 1</a>'
-                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
-                             + 'style="cursor: pointer" '
-                             + 'data-toggle="modal" '
-                             + 'data-target=".preview-redsocial" '
-                             + 'onclick="modalPreviewSerie()"></i>'
-                + '</li>'
-                + '<li>'
-                    + 'Nombre: <a href="#">Serie nombre de la serie 1</a>'
-                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
-                             + 'style="cursor: pointer" '
-                             + 'data-toggle="modal" '
-                             + 'data-target=".preview-redsocial" '
-                             + 'onclick="modalPreviewSerie()"></i>'
-                + '</li>'
-                + '<li>'
-                    + 'Nombre: <a href="#">Serie nombre de la serie 1</a>'
-                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
-                             + 'style="cursor: pointer" '
-                             + 'data-toggle="modal" '
-                             + 'data-target=".preview-redsocial" '
-                             + 'onclick="modalPreviewSerie()"></i>'
-                + '</li>'
-                + '<li>'
-                    + 'Nombre: <a href="#">Serie nombre de la serie 1</a>'
-                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
-                             + 'style="cursor: pointer" '
-                             + 'data-toggle="modal" '
-                             + 'data-target=".preview-redsocial" '
-                             + 'onclick="modalPreviewSerie()"></i>'
-                + '</li>'
-                + '<li>'
-                    + 'Nombre: <a href="#">Serie nombre de la serie 1</a>'
-                    + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
-                             + 'style="cursor: pointer" '
-                             + 'data-toggle="modal" '
-                             + 'data-target=".preview-redsocial" '
-                             + 'onclick="modalPreviewSerie()"></i>'
-                + '</li>'
+                + lis_string
             + '</ul>'
-//            + '<footer class="mt-20">'
-//                + '<cite title="Source Title">'
-//                    + '<b>Autor: &nbsp;'++'</b>'
-//                    + '<a href="#"></a>'
-//                + '</cite><br>'
-//                + '<cite title="Source Topico">'
-//                    + '<b>Topico: &nbsp;</b>'
-//                    + '<a href="#"></a>'
-//                + '</cite><br>'
-//                + '<cite title="Source Red Social">'
-//                    + '<b>Red Social: &nbsp;</b>'
-//                    + '<a href="#"></a>'
-//                + '</cite><br>'
-//                + '<cite title="Source Estatus">'
-//                    + '<b>Estatus: &nbsp;</b>'
-//                    + '<a href="#"></a>'
-//                + '</cite><br>'
+            + '<br/>'
+            + '<footer class="mt-20">'
+                + '<cite title="Source Title">'
+                    + '<b>Autor: &nbsp;'+val.nombreUser+'</b>'
+                    + '<a href="#"></a>'
+                + '</cite><br>'
+                + '<cite title="Source Topico">'
+                    + '<b>Topico: &nbsp;'+val.nameTopico+'</b>'
+                    + '<a href="#"></a>'
+                + '</cite><br>'
+                + '<cite title="Source Red Social">'
+                    + '<b>Red Social: &nbsp; '+val.red_social+'</b>'
+                    + '<a href="#"></a>'
+                + '</cite><br>'
+                + '<cite title="Source Estatus">'
+                    + '<b>Estatus: &nbsp; '+val.estatus+'</b>'
+                    + '<a href="#"></a>'
+                + '</cite><br>'
 //                + '<a class="gototop gototop-button" href="#">'
-//                    + '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent()"></i>'
+//                    + '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editSerie('+val.id_serie+')"></i>'
 //                + '</a>'
-//                + '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview()"></i>'
+                //+ '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial"></i>'
 //                +'&nbsp;<a href="" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
-//            + '</footer>'
+            + '</footer>'
         + '</div>'
         +findivrow;
     });
