@@ -2,9 +2,9 @@
 
 session_start(); // Starting Session
 $error = ''; // Variable To Store Error Message
-if (isset($_POST['submit'])) {
-    if (empty($_POST['inputEmail']) || empty($_POST['inputPassword'])) {
-        $error = "Correo o contraseña incorrecta!";
+if (isset($_POST['login'])) {
+    if (empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['selectTypeUser'])) {
+        $error = "Completa Todos los Campos!";
     } else {
 // Define $username and $password
         $username = $_POST['inputEmail'];
@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 // Selecting Database
         $db = mysql_select_db("csystem", $connection);
 // SQL query to fetch information of registerd users and finds user match.
-        $query = mysql_query("select * from tbl_usuario where password='$password' AND email='$username'", $connection);
+        $query = mysql_query("select * from tbl_usuario where password='$password' AND email='$username' or username='".$username."'", $connection);
         $rows = mysql_num_rows($query);
         if ($rows == 1) {
             
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['tipoUserx'] = $tipoUser;
             
             if ($_SESSION['rol_user'] == 1) {
-                if ($tipoUser == 'autor') {
+                if ($tipoUser == 2) {
                     header("location: application/views/autor.php"); // Redirecting To Other Page
                 } else {
                     header("location: application/views/cliente.php"); // Redirecting To Other Page
@@ -49,5 +49,56 @@ if (isset($_POST['submit'])) {
             $error = "Usuario o contraseña Invalida";
         }
         mysql_close($connection); // Closing Connection
+    }
+}
+else if (isset ($_POST['registrar'])) {
+    if (empty($_POST['nombreCompleto']) || empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['nombreUsuario']) || empty($_POST['selectTypeUser'])) {
+        $error = "Completa todos los campos!";
+    } else {
+        $connection = mysql_connect("localhost", "root", "");
+            
+        $db = mysql_select_db("csystem", $connection);
+        
+        $nombreCompleto = $_POST['nombreCompleto'];
+        $inputEmail = $_POST['inputEmail'];
+        $inputPassword = $_POST['inputPassword'];
+        $nombreUsuario = $_POST['nombreUsuario'];
+        $selectTypeUser = $_POST['selectTypeUser'];
+        
+        $q = "INSERT INTO `tbl_usuario` (`username`, `password`, `rol`"
+                . ", `email`, `nombre`) "
+                . " VALUES ('$nombreUsuario','$inputPassword' ,'$selectTypeUser'"
+                . ", '$inputEmail','$nombreCompleto')";
+        
+        $result_insert = mysql_query($q) or die(mysql_error());
+        /**
+         * obtener datos una ves insertado
+         */
+        if ($result_insert) {
+            
+            $query = mysql_query("select * from tbl_usuario where password='$inputPassword' AND email='$inputEmail' or username='".$nombreUsuario."'", $connection) or die(mysql_error());
+            $rows = mysql_num_rows($query);
+            if ($rows == 1) {
+
+                $_SESSION['login_user'] = $nombreUsuario;
+
+                $res = mysql_fetch_array($query, MYSQL_ASSOC);
+                $_SESSION['rol_user'] = $res['rol'];
+                $_SESSION['id_user'] = $res['id'];
+                $_SESSION['name_user'] = $res['username'];
+                $_SESSION['rol_user'] = $res['rol'];
+
+                if ($_SESSION['rol_user'] == 2) {
+                    header("location: application/views/autor.php");
+                } else {
+                    header("location: application/views/cliente.php");
+                }
+
+            } else {
+                $error = "Usuario o contraseña Invalida";
+            }
+            mysql_close($connection); // Closing Connection
+        
+        }
     }
 }

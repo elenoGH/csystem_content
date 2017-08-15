@@ -9,7 +9,7 @@ session_start(); // Starting Session
 // Storing Session
 $user_check = $_SESSION['login_user'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql = mysql_query("select nombre, apellido from tbl_usuario where email='$user_check'", $connection);
+$ses_sql = mysql_query("select nombre, apellido from tbl_usuario where email='$user_check' or username='".$user_check."'", $connection);
 $row = mysql_fetch_assoc($ses_sql);
 $login_session = $row['nombre'];
 if (!isset($login_session)) {

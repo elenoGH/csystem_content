@@ -3,7 +3,7 @@ include('application/controllers/login.php'); // Includes Login Script
 
 if (isset($_SESSION['login_user'])) {
     if (isset($_SESSION['rol_user'])) {
-        if ($_SESSION['tipoUserx'] == 'autor') {
+        if ($_SESSION['rol_user'] == 2) {
             header("location: application/views/autor.php");
         }else {
             header("location: application/views/cliente.php"); // Redirecting To Other Page
@@ -66,9 +66,9 @@ if (isset($_SESSION['login_user'])) {
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="login">
                             <form class="form-signin" action="" method="post">
-                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
-                                <input type="email" id="inputEmail" name="inputEmail" 
-                                       class="form-control" placeholder="Correo electrónico" 
+                                <label for="inputEmail" class="sr-only">Nombre de Usuario ó Correo electrónico</label>
+                                <input type="text" id="inputEmail" name="inputEmail" 
+                                       class="form-control" placeholder="Usuario ó Correo electrónico" 
                                        required autofocus>
                                 <br />
                                 <label for="inputPassword" class="sr-only">Contraseña</label>
@@ -78,26 +78,26 @@ if (isset($_SESSION['login_user'])) {
                                 <br/>
                                 <select class="form-control" name="selectTypeUser" id="selectTypeUser">
                                     <option value="">Tipo de Usuario</option>
-                                    <option value="autor">Autor</option>
-                                    <option value="cliente">Cliente</option>
+                                    <option value="2">Autor</option>
+                                    <option value="3">Cliente</option>
                                 </select>
                                 <br/>
                                 <p class="lead">
-                                    <input name="submit" type="submit" value="Iniciar" class="btn btn-lg btn-default">
+                                    <input name="login" type="submit" value="Iniciar" class="btn btn-lg btn-default">
                                 </p>
                                 <span><?php echo $error; ?></span>
                             </form>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="registrate">
                             <form class="form-signin" action="" method="post">
-                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
-                                <input type="email" id="inputEmail" name="inputEmail" 
-                                       class="form-control" placeholder="Correo electrónico" 
-                                       required autofocus>
-                                <br />
                                 <label for="nombreCompleto" class="sr-only">Nombre completo</label>
                                 <input type="text" id="nombreCompleto" name="nombreCompleto" 
                                        class="form-control" placeholder="Nombre Completo" 
+                                       required autofocus>
+                                <br />
+                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
+                                <input type="email" id="inputEmail" name="inputEmail" 
+                                       class="form-control" placeholder="Correo electrónico" 
                                        required autofocus>
                                 <br />
                                 <label for="nombreUsuario" class="sr-only">Nombre de usuario</label>
@@ -111,14 +111,15 @@ if (isset($_SESSION['login_user'])) {
                                        required>
                                 <select class="form-control" name="selectTypeUser" id="selectTypeUser">
                                     <option value="">Tipo de Usuario</option>
-                                    <option value="autor">Autor</option>
-                                    <option value="cliente">Cliente</option>
+                                    <option value="2">Autor</option>
+                                    <option value="3">Cliente</option>
                                 </select>
                                 <br />
                                 
                                 <p class="lead">
-                                    <input name="" type="" value="Registrar" class="btn btn-lg btn-default">
+                                    <input name="registrar" type="submit" value="Registrar" class="btn btn-lg btn-default">
                                 </p>
+                                <span><?php echo $error; ?></span>
                             </form>
                         </div>
                     </div>
