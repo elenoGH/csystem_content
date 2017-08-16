@@ -144,7 +144,11 @@ if (isset($_POST['data_up'])) {
     $id_contenido = $_POST['id_contenido'];
     $id_serie = $_POST['id_serie'];
     $es_articulo = $_POST['esarticulo'];
-            
+    $valor_precio = 0;
+    if (is_numeric($_POST['valor_precio'])) {
+        $valor_precio = $_POST['valor_precio'];
+    }
+    
     if ($es_articulo == 'true') {
         if (!empty($id_contenido)) {
             $modified_date = time();
@@ -162,6 +166,7 @@ if (isset($_POST['data_up'])) {
                     . " , estatus = '" . $estatus . "'"
                     . " , modified_date = '" . $modified_date . "'"
                     . " , id_serie_escritor = '" . $id_serie . "'"
+                    . " , precio_contenido = '" . $valor_precio . "'"
                     . " where id = " . $id_contenido;
         } else {
             $created_date = time();
@@ -169,11 +174,11 @@ if (isset($_POST['data_up'])) {
             $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
                     . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
                     . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`"
-                    . ", `id_serie_escritor`) "
+                    . ", `id_serie_escritor`, `precio_contenido`) "
                     . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
                     . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
                     . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date'"
-                    . ", '$id_serie')";
+                    . ", '$id_serie', '$valor_precio')";
         }
     }
     else {
@@ -181,10 +186,10 @@ if (isset($_POST['data_up'])) {
         $modified_date = time();
         $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
                 . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`) "
+                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`, `precio_serie`) "
                 . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
                 . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date')";
+                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date','$valor_precio')";
     }
 
     //Run Query

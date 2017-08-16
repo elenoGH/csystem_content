@@ -96,7 +96,7 @@ include('../../application/models/session.php');
                         <h3 class="mb-40"><?php echo $login_session; ?></h3>
                         <div class="container text-center mb-40">
                             <div class="col-md-4" id="count-contenido">
-                                <b>Contendio </b><br/>0
+                                <b>Artículos </b><br/>0
                             </div>
                             <div class="col-md-4"><b>Ventas</b><br/>
                                 0</div>
@@ -171,6 +171,11 @@ include('../../application/models/session.php');
                                         <input type="text" class="form-control" placeholder="URL" 
                                                id="referencias" name="referencias">
 
+                                    </div>
+                                    <div class="container mt-20">
+                                        <label class="">Valor de mi Articulo</label>
+                                        <input type="number" class="form-control" placeholder="MX$" 
+                                               id="valor_precio" name="valor_precio" maxlength="4">
                                     </div>
                                     <!--div class="container mt-20">
                                         <div class="row">
@@ -251,16 +256,15 @@ include('../../application/models/session.php');
                                 </div>
                             </div>
                         </div>
+                        <div class="card__content card__padding">
+                            <article class="card__article">
+                                <!--this put title and description of content-->
+                            </article>
+                        </div>
                         <div class="card__image border-tlr-radius">
                             <!--put the image via ajax-->
                         </div>
                         <div class="card__content card__padding">
-                            <!--div class="card__share">
-                                <a id="share" class="share-toggle share-icon" href="#"></a>
-                            </div-->
-                            <article class="card__article">
-                                <!--this put title and description of content-->
-                            </article>
                             <div class="card__meta">
                                 <!--add time and reference-->
                             </div>

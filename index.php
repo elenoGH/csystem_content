@@ -5,8 +5,10 @@ if (isset($_SESSION['login_user'])) {
     if (isset($_SESSION['rol_user'])) {
         if ($_SESSION['rol_user'] == 2) {
             header("location: application/views/autor.php");
-        }else {
+        }else if ($_SESSION['rol_user'] == 3){
             header("location: application/views/cliente.php"); // Redirecting To Other Page
+        } else {
+            header("location: index.php"); // Redirecting To Other Page
         }
     }
 }
@@ -68,7 +70,7 @@ if (isset($_SESSION['login_user'])) {
                             <form class="form-signin" action="" method="post">
                                 <label for="inputEmail" class="sr-only">Nombre de Usuario ó Correo electrónico</label>
                                 <input type="text" id="inputEmail" name="inputEmail" 
-                                       class="form-control" placeholder="Usuario ó Correo electrónico" 
+                                       class="form-control" placeholder="Usuario ó Correo" 
                                        required autofocus>
                                 <br />
                                 <label for="inputPassword" class="sr-only">Contraseña</label>

@@ -117,7 +117,7 @@ function scripts_escritor(event)
                             $('a[href="#misarticulos"]').tab('show');
                             $('.series-escritor').removeClass('hide');
                             globalEsArticuloEscritor = true;
-                            $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                            $('#id_serie').val($(this).attr('data-id'));
                         });
                 }, 1000);
             },
@@ -148,6 +148,7 @@ function scripts_escritor(event)
         data.append('url_other_image', $("#idImagenPerfil").attr("src"));
         data.append('id_serie', $('#id_serie').val());
         data.append('esarticulo', globalEsArticuloEscritor);
+        data.append('valor_precio', $('#valor_precio').val());
         
         $.ajax({
             url: '../controllers/escritor/controller_e.php',
@@ -175,7 +176,7 @@ function scripts_escritor(event)
                             $('a[href="#misarticulos"]').tab('show');
                             $('.series-escritor').removeClass('hide');
                             globalEsArticuloEscritor = true;
-                            $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                            $('#id_serie').val($(this).attr('data-id'));
                         });
                     bootbox.alert("Acción Satisfactoria!", function () {
                         $('#titulo_content').val('');
@@ -392,7 +393,7 @@ function deleteSerie (idSerie)
                                     $('a[href="#misarticulos"]').tab('show');
                                     $('.series-escritor').removeClass('hide');
                                     globalEsArticuloEscritor = true;
-                                    $('#id_serie').val($('.add-cont-to-serie').attr('data-id'));
+                                    $('#id_serie').val($(this).attr('data-id'));
                                 });
                             bootbox.alert("Sontenido eliminado!", function(){
 //                                console.log('This was logged in the callback!')
@@ -516,7 +517,7 @@ function renderViewSeries(arrayObj)
         $.each(val.data_by_serie, function (k1, v1) {
             lis_string = lis_string
                 + '<li>'
-                    + 'Nombre: <a href="#">'+v1.titulo+'</a>'
+                    + 'Artículo: <a href="#">'+v1.titulo+'</a>'
                     + '&nbsp;<i class="fa fa-eye" aria-hidden="true" '
                              + 'style="cursor: pointer" '
                              + 'data-toggle="modal" '
@@ -552,19 +553,19 @@ function renderViewSeries(arrayObj)
             + '<br/>'
             + '<footer class="mt-20">'
                 + '<cite title="Source Title">'
-                    + '<b>Autor: &nbsp;'+val.nombreUser+'</b>'
+                    + '<b>Autor: &nbsp;</b>' + val.nombreUser
                     + '<a href="#"></a>'
                 + '</cite><br>'
                 + '<cite title="Source Topico">'
-                    + '<b>Topico: &nbsp;'+val.nameTopico+'</b>'
+                    + '<b>Topico: &nbsp;</b>' + val.nameTopico
                     + '<a href="#"></a>'
                 + '</cite><br>'
                 + '<cite title="Source Red Social">'
-                    + '<b>Red Social: &nbsp; '+val.red_social+'</b>'
+                    + '<b>Red Social: &nbsp;</b>' + val.red_social
                     + '<a href="#"></a>'
                 + '</cite><br>'
                 + '<cite title="Source Estatus">'
-                    + '<b>Estatus: &nbsp; '+val.estatus+'</b>'
+                    + '<b>Estatus: &nbsp;</b>' + val.estatus
                     + '<a href="#"></a>'
                 + '</cite><br>'
 //                + '<a class="gototop gototop-button" href="#">'

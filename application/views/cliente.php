@@ -16,7 +16,7 @@ include('../../application/models/session.php');
 
         <link href="../../assets/css/style.css" rel="stylesheet" type="text/css">
         <script src="../../assets/js/jquery.min.js"></script>
-        <script src="../../assets/js/escritor/script_e.js"></script>
+        <script src="../../assets/js/cliente/script_c.js"></script>
 
         <!-- Bootstrap core CSS -->
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,6 @@ include('../../application/models/session.php');
     </head>
 
     <body>
-        <div id="fb-root"></div>
         <div id="loading" class="hide">
             <div id="loading-content">
                 <div class="load">
@@ -50,15 +49,6 @@ include('../../application/models/session.php');
                 </div>
             </div>
         </div>
-        <!--div id="fb-root">para facebook</div>
-        <div class="fb-post" data-href="https://www.facebook.com/20531316728/posts/10154009990506729/" data-width="500" data-show-text="true">
-            <blockquote cite="https://www.facebook.com/20531316728/posts/10154009990506729/" class="fb-xfbml-parse-ignore">
-                Publicado por <a href="https://www.facebook.com/facebook/">Facebook</a> 
-                en&nbsp;<a href="https://www.facebook.com/20531316728/posts/10154009990506729/">
-                    Jueves, 27 de agosto de 2015
-                </a>
-            </blockquote>
-        </div-->
         <!-- Fixed navbar -->
         <nav class="navbar pleca navbar-default navbar-fixed-top">
             <div class="container">
@@ -71,10 +61,9 @@ include('../../application/models/session.php');
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img class="avatar"  src="../../assets/images/autor_avatar.jpg" width="34" height="34"> Hola <?php echo $login_session; ?>
-                                <a href="../../application/controllers/logout.php">Cerrar</a>
                                 <!--span class="badge alert-danger">42</span></a-->
                                 <ul class="dropdown-menu">
-                                    
+                                    <li><a href="../../application/controllers/logout.php">Cerrar</a></li>
                                 </ul>
                         </li>
                     </ul>
@@ -82,300 +71,107 @@ include('../../application/models/session.php');
                 <!--/.nav-collapse --> 
             </div>
         </nav>
-        <!-- /Fixed navbar --> 
-        <!--Titulo-->
-        <div class="container">
-            <div class="starter-template">
-                <h1>Bienvenidos a Sistema de contenidos</h1>
-                <p class="lead">En esta sección puedes encontrar <br>
-                    Usuarios destacados con más de 30 documentos.<br>
-                </p>
-                <h3><span class="label label-default mt-20">Filtra por redes sociales</span></h3>
-            </div>
-        </div>
-        <!--end título --> 
 
-        <!--iconos de redes-->
-        <div class="container">
-            <div class="col-md-7">
-                <ul>
-                    <li>
-                        <input type="checkbox" id="cb1" />
-                        <label for="cb1"><img src="assets/images/filtro-fb.png" width="48" height="45"></label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="cb2" />
-                        <label for="cb2"><img src="assets/images/filtro-in.png" width="48" height="45"></label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="cb3" />
-                        <label for="cb3"><img src="assets/images/filtro-tw.png" width="48" height="45"></label>
-                    </li>
-                    l
-                    <li>
-                        <input type="checkbox" id="cb4" />
-                        <label for="cb4"><img src="assets/images/filtro-gif.png" width="48" height="45"></label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="cb5" />
-                        <label for="cb5"><img src="assets/images/filtro-img.png" width="48" height="45"></label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="cb6" />
-                        <label for="cb6"><img src="assets/images/filtro-video.png" width="48" height="45"></label>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-5">
-                <form class="form-inline mt-25">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputName2" placeholder="Buscar...">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="col-md-4">
+                    <div class="thumbnail text-center ">
+                        <div class="col-md-12 mb-20 well-sm well ">
+                            <img src="../../assets/images/autor_avatar.jpg" alt="avatar" 
+                                 class="img-circle" width="100" height="100" 
+                                 style="margin-bottom: -30px;">
+                        </div>
+                        <div class="clearfix">...</div>
+                        <h3 class="mb-40"><?php echo $login_session; ?></h3>
+                        <div class="container text-center">
+                            <div class="col-md-6" id="count-articulos">
+                                <b>Artículos </b><br/>0
+                            </div>
+                            <div class="col-md-6" id="count-series">
+                                <b>Series</b><br/>0
+                            </div>
+                        </div>
+                        <div class="starter-template">
+                            En esta sección puedes encontrar 
+                            <br/>
+                            Usuarios con Artículos y Series destacadas.
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form-inline mt-25">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Buscar...">
+                                        </div>
+                                        <button type="" class="btn btn-default">Buscar</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul>
+                                        <li>
+                                            <input type="checkbox" id="cb1" />
+                                            <label for="cb1"><img src="../../assets/images/filtro-fb.png" width="48" height="45"></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cb2" />
+                                            <label for="cb2"><img src="../../assets/images/filtro-in.png" width="48" height="45"></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cb3" />
+                                            <label for="cb3"><img src="../../assets/images/filtro-tw.png" width="48" height="45"></label>
+                                        </li>
+                                        <!--li>
+                                            <input type="checkbox" id="cb4" />
+                                            <label for="cb4"><img src="../../assets/images/filtro-gif.png" width="48" height="45"></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cb5" />
+                                            <label for="cb5"><img src="../../assets/images/filtro-img.png" width="48" height="45"></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="cb6" />
+                                            <label for="cb6"><img src="../../assets/images/filtro-video.png" width="48" height="45"></label>
+                                        </li-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-default">Buscar</button>
-                </form>
+                </div>
+                <div class="col-md-8">
+                    <div class="container">
+                        <!--div class="starter-template">
+                            <h4>Bienvenido al Sistema de contenidos</h4>
+                        </div-->
+                        <div class="row">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#autores" aria-controls="autores" role="tab" data-toggle="tab" id="count-autores">
+                                        Autores &nbsp;
+                                        <span class="badge">0</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="autores">
+                                    <div id="load-datos-autores">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--end iconos de redes--> 
         </div>
-        <section>
-            <div class="container mt-20">
-                <div class="col-md-6 text-uppercase">
-                    <h4>tendencias</h4>
-                </div>
-                <div class="col-md-6">
-                </div>
-                <div class="clearfix">...</div>
-                <span class="label label-info pull-right" style="margin-left:5px">Educación</span>
-                <span class="label label-info pull-right" style="margin-left:5px">México</span>
-                <span class="label label-info pull-right" style="margin-left:5px">Duarte</span>
-                <hr />
-            </div>
-            <!--noticias pekes-->
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-1.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>13 millones</h4>
-                    Es increíble como dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-2.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>¿Qué opinas?</h4>
-                    Cuando era sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <div class="clearfix">...</div>
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-3.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Todo sobre los tacos</h4>
-                    Comer todos dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-4.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Sr. muy enojado</h4>
-                    Este señor dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <!--end noticias pekes-->
-            <div class="clearfix">...</div>
-            <div class="container mt-20">
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-1.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-2.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-3.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-4.jpg" width="100%" ></a></div>
-            </div>
-            <div class="clearfix">...</div>
+        <section id="section-view-articulos">
+            
         </section>
-        <section>
-            <div class="container mt-20">
-                <div class="col-md-6 text-uppercase">
-                    <h4>top usuarios</h4>
-                </div>
-                <div class="col-md-6"></div>
-                <div class="clearfix">...</div>
-                <hr />
-            </div>
-            <!--noticias pekes-->
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-1.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>13 millones</h4>
-                    Es increíble como dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-2.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>¿Qué opinas?</h4>
-                    Cuando era sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <div class="clearfix">...</div>
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-3.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Todo sobre los tacos</h4>
-                    Comer todos dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-4.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Sr. muy enojado</h4>
-                    Este señor dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <!--end noticias pekes-->
-            <div class="clearfix">...</div>
-            <div class="container mt-20">
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-1.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-2.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-3.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-4.jpg" width="100%" ></a></div>
-            </div>
-            <div class="clearfix">...</div>
-        </section>
-        <section>
-            <div class="container mt-20">
-                <div class="col-md-6 text-uppercase">
-                    <h4>top mensual</h4>
-                </div>
-                <div class="col-md-6"></div>
-                <div class="clearfix">...</div>
-                <hr />
-            </div>
-            <!--noticias pekes-->
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-1.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>13 millones</h4>
-                    Es increíble como dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-2.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>¿Qué opinas?</h4>
-                    Cuando era sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <div class="clearfix">...</div>
-            <div class="container">
-                <div class="col-lg-2"><img src="assets/images/tw-3.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Todo sobre los tacos</h4>
-                    Comer todos dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <div class="col-lg-2"><img src="assets/images/tw-4.jpg" class="img-thumbnail" width="100%" height="100%"></div>
-                <div class="col-lg-4 ">
-                    <h4>Sr. muy enojado</h4>
-                    Este señor dolor sit amet, consectetur adipiscing elit. Duis porttitor eget arcu nec tincidunt. Praesent quis libero eros. Ut euismod, ante vel pharetra tempus, augue lorem euismod turpis.
-                    <footer class="mt-20">
-                        <img src="assets/images/fb.png" width="21" height="21">
-                        <img src="assets/images/tw.png" width="21" height="21">
-                        <img src="assets/images/in.png" width="21" height="21">
-                        <a href="final.html" type="button" class="btn btn-success btn-sm pull-right" target="_blank"  >Ver detalle</a>
-                        <a href="#" type="button" class="btn btn-success btn-sm pull-right"style="margin-right:10px;" >Comprar</a>
-
-                    </footer>
-                </div>
-                <hr />
-            </div>
-            <!--end noticias pekes-->
-            <div class="clearfix">...</div>
-            <div class="container mt-20">
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-1.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-2.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-3.jpg" width="100%" ></a></div>
-                <div class="col-md-3"><a href="final.html" target="_blank"><img  src="assets/images/img-4.jpg" width="100%" ></a></div>
-            </div>
-            <div class="clearfix">...</div>
+        <section id="section-view-series">
+            
         </section>
         <footer class="footer pleca mt-80">
             <div class="container ">
@@ -386,9 +182,10 @@ include('../../application/models/session.php');
             ================================================== --> 
         <!-- Placed at the end of the document so the pages load faster --> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
-        <script>window.jQuery || document.write('<script src="assets/js/jquery.min.js"><\/script>')</script> 
-        <script src="assets/js/bootstrap.min.js"></script> 
+
+        <script src="../../assets/js/bootstrap.min.js"></script> 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-        <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../../assets/js/bootbox.min.js"></script>
     </body>
 </html>
