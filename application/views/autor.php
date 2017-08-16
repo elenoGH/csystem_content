@@ -139,7 +139,7 @@ include('../../application/models/session.php');
                                                   placeholder="post"
                                                   name="post_to_enmbedded_text" id="post_to_enmbedded_text"
                                                   maxlength="140"></textarea>
-                                        <span id="count-caracter" class=""><strong>250</strong></span>
+                                        <span id="count-caracter" class=""><strong>140</strong></span>
                                     </div>
                                     <div class="container mt-20">
                                         <div id="previewImgPerfil">

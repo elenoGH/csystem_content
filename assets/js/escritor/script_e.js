@@ -187,7 +187,7 @@ function scripts_escritor(event)
                         $('.button-actualizar').attr('data-id', '');
                         $(".button-actualizar").addClass("hide");
                         $(".button-agregar").removeClass("hide");
-                        
+                        $('#valor_precio').val(0);
                     });
                 }, 500);
             },
@@ -222,7 +222,7 @@ function scripts_escritor(event)
 //            document.forms[0].reset();
             $("#div-textarea-id").show("slow");
             $("#post_to_enmbedded_text").attr("placeholder", "post");
-            var e = $('<strong>250</strong>');
+            var e = $('<strong>140</strong>');
             $("#count-caracter").html(e);
         } else if ($(this).val() == 'twitter') {
             $("#div-textarea-id").show("slow");
@@ -306,7 +306,7 @@ function editContent(value)
             $("#idImagenPerfil").attr("src", obj[0].path_source);
             $('#id_topico').val(obj[0].id_topico);
             $('#referencias').val(obj[0].referencias);
-
+            $('#valor_precio').val(obj[0].precio_contenido);
             //agregar el id para actualizar
             $('.button-actualizar').attr('data-id', obj[0].id_contenido);
 
@@ -322,7 +322,7 @@ function editContent(value)
                     $('input[name="red_social"][value="instagram"]').attr('checked', false);
                     $("#div-textarea-id").show("slow");
                     $("#post_to_enmbedded_text").attr("placeholder", "Escribe la idea principal de tu post");
-                    var e = $('<strong>250</strong>');
+                    var e = $('<strong>140</strong>');
                     $("#count-caracter").html(e);
                 } else if (($(this).val() == 'twitter') && (obj[0].red_social == 'twitter')) {
                     $(this).attr('checked', true);
@@ -534,6 +534,14 @@ function renderViewSeries(arrayObj)
              findivrow = '';
             count++;
         }
+        srcRedSocial = '';
+        if (val.red_social == 'facebook') {
+            srcRedSocial = '../../assets/images/fb.png';
+        }else if (val.red_social == 'twitter') {
+            srcRedSocial = '../../assets/images/tw.png';
+        } else if (val.red_social == 'instagram') {
+            srcRedSocial = '../../assets/images/in.png';
+        }
         str_series = str_series+inirow+'<div class="col-md-3">'
             + '<button type="button" class="close" data-dismiss="modal" onclick="deleteSerie('+val.id_serie+')" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
@@ -541,7 +549,7 @@ function renderViewSeries(arrayObj)
             + '<img  src="'+val.path_source+'" width="100%" >'
         + '</div>'
         + '<div class="col-md-3">'
-            + '<h4>'+val.titulo_serie+'</h4>'
+            + '<h4><img src="'+srcRedSocial+'" width="21" height="21">&nbsp;'+val.titulo_serie+'</h4>'
             + '<p>'+val.desc_serie+'</p>'
             + '<br/>'
             + '<h6>Agregar Contenido</h6>'
@@ -558,10 +566,6 @@ function renderViewSeries(arrayObj)
                 + '</cite><br>'
                 + '<cite title="Source Topico">'
                     + '<b>Topico: &nbsp;</b>' + val.nameTopico
-                    + '<a href="#"></a>'
-                + '</cite><br>'
-                + '<cite title="Source Red Social">'
-                    + '<b>Red Social: &nbsp;</b>' + val.red_social
                     + '<a href="#"></a>'
                 + '</cite><br>'
                 + '<cite title="Source Estatus">'

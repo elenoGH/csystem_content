@@ -109,7 +109,7 @@ function getGenerateViewListAutores($array_autores)
                         . '</cite>'
                             . '<br/>'
                         . '<cite title="Source Mas">'
-                            . 'Ver Más &nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" '
+                            . 'Ver Más &nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" '
                                 . 'onclick="viewContentAutor(\'' . $json_generales_autor . '\', \'' . $json_articulos_usuario . '\', \'' . $json_series_usuario . '\')"></i>'
                         . '</cite>'
                     . '</footer>'
@@ -121,15 +121,24 @@ function getGenerateViewListAutores($array_autores)
 }
 
 if (isset($_POST['getMD5info'])) {
-    $md5enc_generales_autor = $_POST['md5info_generales_autor'];
-    $md5enc_articulos_usuario = $_POST['md5info_articulos_usuario'];
-    $md5enc_series_usuario = $_POST['md5info_series_usuario'];
+    $md5enc_generales_autor = '';
+    if (isset($_POST['md5info_generales_autor']) && !empty($_POST['md5info_generales_autor'])) {
+        $md5enc_generales_autor = desencriptar($_POST['md5info_generales_autor']);
+    }
+    $md5enc_articulos_usuario = '';
+    if (isset($_POST['md5info_articulos_usuario']) && !empty($_POST['md5info_articulos_usuario'])) {
+        $md5enc_articulos_usuario = desencriptar($_POST['md5info_articulos_usuario']);
+    }
+    $md5enc_series_usuario = '';
+    if (isset($_POST['md5info_series_usuario']) && !empty($_POST['md5info_series_usuario'])) {
+        $md5enc_series_usuario = desencriptar($_POST['md5info_series_usuario']);
+    }
     
     echo json_encode(
             array(
-                'generales_autor' => desencriptar($md5enc_generales_autor)
-                , 'articulos_usuario' => desencriptar($md5enc_articulos_usuario)
-                , 'series_usuario' => desencriptar($md5enc_series_usuario)
+                'generales_autor'       => $md5enc_generales_autor
+                , 'articulos_usuario'   => $md5enc_articulos_usuario
+                , 'series_usuario'      => $md5enc_series_usuario
             )
         );
     die;

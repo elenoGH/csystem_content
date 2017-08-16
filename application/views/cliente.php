@@ -85,57 +85,16 @@ include('../../application/models/session.php');
                         <h3 class="mb-40"><?php echo $login_session; ?></h3>
                         <div class="container text-center">
                             <div class="col-md-6" id="count-articulos">
-                                <b>Artículos </b><br/>0
+                                <b>Total Artículos </b><br/>0
                             </div>
                             <div class="col-md-6" id="count-series">
-                                <b>Series</b><br/>0
+                                <b>Total Series</b><br/>0
                             </div>
                         </div>
                         <div class="starter-template">
-                            En esta sección puedes encontrar 
+                            En <b>Ver Más</b> puedes encontrar 
                             <br/>
-                            Usuarios con Artículos y Series destacadas.
-                            <br/>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form class="form-inline mt-25">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Buscar...">
-                                        </div>
-                                        <button type="" class="btn btn-default">Buscar</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" id="cb1" />
-                                            <label for="cb1"><img src="../../assets/images/filtro-fb.png" width="48" height="45"></label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="cb2" />
-                                            <label for="cb2"><img src="../../assets/images/filtro-in.png" width="48" height="45"></label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="cb3" />
-                                            <label for="cb3"><img src="../../assets/images/filtro-tw.png" width="48" height="45"></label>
-                                        </li>
-                                        <!--li>
-                                            <input type="checkbox" id="cb4" />
-                                            <label for="cb4"><img src="../../assets/images/filtro-gif.png" width="48" height="45"></label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="cb5" />
-                                            <label for="cb5"><img src="../../assets/images/filtro-img.png" width="48" height="45"></label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="cb6" />
-                                            <label for="cb6"><img src="../../assets/images/filtro-video.png" width="48" height="45"></label>
-                                        </li-->
-                                    </ul>
-                                </div>
-                            </div>
+                            Todos los Artículos y Series destacadas por Autor.
                         </div>
                     </div>
                 </div>
@@ -173,6 +132,38 @@ include('../../application/models/session.php');
         <section id="section-view-series">
             
         </section>
+        <div class="modal fade preview-redsocial" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-dialog" role="">
+                <!---->
+                <div class="wrapper">
+                    <div class="card radius shadowDepth1">
+                        <div class="card__action">
+
+                            <div class="card__author">
+                                <img src="http://lorempixel.com/40/40/sports/" alt="user">
+                                <div class="card__author-content">
+                                    Creado por <a href="#"><?php echo $login_session; ?></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__content card__padding">
+                            <article class="card__article">
+                                <!--this put title and description of content-->
+                            </article>
+                        </div>
+                        <div class="card__image border-tlr-radius">
+                            <!--put the image via ajax-->
+                        </div>
+                        <div class="card__content card__padding">
+                            <div class="card__meta">
+                                <!--add time and reference-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
         <footer class="footer pleca mt-80">
             <div class="container ">
                 <p class="mt-20"  style="color:#FFF;">Aureacode</p>

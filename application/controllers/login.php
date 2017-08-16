@@ -56,7 +56,7 @@ else if (isset ($_POST['registrar'])) {
         $error = "Completa todos los campos!";
     } else {
         $connection = mysql_connect("localhost", "root", "");
-            
+        //$connection = mysql_connect("localhost", "csystem", "csystem");
         $db = mysql_select_db("csystem", $connection);
         
         $nombreCompleto = $_POST['nombreCompleto'];

@@ -9,7 +9,8 @@ if (isset($_POST['get_series'])) {
 }
 
 if (isset($_POST['editContent'])) {
-    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social "
+            . ", tc.estatus as estatus_cont, tc.referencias, tc.created_date, tc.precio_contenido "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.id as id_topico, tto.nombre as nametopico "
             . "from tbl_usuario tu "
@@ -385,6 +386,16 @@ function getDataContenidoEscritor($connection, $SESSION) {
 
 function getStructureContentInfo($itemArray) {
     $json = encriptar(json_encode($itemArray));
+    
+    $srcRedSocial = '';
+    if ($itemArray['red_social'] == 'facebook') {
+        $srcRedSocial = '../../assets/images/fb.png';
+    }else if ($itemArray['red_social'] == 'twitter') {
+        $srcRedSocial = '../../assets/images/tw.png';
+    } else if ($itemArray['red_social'] == 'instagram') {
+        $srcRedSocial = '../../assets/images/in.png';
+    }
+        
     $structureCI = '<div class="col-lg-2">'
                     . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido(' . $itemArray['id_contenido'] . ')" aria-label="Close">'
                         . '<span aria-hidden="true">&times;</span>'
@@ -392,7 +403,7 @@ function getStructureContentInfo($itemArray) {
                     . '<img src="' . $itemArray['path_source'] . '" class="img-thumbnail" width="100%" height="100%">'
                 . '</div>'
                 . '<div class="col-lg-4 ">'
-                    . '<h4>' . $itemArray['titulo'] . '</h4>'
+                    . '<h4><img src="'.$srcRedSocial.'" width="21" height="21">&nbsp;' . $itemArray['titulo'] . '</h4>'
                     . $itemArray['post_to_enmbedded_text']
                     . '<footer class="mt-20">'
                         . '<cite title="Source Title">'
@@ -402,10 +413,6 @@ function getStructureContentInfo($itemArray) {
                         . '<cite title="Source Topico">'
                             . '<b>Topico: &nbsp;</b>'
                             . '<a href="#">' . $itemArray['nametopico'] . '</a>'
-                        . '</cite><br>'
-                        . '<cite title="Source Red Social">'
-                            . '<b>Red Social: &nbsp;</b>'
-                            . '<a href="#">' . $itemArray['red_social'] . '</a>'
                         . '</cite><br>'
                         . '<cite title="Source Estatus">'
                             . '<b>Estatus: &nbsp;</b>'
