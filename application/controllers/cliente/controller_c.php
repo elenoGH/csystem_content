@@ -88,7 +88,7 @@ function getGenerateViewListAutores($array_autores)
         $string_value = $string_value
             .'<div class="container mt-20">'
                 . '<div class="col-lg-1">'
-                    . '<img src="../../assets/images/autor_avatar.jpg" alt="avatar" class="img-circle" width="50" height="50">'
+                    . '<img src="../../../assets/images/autor_avatar.jpg" alt="avatar" class="img-circle" width="50" height="50">'
                 . '</div>'
                 . '<div class="col-lg-11">'
 //                    . '<b>Nombre: &nbsp;</b>'. $autor['generales_autor']['nameUser']
@@ -154,4 +154,26 @@ function desencriptar($cadena) {
     $key = '';  // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
     $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($cadena), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
     return $decrypted;  //Devuelve el string desencriptado
+}
+
+if (isset($_POST['save_compra_cliente'])) {
+    
+    $id_contenido = $_POST['id_contenido'];
+    $id_autor = $_POST['id_autor'];
+    $id_cliente = $_SESSION['id_user'];
+    $tipo_contenido_comprado = $_POST['tipo_contenido_comprado'];
+    
+    $q = "INSERT INTO `tbl_compras_cliente` (`id_cliente`, `id_autor`, `id_contenido_as`"
+        . ", `tipo_contenido_comprado`) "
+        . " VALUES ('$id_cliente','$id_autor' ,'$id_contenido'"
+        . ", '$tipo_contenido_comprado')";
+    
+    $result_insert = mysql_query($q) or die(mysql_error());
+    
+    echo json_encode(
+            array(
+                'resultado_insert' => $result_insert
+            )
+        );
+    die;
 }

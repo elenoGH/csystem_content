@@ -36,9 +36,9 @@ if (isset($_POST['login'])) {
             
             if ($_SESSION['rol_user'] == 1) {
                 if ($tipoUser == 2) {
-                    header("location: application/views/autor.php"); // Redirecting To Other Page
+                    header("location: application/views/autor/autor.php"); // Redirecting To Other Page
                 } else {
-                    header("location: application/views/cliente.php"); // Redirecting To Other Page
+                    header("location: application/views/cliente/cliente.php"); // Redirecting To Other Page
                 }
             }
 //            else if ($_SESSION['rol_user'] == 1) {
@@ -89,9 +89,9 @@ else if (isset ($_POST['registrar'])) {
                 $_SESSION['rol_user'] = $res['rol'];
 
                 if ($_SESSION['rol_user'] == 2) {
-                    header("location: application/views/autor.php");
+                    header("location: application/views/autor/autor.php");
                 } else {
-                    header("location: application/views/cliente.php");
+                    header("location: application/views/cliente/cliente.php");
                 }
 
             } else {

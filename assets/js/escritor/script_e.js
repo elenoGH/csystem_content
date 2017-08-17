@@ -20,7 +20,7 @@ function scripts_escritor(event)
         data.append('get_series', true);
 
         $.ajax({
-            url: '../controllers/escritor/controller_e.php',
+            url: '../../controllers/escritor/controller_e.php',
             type: "POST",
             data: data,
             contentType: false,
@@ -96,7 +96,7 @@ function scripts_escritor(event)
         data.append('get_data', true);
 
         $.ajax({
-            url: '../controllers/escritor/controller_e.php',
+            url: '../../controllers/escritor/controller_e.php',
             type: "POST",
             data: data,
             contentType: false,
@@ -151,7 +151,7 @@ function scripts_escritor(event)
         data.append('valor_precio', $('#valor_precio').val());
         
         $.ajax({
-            url: '../controllers/escritor/controller_e.php',
+            url: '../../controllers/escritor/controller_e.php',
             type: "POST",
             data: data,
             contentType: false,
@@ -245,7 +245,7 @@ function scripts_escritor(event)
         data.append('get_topicos', true);
 
         $.ajax({
-            url: '../controllers/escritor/controller_e.php',
+            url: '../../controllers/escritor/controller_e.php',
             type: "POST",
             data: data,
             contentType: false,
@@ -286,7 +286,7 @@ function editContent(value)
     data.append('value_edit', value);
 
     $.ajax({
-        url: '../controllers/escritor/controller_e.php',
+        url: '../../controllers/escritor/controller_e.php',
         type: "POST",
         data: data,
         contentType: false,
@@ -373,7 +373,7 @@ function deleteSerie (idSerie)
                 data.append('id_serie_delete', idSerie);
 
                 $.ajax({
-                    url: '../controllers/escritor/controller_e.php',
+                    url: '../../controllers/escritor/controller_e.php',
                     type: "POST",
                     data: data,
                     contentType: false,
@@ -434,7 +434,7 @@ function deleteContenido(value)
                 data.append('value_delete', value);
 
                 $.ajax({
-                    url: '../controllers/escritor/controller_e.php',
+                    url: '../../controllers/escritor/controller_e.php',
                     type: "POST",
                     data: data,
                     contentType: false,
@@ -476,7 +476,7 @@ function modalPreview(json)
     data.append('md5info', json);
     
     $.ajax({
-        url: '../controllers/escritor/controller_e.php',
+        url: '../../controllers/escritor/controller_e.php',
         type: "POST",
         data: data,
         contentType: false,
@@ -536,11 +536,11 @@ function renderViewSeries(arrayObj)
         }
         srcRedSocial = '';
         if (val.red_social == 'facebook') {
-            srcRedSocial = '../../assets/images/fb.png';
+            srcRedSocial = '../../../assets/images/fb.png';
         }else if (val.red_social == 'twitter') {
-            srcRedSocial = '../../assets/images/tw.png';
+            srcRedSocial = '../../../assets/images/tw.png';
         } else if (val.red_social == 'instagram') {
-            srcRedSocial = '../../assets/images/in.png';
+            srcRedSocial = '../../../assets/images/in.png';
         }
         str_series = str_series+inirow+'<div class="col-md-3">'
             + '<button type="button" class="close" data-dismiss="modal" onclick="deleteSerie('+val.id_serie+')" aria-label="Close">'

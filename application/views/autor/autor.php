@@ -1,5 +1,5 @@
 <?php
-include('../../application/models/session.php');
+include('../../../application/models/session.php');
 ?>
 
 <!DOCTYPE html>
@@ -14,22 +14,22 @@ include('../../application/models/session.php');
         <link rel="icon" href="#">
         <title>Sistema de contenido</title>
 
-        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css">
-        <script src="../../assets/js/jquery.min.js"></script>
-        <script src="../../assets/js/escritor/script_e.js"></script>
+        <link href="../../../assets/css/style.css" rel="stylesheet" type="text/css">
+        <script src="../../../assets/js/jquery.min.js"></script>
+        <script src="../../../assets/js/escritor/script_e.js"></script>
 
         <!-- Bootstrap core CSS -->
-        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../../assets/css/starter-template.css">
+        <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../../../assets/css/starter-template.css">
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css">
+        <link href="../../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../../../assets/css/bootstrap.css">
         <!-- Custom styles for this template -->
-        <link href="../../assets/css/cover2.css" rel="stylesheet">
+        <link href="../../../assets/css/cover2.css" rel="stylesheet">
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-        <!--[if lt IE 9]><script src="../../../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap-extras-margins-padding.css">
+        <!--[if lt IE 9]><script src="../../../../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="../../../assets/js/ie-emulation-modes-warning.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../assets/css/bootstrap-extras-margins-padding.css">
 
         <script src="https://use.fontawesome.com/ddec08f0ce.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -40,7 +40,6 @@ include('../../application/models/session.php');
     </head>
 
     <body>
-        <div id="fb-root"></div>
         <div id="loading" class="hide">
             <div id="loading-content">
                 <div class="load">
@@ -69,12 +68,16 @@ include('../../application/models/session.php');
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img class="avatar"  src="../../assets/images/autor_avatar.jpg" width="34" height="34"> Hola <?php echo $login_session; ?>
-                                <!--span class="badge alert-danger">42</span></a-->
-                                <ul class="dropdown-menu">
-                                    <li><a href="../../application/controllers/logout.php">Cerrar</a></li>
-                                </ul>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="../../../assets/images/autor_avatar.jpg" alt="avatar" 
+                                     class="img-circle" width="34" height="34" style="margin-bottom: 0px;">
+                                        Hola <?php echo $login_session; ?>
+                                        <span class="badge alert-danger"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../../../application/controllers/logout.php">Cerrar</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +91,7 @@ include('../../application/models/session.php');
                 <div class="col-md-4">
                     <div class="thumbnail text-center ">
                         <div class="col-md-12 mb-20 well-sm well ">
-                            <img src="../../assets/images/autor_avatar.jpg" alt="avatar" 
+                            <img src="../../../assets/images/autor_avatar.jpg" alt="avatar" 
                                  class="img-circle" width="100" height="100" 
                                  style="margin-bottom: -30px;">
                         </div>
@@ -112,15 +115,15 @@ include('../../application/models/session.php');
                             <ul class="nav nav-tabs" role="tablist">
                                 <li>
                                     <input type="radio" id="cb1" name="red_social" value="facebook">
-                                    <label for="cb1"><img src="../../assets/images/icon-fb2.png" width="44" height="44"></label>
+                                    <label for="cb1"><img src="../../../assets/images/icon-fb2.png" width="44" height="44"></label>
                                 </li>
                                 <li>
                                     <input type="radio" id="cb2" name="red_social" value="twitter">
-                                    <label for="cb2"><img src="../../assets/images/icon-twitter2.png" width="44" height="44"></label>
+                                    <label for="cb2"><img src="../../../assets/images/icon-twitter2.png" width="44" height="44"></label>
                                 </li>
                                 <li>
                                     <input type="radio" id="cb3" name="red_social" value="instagram">
-                                    <label for="cb3"><img src="../../assets/images/icon-instagram2.png" width="44" height="44"></label>
+                                    <label for="cb3"><img src="../../../assets/images/icon-instagram2.png" width="44" height="44"></label>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -284,9 +287,9 @@ include('../../application/models/session.php');
         <!-- Placed at the end of the document so the pages load faster --> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
 
-        <script src="../../assets/js/bootstrap.min.js"></script> 
+        <script src="../../../assets/js/bootstrap.min.js"></script> 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-        <script src="../../assets/js/bootbox.min.js"></script>
+        <script src="../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../../../assets/js/bootbox.min.js"></script>
     </body>
 </html>

@@ -219,7 +219,7 @@ function createSource($file, $param_array) {
     $name_image_candidato = 'img_source_' . $param_array['user'] . '_' . time();
     $imageFileTypeextension = pathinfo($target_dir . basename($file["name"]), PATHINFO_EXTENSION);
 
-    $dataComent['image_path'] = '../../assets/media/dir_source/';
+    $dataComent['image_path'] = '../../../assets/media/dir_source/';
     $dataComent['image_name'] = $name_image_candidato . '.' . $imageFileTypeextension;
 
     //$target_file = $target_dir . basename($_FILES["image-perfil-candidato"]["name"]);
@@ -389,11 +389,11 @@ function getStructureContentInfo($itemArray) {
     
     $srcRedSocial = '';
     if ($itemArray['red_social'] == 'facebook') {
-        $srcRedSocial = '../../assets/images/fb.png';
+        $srcRedSocial = '../../../assets/images/fb.png';
     }else if ($itemArray['red_social'] == 'twitter') {
-        $srcRedSocial = '../../assets/images/tw.png';
+        $srcRedSocial = '../../../assets/images/tw.png';
     } else if ($itemArray['red_social'] == 'instagram') {
-        $srcRedSocial = '../../assets/images/in.png';
+        $srcRedSocial = '../../../assets/images/in.png';
     }
         
     $structureCI = '<div class="col-lg-2">'

@@ -10,7 +10,7 @@ function scripts_cliente(event)
         var data = new FormData();
         data.append('get_all_autores', true);
         $.ajax({
-            url: '../controllers/cliente/controller_c.php',
+            url: '../../controllers/cliente/controller_c.php',
             type: "POST",
             data: data,
             contentType: false,
@@ -61,7 +61,7 @@ function viewContentAutor(generales_autor, articulos_usuario, series_usuario)
     data.append('md5info_series_usuario', series_usuario);
     
     $.ajax({
-        url: '../controllers/cliente/controller_c.php',
+        url: '../../controllers/cliente/controller_c.php',
         type: "POST",
         data: data,
         contentType: false,
@@ -130,11 +130,11 @@ function renderViewArticulos(objs_articulos_usuario)
         }
         srcRedSocial = '';
         if (articulo.red_social == 'facebook') {
-            srcRedSocial = '../../assets/images/fb.png';
+            srcRedSocial = '../../../assets/images/fb.png';
         }else if (articulo.red_social == 'twitter') {
-            srcRedSocial = '../../assets/images/tw.png';
+            srcRedSocial = '../../../assets/images/tw.png';
         } else if (articulo.red_social == 'instagram') {
-            srcRedSocial = '../../assets/images/in.png';
+            srcRedSocial = '../../../assets/images/in.png';
         }
         finview_content = finview_content+initcontainer
             + '<div class="col-lg-2">\n\
@@ -145,7 +145,7 @@ function renderViewArticulos(objs_articulos_usuario)
                     '+articulo.post_to_enmbedded_text+'\n\
                     <footer class="mt-20">\n\
                         '+articulo.precio_contenido+'$ \n\
-                        &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>\n\
+                        &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+articulo.id+', '+articulo.id_usuario+', 1)"></i>\n\
                         &nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" \n\
                             data-target=".preview-redsocial" onclick="modalPreview(\'' +articulo.titulo+ '\', \'' +articulo.post_to_enmbedded_text+ '\', \'' +articulo.path_source+ '\')"></i>\n\
                     </footer>\n\
@@ -186,11 +186,11 @@ function renderViewSeries(objs_series_usuario)
         }
         srcRedSocial = '';
         if (series.red_social == 'facebook') {
-            srcRedSocial = '../../assets/images/fb.png';
+            srcRedSocial = '../../../assets/images/fb.png';
         }else if (series.red_social == 'twitter') {
-            srcRedSocial = '../../assets/images/tw.png';
+            srcRedSocial = '../../../assets/images/tw.png';
         } else if (series.red_social == 'instagram') {
-            srcRedSocial = '../../assets/images/in.png';
+            srcRedSocial = '../../../assets/images/in.png';
         }
         var articulos = '';
         $.each(series.articulos_by_serie, function(k1, v1){
@@ -208,7 +208,7 @@ function renderViewSeries(objs_series_usuario)
                 <footer class="mt-20">\n\
                     '+articulos+'\n\
                     <b>'+series.precio_serie+'$</b>\n\
-                    &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>\n\
+                    &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+series.id+', '+series.id_usuario+', 2)"></i>\n\
                 </footer>\n\
             </div>'
             + fincontainer;
@@ -224,4 +224,59 @@ function modalPreview(titulo, descipcion, url_imagen)
     $('.card__article').html('<h2><a href="#">'+titulo+'</a></h2>\n\
                             <p>'+descipcion+'</p>');
     $('.card__meta').html('<time>'+date_format+'</time>');
+}
+
+function addCarritoComprar(id_contenido,id_autor, tipo)
+{
+    var tipo_contenido_comprado = 'serie';
+    if (tipo == 1) {
+        tipo_contenido_comprado = 'articulo';
+    }
+    
+    bootbox.confirm({
+        message: "Deseas comprar este contenido?",
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                
+                var data = new FormData();
+                data.append('save_compra_cliente', true);
+                data.append('id_contenido', id_contenido);
+                data.append('id_autor', id_autor); 
+                data.append('tipo_contenido_comprado', tipo_contenido_comprado); 
+                
+                $.ajax({
+                    url: '../../controllers/cliente/controller_c.php',
+                    type: "POST",
+                    data: data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (respuesta) {
+
+                        var obj = JSON.parse(respuesta);
+                        $("#loading").addClass('hide');
+                    },
+                    error: function (result)
+                    {
+                        alert(JSON.stringify(result));
+                    },
+                    fail: function (status) {
+                    },
+                    beforeSend: function (d) {
+                        $("#loading").removeClass('hide');
+                    }
+                });
+            }
+        }
+    });
 }

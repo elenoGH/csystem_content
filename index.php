@@ -4,9 +4,9 @@ include('application/controllers/login.php'); // Includes Login Script
 if (isset($_SESSION['login_user'])) {
     if (isset($_SESSION['rol_user'])) {
         if ($_SESSION['rol_user'] == 2) {
-            header("location: application/views/autor.php");
+            header("location: application/views/autor/autor.php");
         }else if ($_SESSION['rol_user'] == 3){
-            header("location: application/views/cliente.php"); // Redirecting To Other Page
+            header("location: application/views/cliente/cliente.php"); // Redirecting To Other Page
         } else {
             header("location: index.php"); // Redirecting To Other Page
         }
