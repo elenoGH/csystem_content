@@ -92,14 +92,14 @@ include('../../../application/models/session.php');
                         <img src="../../../assets/images/fb.png" width="21" height="21">
                         Publicación para Facebook
                     </h4>
-                    <div id='load-datos-articulos-facebook'>
+                    <div class="row" id='load-datos-articulos-facebook'>
                         
                     </div>
                     <h4 class="mt-40 mb-10">
                         <img src="../../../assets/images/tw.png" width="21" height="21">
                         Publicación para Twitter
                     </h4>
-                    <div id='load-datos-articulos-twitter'>
+                    <div class="row" id='load-datos-articulos-twitter'>
 
                     </div>
                     <h4 class="mt-40">
@@ -107,7 +107,7 @@ include('../../../application/models/session.php');
                         Publicación para Instagram
                     </h4>
                     <hr class="pull-left" style="width:90%;" />
-                    <div id='load-datos-articulos-instagram'>
+                    <div class="row" id='load-datos-articulos-instagram'>
                         
                     </div>
                 </div>
