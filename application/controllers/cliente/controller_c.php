@@ -27,19 +27,21 @@ function getAllAutores($connection, $SESSION)
     $array_resultado = array();
     while ($data_array = mysql_fetch_array($query, MYSQL_ASSOC)) {
         $array_resultado[$data_array['id_usuario']]['generales_autor'] = $data_array;
-        $query_articulos = mysql_query("select * "
-            . " from tbl_contenido_escritor "
-            . " where id > 0 "
-            . " and id_usuario =".$data_array['id_usuario']
-            . " and id_serie_escritor = 0 "
+        $query_articulos = mysql_query("select tce.*, tcc.id as id_compra, tcc.id_cliente as id_cliente_comp, tcc.id_autor as id_autor_comp, tcc.tipo_contenido_comprado "
+            . " from tbl_contenido_escritor tce "
+                . " left join tbl_compras_cliente tcc on tcc.id_contenido_as = tce.id "
+            . " where tce.id > 0 "
+            . " and tce.id_usuario =".$data_array['id_usuario']
+            . " and tce.id_serie_escritor = 0 "
             , $connection) or die(mysql_error());
         while ($articulos_array = mysql_fetch_array($query_articulos, MYSQL_ASSOC)) {
             $array_resultado[$data_array['id_usuario']]['articulos_usuario'][] = $articulos_array;
         }
-        $query_series = mysql_query("select * "
-            . " from tbl_serie_escritor "
-            . " where id > 0 "
-            . " and id_usuario =".$data_array['id_usuario']
+        $query_series = mysql_query("select tse.*, tcc.id as id_compra, tcc.id_cliente as id_cliente_comp, tcc.id_autor as id_autor_comp, tcc.tipo_contenido_comprado "
+            . " from tbl_serie_escritor tse "
+                . " left join tbl_compras_cliente tcc on tcc.id_contenido_as = tse.id "
+            . " where tse.id > 0 "
+            . " and tse.id_usuario =".$data_array['id_usuario']
             , $connection) or die(mysql_error());
         $count_articulos_by_series = 0;
         while ($series_array = mysql_fetch_array($query_series, MYSQL_ASSOC)) {
@@ -84,14 +86,12 @@ function getGenerateViewListAutores($array_autores)
         }
         $json_generales_autor = encriptar(json_encode($autor['generales_autor']));
         
-        
         $string_value = $string_value
             .'<div class="container mt-20">'
                 . '<div class="col-lg-1">'
                     . '<img src="../../../assets/images/autor_avatar.jpg" alt="avatar" class="img-circle" width="50" height="50">'
                 . '</div>'
                 . '<div class="col-lg-11">'
-//                    . '<b>Nombre: &nbsp;</b>'. $autor['generales_autor']['nameUser']
 //                    . '<p style="font-size:14px"><b>Sobre él: &nbsp;</b>'
 //                        . $autor['generales_autor']['descripcion_corta']
 //                    . '</p>'
@@ -170,9 +170,25 @@ if (isset($_POST['save_compra_cliente'])) {
     
     $result_insert = mysql_query($q) or die(mysql_error());
     
+    $result_update = '';
+    
+    if ($result_insert) {
+        if ('serie') {
+            $q = " update tbl_serie_escritor "
+            . " set estatus = 'comprado' "
+            . " where id = " . $id_contenido;
+        } else if ('articulo') {
+            $q = " update tbl_contenido_escritor "
+            . " set estatus = 'comprado' "
+            . " where id = " . $id_contenido;
+        }
+        
+        $result_update = mysql_query($q) or die(mysql_error());
+    }
     echo json_encode(
             array(
                 'resultado_insert' => $result_insert
+                , 'resultado_update' => $result_update
             )
         );
     die;

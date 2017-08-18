@@ -512,6 +512,7 @@ function renderViewSeries(arrayObj)
     var inirow = '';
     var findivrow = '';
     var count = 0;
+    
     $.each(arrayObj, function (key, val) {
         var lis_string = '';
         $.each(val.data_by_serie, function (k1, v1) {
@@ -542,6 +543,17 @@ function renderViewSeries(arrayObj)
         } else if (val.red_social == 'instagram') {
             srcRedSocial = '../../../assets/images/in.png';
         }
+        
+        var compraIcon = '&nbsp;<strong>Comprado</strong>';
+        var styleComprado = 'style="color: green;"';
+        var iconPalomitaComprado = '&nbsp;<i class="fa fa-check" aria-hidden="true"></i>';
+        
+        if (val.estatus != 'comprado') {
+            compraIcon = '<b>'+val.estatus+'</b>';
+            styleComprado = '';
+            iconPalomitaComprado = '';
+        }
+        
         str_series = str_series+inirow+'<div class="col-md-3">'
             + '<button type="button" class="close" data-dismiss="modal" onclick="deleteSerie('+val.id_serie+')" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
@@ -551,7 +563,7 @@ function renderViewSeries(arrayObj)
         + '<div class="col-md-3">'
             + '<h4><img src="'+srcRedSocial+'" width="21" height="21">&nbsp;'+val.titulo_serie+'</h4>'
             + '<p>'+val.desc_serie+'</p>'
-            + '<br/>'
+            + '<div '+styleComprado+'>' + compraIcon + iconPalomitaComprado +'</div>'
             + '<h6>Agregar Contenido</h6>'
             + '&nbsp;<a href="#"><i class="fa fa-plus add-cont-to-serie" aria-hidden="true" \n\
                style="cursor: pointer" data-toggle="tooltip" data-placement="right" title="Agregar Contenido" data-id="'+val.id_serie+'"></i></a>'

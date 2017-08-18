@@ -140,8 +140,6 @@ if (isset($_POST['data_up'])) {
     $etiquetas = json_encode(array('biologia' => 'bilogia', 'hurbanismo' => 'hurbanismo', 'tecnologi' => 'tecnologia'));
     $id_topico = $_POST['id_topico'];
     $referencias = $_POST['referencias'];
-    //al generar el contenido del escritor queda por primera ves en espera para la venta
-    $estatus = 'espera';
     $id_contenido = $_POST['id_contenido'];
     $id_serie = $_POST['id_serie'];
     $es_articulo = $_POST['esarticulo'];
@@ -164,12 +162,13 @@ if (isset($_POST['data_up'])) {
                     . " , categoria = '" . $categoria . "'"
                     . " , etiquetas = '" . $etiquetas . "'"
                     . " , referencias = '" . $referencias . "'"
-                    . " , estatus = '" . $estatus . "'"
                     . " , modified_date = '" . $modified_date . "'"
                     . " , id_serie_escritor = '" . $id_serie . "'"
                     . " , precio_contenido = '" . $valor_precio . "'"
                     . " where id = " . $id_contenido;
         } else {
+            //al generar el contenido del escritor queda por primera ves en espera para la venta
+            $estatus = 'espera';
             $created_date = time();
             $modified_date = time();
             $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
@@ -185,6 +184,8 @@ if (isset($_POST['data_up'])) {
     else {
         $created_date = time();
         $modified_date = time();
+        //al generar el contenido del escritor queda por primera ves en espera para la venta
+        $estatus = 'espera';
         $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
                 . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
                 . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`, `precio_serie`) "
@@ -395,7 +396,16 @@ function getStructureContentInfo($itemArray) {
     } else if ($itemArray['red_social'] == 'instagram') {
         $srcRedSocial = '../../../assets/images/in.png';
     }
-        
+    
+    $esComprado = '';
+    $style = '';
+    $editarArticulo = '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent(' . $itemArray['id_contenido'] . ')"></i>';
+    
+    if ($itemArray['estatus_cont'] == 'comprado') {
+        $esComprado = '&nbsp; <i class="fa fa-check" aria-hidden="true"></i>';
+        $style = 'style="color: green;"';
+        $editarArticulo = '';
+    }
     $structureCI = '<div class="col-lg-2">'
                     . '<button type="button" class="close" data-dismiss="modal" onclick="deleteContenido(' . $itemArray['id_contenido'] . ')" aria-label="Close">'
                         . '<span aria-hidden="true">&times;</span>'
@@ -416,10 +426,10 @@ function getStructureContentInfo($itemArray) {
                         . '</cite><br>'
                         . '<cite title="Source Estatus">'
                             . '<b>Estatus: &nbsp;</b>'
-                            . '<a href="#">' . $itemArray['estatus_cont'] . '</a>'
+                            . '<b '.$style.'>' . $itemArray['estatus_cont'] . $esComprado . '</b>'
                         . '</cite><br>'
                         . '<a class="gototop gototop-button" href="#">'
-                            . '<i class="fa fa-pencil" aria-hidden="true" style="cursor: pointer" onclick="editContent(' . $itemArray['id_contenido'] . ')"></i>'
+                            . $editarArticulo
                         . '</a>'
                         . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\'' . $json . '\')"></i>'
                         . '&nbsp;<a href="' . $itemArray['referencias'] . '" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'

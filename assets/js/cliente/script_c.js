@@ -1,4 +1,5 @@
 $(document).on("ready", scripts_cliente);
+var totalComprasCliente = 0;
 
 function scripts_cliente(event)
 {
@@ -26,9 +27,20 @@ function scripts_cliente(event)
                 $.each(obj.array_autores, function (key, autor_obj) {
                     if (autor_obj.articulos_usuario != undefined) {
                         countArticulos = countArticulos + Object.keys(autor_obj.articulos_usuario).length;
+                        
+                        $.each(autor_obj.articulos_usuario, function(llaveArt, objArt){
+                            if(objArt.id_compra != null) {
+                                totalComprasCliente++;
+                            }
+                        });
                     }
                     if (autor_obj.series_usuario != undefined ) {
                         countSeries = countSeries + Object.keys(autor_obj.series_usuario).length;
+                        $.each(autor_obj.series_usuario, function(llaveSerie, objSerie){
+                            if(objSerie.id_compra != null) {
+                                totalComprasCliente++;
+                            }
+                        });
                     }
                 });
                 
@@ -36,6 +48,8 @@ function scripts_cliente(event)
                 $('#count-autores').html("Autores &nbsp;<span class='badge'>"+Object.keys(obj.array_autores).length+"</span>");
                 $('#count-articulos').html("<b>Total Artículos </b><br/>"+countArticulos);
                 $('#count-series').html("<b>Total Series</b><br/>"+countSeries);
+                $('#total-compras-cliente').html('Mis Compras &nbsp; <span class="badge alert-danger">'+totalComprasCliente+'</span>');
+                
                 $("#loading").addClass('hide');
                 
             },
@@ -136,6 +150,18 @@ function renderViewArticulos(objs_articulos_usuario)
         } else if (articulo.red_social == 'instagram') {
             srcRedSocial = '../../../assets/images/in.png';
         }
+        var compraIcon = '&nbsp;<strong>Comprado</strong>';
+        var ponerPrecio = '';
+        var styleComprado = 'style="color: green;"';
+        var iconPalomitaComprado = '&nbsp;<i class="fa fa-check" aria-hidden="true"></i>';
+        
+        if (articulo.id_compra == null) {
+            compraIcon = '&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+articulo.id+', '+articulo.id_usuario+', 1)"></i>';
+            ponerPrecio = articulo.precio_contenido+'$ ';
+            styleComprado = '';
+            iconPalomitaComprado = '';
+        }
+        
         finview_content = finview_content+initcontainer
             + '<div class="col-lg-2">\n\
                     <img src="'+articulo.path_source+'" class="img-thumbnail" width="100%" height="100%">\n\
@@ -143,10 +169,12 @@ function renderViewArticulos(objs_articulos_usuario)
                 <div class="col-lg-4 ">\n\
                     <h4><img src="'+srcRedSocial+'" width="21" height="21"> &nbsp;'+articulo.titulo+'</h4>\n\
                     '+articulo.post_to_enmbedded_text+'\n\
-                    <footer class="mt-20">\n\
-                        '+articulo.precio_contenido+'$ \n\
-                        &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+articulo.id+', '+articulo.id_usuario+', 1)"></i>\n\
-                        &nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" \n\
+                    <footer class="mt-20">'
+                        + '<div id="comprado-text-'+articulo.id+'" '+styleComprado+'>'
+                        + ponerPrecio
+                        + compraIcon + iconPalomitaComprado
+                        + '</div>'
+                        + '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" \n\
                             data-target=".preview-redsocial" onclick="modalPreview(\'' +articulo.titulo+ '\', \'' +articulo.post_to_enmbedded_text+ '\', \'' +articulo.path_source+ '\')"></i>\n\
                     </footer>\n\
                 </div>'
@@ -201,15 +229,29 @@ function renderViewSeries(objs_series_usuario)
                     +'<br/>';
         });
         
+        var compraIcon = '&nbsp;<strong>Comprado</strong>';
+        var ponerPrecio = '';
+        var styleComprado = 'style="color: green;"';
+        var iconPalomitaComprado = '&nbsp;<i class="fa fa-check" aria-hidden="true"></i>';
+        
+        if (series.id_compra == null) {
+            compraIcon = '&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+series.id+', '+series.id_usuario+', 2)"></i>';
+            ponerPrecio = series.precio_serie+'$ ';
+            styleComprado = '';
+            iconPalomitaComprado = '';
+        }
+        
         finview_content = finview_content+initcontainer
             + '<div class="col-md-3">\n\
                 <h4><img src="'+srcRedSocial+'" width="21" height="21"> &nbsp; '+series.titulo+'</h4>\n\
                 <img  src="'+series.path_source+'" style="height: 100%; width: 100%;" >\n\
-                <footer class="mt-20">\n\
-                    '+articulos+'\n\
-                    <b>'+series.precio_serie+'$</b>\n\
-                    &nbsp;<i class="fa fa-shopping-cart" aria-hidden="true" style="cursor: pointer" onclick="addCarritoComprar('+series.id+', '+series.id_usuario+', 2)"></i>\n\
-                </footer>\n\
+                <footer class="mt-20">'
+                    + articulos
+                    + '<div id="comprado-text-'+series.id+'" '+styleComprado+'>'
+                    + ponerPrecio
+                    + compraIcon + iconPalomitaComprado
+                    + '</div>'
+                + '</footer>\n\
             </div>'
             + fincontainer;
     });
@@ -264,6 +306,9 @@ function addCarritoComprar(id_contenido,id_autor, tipo)
                     success: function (respuesta) {
 
                         var obj = JSON.parse(respuesta);
+                        $('#comprado-text-'+id_contenido).html('<strong>Comprado</strong>').append('&nbsp;<i class="fa fa-check" aria-hidden="true"></i>').css('color', 'green');
+                        totalComprasCliente++;
+                        $('#total-compras-cliente').html('Mis Compras &nbsp; <span class="badge alert-danger">'+totalComprasCliente+'</span>');
                         $("#loading").addClass('hide');
                     },
                     error: function (result)

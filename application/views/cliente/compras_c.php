@@ -62,8 +62,8 @@ include('../../../application/models/session.php');
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src="../../../assets/images/autor_avatar.jpg" alt="avatar" 
                                      class="img-circle" width="34" height="34" style="margin-bottom: 0px;">
-                                        Hola <?php echo $login_session; ?>
-                                        <span class="badge alert-danger"></span>
+                                Hola <?php echo $login_session; ?>
+                                <span class="badge alert-danger"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -85,11 +85,33 @@ include('../../../application/models/session.php');
                 <h1>Estas son tus compras</h1>
             </div>
         </div>
-        <section id="section-view-articulos">
+        <section>
+            <div class="container mt-60">
+                <div class="">
+                    <h4 class="mb-10">
+                        <img src="../../../assets/images/fb.png" width="21" height="21">
+                        Publicación para Facebook
+                    </h4>
+                    <div id='load-datos-articulos-facebook'>
+                        
+                    </div>
+                    <h4 class="mt-40 mb-10">
+                        <img src="../../../assets/images/tw.png" width="21" height="21">
+                        Publicación para Twitter
+                    </h4>
+                    <div id='load-datos-articulos-twitter'>
 
-        </section>
-        <section id="section-view-series">
-
+                    </div>
+                    <h4 class="mt-40">
+                        <img src="../../../assets/images/in.png" width="21" height="21">
+                        Publicación para Instagram
+                    </h4>
+                    <hr class="pull-left" style="width:90%;" />
+                    <div id='load-datos-articulos-instagram'>
+                        
+                    </div>
+                </div>
+            </div>
         </section>
         <div class="modal fade preview-redsocial" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-dialog" role="">

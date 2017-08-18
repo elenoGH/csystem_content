@@ -68,7 +68,7 @@ include('../../../application/models/session.php');
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="../../../application/views/cliente/compras_c.php">
+                                    <a href="../../../application/views/cliente/compras_c.php" id='total-compras-cliente'>
                                         Mis Compras &nbsp; <span class="badge alert-danger">0</span>
                                     </a>
                                 </li>
