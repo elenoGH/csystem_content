@@ -57,6 +57,9 @@ function viewContenArticulosComprados(objArt)
     var count = 0;
     
     $.each(objArt, function(key, articulo){
+        var dt = new Date(articulo.created_date*1000);
+        var date_format = dt.getDay() + '/' + dt.getMonth() + '/' + dt.getFullYear();
+        
         if (articulo.red_social == 'facebook') {
             if (count == 1) {
                 inirow = '';
@@ -67,8 +70,7 @@ function viewContenArticulosComprados(objArt)
                 findivrow = '';
                count++;
            }
-            var dt = new Date(articulo.created_date*1000);
-            var date_format = dt.getDay() + '/' + dt.getMonth() + '/' + dt.getFullYear();
+            
            string_return_facebook = string_return_facebook 
                + inirow
                + '<div class="col-lg-6">\n\
@@ -157,7 +159,7 @@ function viewContenArticulosComprados(objArt)
                             <div class="card__author-content">\n\
                                 <b>'+articulo.titulo+'</b>\n\
                                 <br/>\n\
-                                '+articulo.date_format+' \n\
+                                '+date_format+' \n\
                                 <br/>\n\
                                 &nbsp; &nbsp; &nbsp;<i class="fa fa-comment-o" aria-hidden="true"></i>\n\
                                 &nbsp; &nbsp; &nbsp;<i class="fa fa-heart-o" aria-hidden="true" style="cursor: pointer"></i>\n\

@@ -173,7 +173,7 @@ if (isset($_POST['save_compra_cliente'])) {
     $result_update = '';
     
     if ($result_insert) {
-        if ('serie') {
+        if ($tipo_contenido_comprado == 'serie') {
             $q = " update tbl_serie_escritor "
             . " set estatus = 'comprado' "
             . " where id = " . $id_contenido;
