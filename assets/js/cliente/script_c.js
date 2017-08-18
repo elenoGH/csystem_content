@@ -29,7 +29,7 @@ function scripts_cliente(event)
                         countArticulos = countArticulos + Object.keys(autor_obj.articulos_usuario).length;
                         
                         $.each(autor_obj.articulos_usuario, function(llaveArt, objArt){
-                            if(objArt.id_compra != null) {
+                            if(objArt.id_compra != null && obj.id_cliente == objArt.id_cliente_comp) {
                                 totalComprasCliente++;
                             }
                         });
@@ -37,7 +37,7 @@ function scripts_cliente(event)
                     if (autor_obj.series_usuario != undefined ) {
                         countSeries = countSeries + Object.keys(autor_obj.series_usuario).length;
                         $.each(autor_obj.series_usuario, function(llaveSerie, objSerie){
-                            if(objSerie.id_compra != null) {
+                            if(objSerie.id_compra != null && obj.id_cliente == objSerie.id_cliente_comp) {
                                 totalComprasCliente++;
                             }
                         });

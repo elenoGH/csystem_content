@@ -9,6 +9,7 @@ if (isset($_POST['get_all_autores'])) {
     $data_array = array(
         'array_autores' => $array_autores
         , 'structure_view' => $structure_view
+        , 'id_cliente' => $_SESSION['id_user']
     );
     
     echo json_encode($data_array);
