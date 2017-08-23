@@ -135,13 +135,14 @@ function scripts_escritor(event)
 
     $('form').on('submit', function (event)
     {
+        var redSocial = $(this).find('input[name=red_social]:checked').val();
         event.preventDefault();
         var data = new FormData();
         data.append('data_up', true);
         data.append('titulo_content', $('#titulo_content').val());
         data.append('post_to_enmbedded_text', $('#post_to_enmbedded_text').val());
         data.append('file_update', $('input[type=file]')[0].files[0]);
-        data.append('red_social', $(this).find('input[name=red_social]:checked').val());
+        data.append('red_social', redSocial);
         data.append('id_topico', $('#id_topico').val());
         data.append('referencias', $('#referencias').val());
         data.append('id_contenido', $('.button-actualizar').attr('data-id'));
@@ -172,12 +173,12 @@ function scripts_escritor(event)
                     var str_series = renderViewSeries(obj.series_escritor);
                     $('#load-datos-series').html(str_series);
                     $('[data-toggle="tooltip"]').tooltip();
-                        $('.add-cont-to-serie').click(function () {
-                            $('a[href="#misarticulos"]').tab('show');
-                            $('.series-escritor').removeClass('hide');
-                            globalEsArticuloEscritor = true;
-                            $('#id_serie').val($(this).attr('data-id'));
-                        });
+                    $('.add-cont-to-serie').click(function () {
+                        $('a[href="#misarticulos"]').tab('show');
+                        $('.series-escritor').removeClass('hide');
+                        globalEsArticuloEscritor = true;
+                        $('#id_serie').val($(this).attr('data-id'));
+                    });
                     bootbox.alert("Acción Satisfactoria!", function () {
                         $('#titulo_content').val('');
                         $('#post_to_enmbedded_text').val('');
@@ -188,6 +189,14 @@ function scripts_escritor(event)
                         $(".button-actualizar").addClass("hide");
                         $(".button-agregar").removeClass("hide");
                         $('#valor_precio').val(0);
+                        var totalCarac = 0;
+                        if (redSocial == 'twitter') {
+                            totalCarac = 140;
+                        } else if (redSocial == 'facebook') {
+                            totalCarac = 250;
+                        }
+                        
+                        $('#count-caracter').html('<strong>' + totalCarac + '</strong>').append('&nbsp;<i class="fa fa-check" aria-hidden="true"></i>').css('color', 'green');
                     });
                 }, 500);
             },
@@ -205,7 +214,27 @@ function scripts_escritor(event)
     });
 
     $('#post_to_enmbedded_text').on('keyup', function (e) {
-        var limit = 140;
+        var limit = 0;
+        
+        $('input:radio').each(function () {
+            var $this = $(this),
+            id = $this.attr('id'),
+            name = $this.attr('name'),
+            value = $this.attr('value');
+            var ischequed = $this.attr('checked');
+            if (value == 'facebook' && ischequed != undefined) {
+                limit = 250;
+                return false;
+            } else if (value == 'twitter' && ischequed != undefined) {
+                limit = 140;
+                return false;
+            } else if (value == 'instagram' && ischequed != undefined) {
+                $('#post_to_enmbedded_text').val('');
+                return false;
+            }
+
+        });
+        
         var value = e.target.value.length
         var result = limit - value;
         result = (result <= 0) ? result = 0 : result;
@@ -219,18 +248,31 @@ function scripts_escritor(event)
     $("#div-textarea-id").show("slow");
     $('input:radio').change(function () {
         if ($(this).val() == 'facebook') {
-//            document.forms[0].reset();
+            $('#cb1').attr('checked', true);
+            $('#cb2').attr('checked', false);
+            $('#cb3').attr('checked', false);
             $("#div-textarea-id").show("slow");
+            $("#post_to_enmbedded_text").val('');
             $("#post_to_enmbedded_text").attr("placeholder", "post");
-            var e = $('<strong>140</strong>');
+            $("#post_to_enmbedded_text").attr("maxlength",250);
+            var e = $('<strong>250</strong>');
             $("#count-caracter").html(e);
         } else if ($(this).val() == 'twitter') {
+            $('#cb1').attr('checked', false);
+            $('#cb2').attr('checked', true);
+            $('#cb3').attr('checked', false);
             $("#div-textarea-id").show("slow");
+            $("#post_to_enmbedded_text").val('');
             $("#post_to_enmbedded_text").attr("placeholder", "#tweet");
+            $("#post_to_enmbedded_text").attr("maxlength", 140);
             var e = $('<strong>140</strong>');
             $("#count-caracter").html(e);
         } else if ($(this).val() == 'instagram') {
+            $('#cb1').attr('checked', false);
+            $('#cb2').attr('checked', false);
+            $('#cb3').attr('checked', true);
             $("#div-textarea-id").hide("slow");
+            $("#post_to_enmbedded_text").val('');
         }
     });
     $(document).on('change', 'input[type="file"]', function (e) {
@@ -322,7 +364,7 @@ function editContent(value)
                     $('input[name="red_social"][value="instagram"]').attr('checked', false);
                     $("#div-textarea-id").show("slow");
                     $("#post_to_enmbedded_text").attr("placeholder", "Escribe la idea principal de tu post");
-                    var e = $('<strong>140</strong>');
+                    var e = $('<strong>250</strong>');
                     $("#count-caracter").html(e);
                 } else if (($(this).val() == 'twitter') && (obj[0].red_social == 'twitter')) {
                     $(this).attr('checked', true);
