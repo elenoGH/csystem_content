@@ -10,7 +10,7 @@ if (isset($_POST['get_series'])) {
 
 if (isset($_POST['editContent'])) {
     $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social "
-            . ", tc.estatus as estatus_cont, tc.referencias, tc.created_date, tc.precio_contenido "
+            . ", tc.estatus as estatus_cont, tc.created_date, tc.precio_contenido "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.id as id_topico, tto.nombre as nametopico "
             . "from tbl_usuario tu "
@@ -139,7 +139,6 @@ if (isset($_POST['data_up'])) {
     $categoria = 'Social';
     $etiquetas = json_encode(array('biologia' => 'bilogia', 'hurbanismo' => 'hurbanismo', 'tecnologi' => 'tecnologia'));
     $id_topico = $_POST['id_topico'];
-    $referencias = $_POST['referencias'];
     $id_contenido = $_POST['id_contenido'];
     $id_serie = $_POST['id_serie'];
     $es_articulo = $_POST['esarticulo'];
@@ -161,7 +160,6 @@ if (isset($_POST['data_up'])) {
                     . " , tipo_source = '" . $tipo_source . "'"
                     . " , categoria = '" . $categoria . "'"
                     . " , etiquetas = '" . $etiquetas . "'"
-                    . " , referencias = '" . $referencias . "'"
                     . " , modified_date = '" . $modified_date . "'"
                     . " , id_serie_escritor = '" . $id_serie . "'"
                     . " , precio_contenido = '" . $valor_precio . "'"
@@ -173,11 +171,11 @@ if (isset($_POST['data_up'])) {
             $modified_date = time();
             $q = "INSERT INTO `tbl_contenido_escritor` (`id_usuario`, `id_topico`, `titulo`"
                     . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-                    . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`"
+                    . ", `tipo_source`, `categoria`, `etiquetas`, `estatus`, `created_date`, `modified_date`"
                     . ", `id_serie_escritor`, `precio_contenido`) "
                     . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
                     . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-                    . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date'"
+                    . ", '$tipo_source','$categoria','$etiquetas','$estatus','$created_date','$modified_date'"
                     . ", '$id_serie', '$valor_precio')";
         }
     }
@@ -188,10 +186,10 @@ if (isset($_POST['data_up'])) {
         $estatus = 'espera';
         $q = "INSERT INTO `tbl_serie_escritor` (`id_usuario`, `id_topico`, `titulo`"
                 . ", `post_to_enmbedded_text`, `url`, `path_source`, `red_social`"
-                . ", `tipo_source`, `categoria`, `etiquetas`, `referencias`, `estatus`, `created_date`, `modified_date`, `precio_serie`) "
+                . ", `tipo_source`, `categoria`, `etiquetas`, `estatus`, `created_date`, `modified_date`, `precio_serie`) "
                 . " VALUES ('$id_usuario','$id_topico' ,'$titulo_cont'"
                 . ", '$post_to_enmbedded_text','$url','$path_source','$red_social'"
-                . ", '$tipo_source','$categoria','$etiquetas','$referencias','$estatus','$created_date','$modified_date','$valor_precio')";
+                . ", '$tipo_source','$categoria','$etiquetas','$estatus','$created_date','$modified_date','$valor_precio')";
     }
 
     //Run Query
@@ -315,7 +313,7 @@ function getDataEscritor($connection, $SESSION) {
 function getDataSeriesEscritor($connection, $SESSION)
 {
     $query = mysql_query("select ts.id as id_serie, ts.id_usuario, ts.id_topico, ts.titulo as titulo_serie, ts.post_to_enmbedded_text as desc_serie, ts.url as url_serie, ts.path_source, ts.red_social, ts.tipo_source "
-            . " , ts.categoria, ts.etiquetas, ts.referencias, ts.estatus, ts.created_date, ts.modified_date "
+            . " , ts.categoria, ts.etiquetas, ts.estatus, ts.created_date, ts.modified_date "
             . " , tu.nombre as nombreUser, tu.apellido as apUser, tu.email "
             . " , tto.nombre as nameTopico "
             . " from tbl_serie_escritor ts "
@@ -347,7 +345,7 @@ function getContenidoSeries($connection, $SESSION, $array_resultado)
     $array_data_ret = array();
     foreach ($array_resultado as $key => $obj_item) {
         $array_resultado_by_serie = array();
-        $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
+        $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.created_date "
                 . ", tu.nombre as nameuser, tu.apellido as apellidouser"
                 . ", tto.nombre as nametopico "
                 . "from tbl_usuario tu "
@@ -368,7 +366,7 @@ function getContenidoSeries($connection, $SESSION, $array_resultado)
 }
 
 function getDataContenidoEscritor($connection, $SESSION) {
-    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.referencias, tc.created_date "
+    $query = mysql_query("select tc.id as id_contenido, tc.path_source, tc.titulo, tc.post_to_enmbedded_text, tc.red_social, tc.estatus as estatus_cont, tc.created_date "
             . ", tu.nombre as nameuser, tu.apellido as apellidouser"
             . ", tto.nombre as nametopico "
             . "from tbl_usuario tu "
@@ -432,7 +430,6 @@ function getStructureContentInfo($itemArray) {
                             . $editarArticulo
                         . '</a>'
                         . '&nbsp;<i class="fa fa-eye" aria-hidden="true" style="cursor: pointer" data-toggle="modal" data-target=".preview-redsocial" onclick="modalPreview(\'' . $json . '\')"></i>'
-                        . '&nbsp;<a href="' . $itemArray['referencias'] . '" target="_blank"><i class="fa fa-external-link-square" aria-hidden="true" style="cursor: pointer"></i></a>'
                     . '</footer>'
                 . '</div>';
     return $structureCI;

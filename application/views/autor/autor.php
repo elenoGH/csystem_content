@@ -170,24 +170,10 @@ include('../../../application/models/session.php');
                                         </select>
                                     </div>
                                     <div class="container mt-20">
-                                        <label class="">Referencias</label>
-                                        <input type="text" class="form-control" placeholder="URL" 
-                                               id="referencias" name="referencias">
-
-                                    </div>
-                                    <div class="container mt-20">
                                         <label class="">Valor de mi Articulo</label>
                                         <input type="number" class="form-control" placeholder="MX$" 
                                                id="valor_precio" name="valor_precio" maxlength="4">
                                     </div>
-                                    <!--div class="container mt-20">
-                                        <div class="row">
-                                        <label class="btn btn-default btn-file">
-                                            Agregar
-                                            <input type="" name="files_updates" id="files_updates" style="display: none;">
-                                        </label>
-                                          </div>
-                                    </div-->
                                     <div class="container mt-20 pull-right">
                                         <div class="col-md-6 mt-15">
                                             <button type="submit" value="Submit" 
@@ -198,14 +184,6 @@ include('../../../application/models/session.php');
                                                     class="btn btn-default btn-sm active button-agregar">
                                                 Publicar
                                             </button>&nbsp;
-                                            <!--button type="button" value="0" 
-                                                    class="btn btn-default btn-sm active" data-toggle="modal" data-target=".preview-redsocial">
-                                                Preview
-                                            </button-->
-                                            <!--button type="button" value=""  data-id="" id="nuevo-clean"
-                                                    class="btn btn-default btn-sm active button-nuevo">
-                                                Nuevo
-                                            </button-->
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +247,7 @@ include('../../../application/models/session.php');
                         </div>
                         <div class="card__content card__padding">
                             <div class="card__meta">
-                                <!--add time and reference-->
+                                
                             </div>
                         </div>
                     </div>

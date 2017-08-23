@@ -80,9 +80,7 @@ function scripts_escritor(event)
         $('#post_to_enmbedded_text').val('');
         $("#idImagenPerfil").attr("src", 'https://placehold.it/300x200');
         $('#id_topico').val('');
-        $('#referencias').val('');
         $('.button-actualizar').attr('data-id', '');
-//        $(".button-nuevo").addClass("hide");
         $(".button-actualizar").addClass("hide");
         $(".button-agregar").removeClass("hide");
     });
@@ -144,7 +142,6 @@ function scripts_escritor(event)
         data.append('file_update', $('input[type=file]')[0].files[0]);
         data.append('red_social', redSocial);
         data.append('id_topico', $('#id_topico').val());
-        data.append('referencias', $('#referencias').val());
         data.append('id_contenido', $('.button-actualizar').attr('data-id'));
         data.append('url_other_image', $("#idImagenPerfil").attr("src"));
         data.append('id_serie', $('#id_serie').val());
@@ -184,7 +181,6 @@ function scripts_escritor(event)
                         $('#post_to_enmbedded_text').val('');
                         $("#idImagenPerfil").attr("src", '');
                         $('#id_topico').val('');
-                        $('#referencias').val('');
                         $('.button-actualizar').attr('data-id', '');
                         $(".button-actualizar").addClass("hide");
                         $(".button-agregar").removeClass("hide");
@@ -347,7 +343,6 @@ function editContent(value)
             $('#post_to_enmbedded_text').val(obj[0].post_to_enmbedded_text);
             $("#idImagenPerfil").attr("src", obj[0].path_source);
             $('#id_topico').val(obj[0].id_topico);
-            $('#referencias').val(obj[0].referencias);
             $('#valor_precio').val(obj[0].precio_contenido);
             //agregar el id para actualizar
             $('.button-actualizar').attr('data-id', obj[0].id_contenido);
@@ -531,8 +526,7 @@ function modalPreview(json)
             $('.border-tlr-radius').html('<img src="'+obj.path_source+'" alt="image" class="border-tlr-radius">');
             $('.card__article').html('<h2><a href="#">'+obj.titulo+'</a></h2>\n\
                                     <p>'+obj.post_to_enmbedded_text+'</p>');
-            $('.card__meta').html('<a href="'+obj.referencias+'" target="_blank">Referencia</a>\n\
-                                    <time>'+date_format+'</time>');
+            $('.card__meta').html('<time>'+date_format+'</time>');
             
 
         },
