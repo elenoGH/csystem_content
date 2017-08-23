@@ -9,12 +9,18 @@ session_start(); // Starting Session
 // Storing Session
 $user_check = $_SESSION['login_user'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql = mysql_query("select nombre, apellido from tbl_usuario where email='$user_check' or username='".$user_check."'", $connection);
+$ses_sql = mysql_query("select * "
+        . "from tbl_usuario "
+        . " where email='$user_check' "
+        . "     or username='".$user_check."' "
+        . "     or nickname ='".$user_check."' ", $connection);
 $row = mysql_fetch_assoc($ses_sql);
-$login_session = $row['nombre'];
+
+$login_session = ( $row['rol'] == 2 ? $row['nickname']: $row['nombre']);
+
 if (!isset($login_session)) {
     mysql_close($connection); // Closing Connection
-    header('Location: ../../index.php'); // Redirecting To Home Page
+    header('Location: ../../../index.php'); // Redirecting To Home Page
 }
 if (!mysql_set_charset('utf8',$connection)) {
 //    printf("Error cargando el conjunto de caracteres utf8: %s\n", mysqli_error($con));

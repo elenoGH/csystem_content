@@ -4,7 +4,7 @@
 
 input#inputEmail.form-control, input#nombreCompleto.form-control
 , input#nombreUsuario.form-control, input#inputPassword.form-control
-, select#selectTypeUser.form-control{  
+, select#selectTypeUser_login.form-control, select#selectTypeUser_registro.form-control{  
     background: none;
     color: #fff;
     font-size: 24px;

@@ -6,9 +6,9 @@ if (isset($_SESSION['login_user'])) {
         if ($_SESSION['rol_user'] == 2) {
             header("location: application/views/autor/autor.php");
         }else if ($_SESSION['rol_user'] == 3){
-            header("location: application/views/cliente/cliente.php"); // Redirecting To Other Page
+            header("location: application/views/cliente/cliente.php"); // Redirecting To cliente
         } else {
-            header("location: index.php"); // Redirecting To Other Page
+            header("location: index.php"); // Redirecting To index
         }
     }
 }
@@ -28,6 +28,8 @@ if (isset($_SESSION['login_user'])) {
         <!-- Bootstrap core CSS -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
+        <script src="assets/js/jquery.min.js"></script>
+        
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -39,6 +41,7 @@ if (isset($_SESSION['login_user'])) {
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
         <script src="assets/js/ie-emulation-modes-warning.js"></script>
+        <script src="assets/js/general.js"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -68,17 +71,15 @@ if (isset($_SESSION['login_user'])) {
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="login">
                             <form class="form-signin" action="" method="post">
-                                <label for="inputEmail" class="sr-only">Nombre de Usuario ó Correo electrónico</label>
                                 <input type="text" id="inputEmail" name="inputEmail" 
                                        class="form-control" placeholder="Usuario ó Correo" 
                                        required autofocus>
                                 <br />
-                                <label for="inputPassword" class="sr-only">Contraseña</label>
                                 <input type="password" id="inputPassword" name="inputPassword"
                                        class="form-control" placeholder="Contraseña" 
                                        required>
                                 <br/>
-                                <select class="form-control" name="selectTypeUser" id="selectTypeUser">
+                                <select class="form-control" name="selectTypeUser_login" id="selectTypeUser_login">
                                     <option value="">Tipo de Usuario</option>
                                     <option value="2">Autor</option>
                                     <option value="3">Cliente</option>
@@ -92,32 +93,27 @@ if (isset($_SESSION['login_user'])) {
                         </div>
                         <div role="tabpanel" class="tab-pane" id="registrate">
                             <form class="form-signin" action="" method="post">
-                                <label for="nombreCompleto" class="sr-only">Nombre completo</label>
                                 <input type="text" id="nombreCompleto" name="nombreCompleto" 
                                        class="form-control" placeholder="Nombre Completo" 
                                        required autofocus>
                                 <br />
-                                <label for="inputEmail" class="sr-only">Correo electrónico</label>
                                 <input type="email" id="inputEmail" name="inputEmail" 
                                        class="form-control" placeholder="Correo electrónico" 
                                        required autofocus>
                                 <br />
-                                <label for="nombreUsuario" class="sr-only">Nombre de usuario</label>
                                 <input type="text" id="nombreUsuario" name="nombreUsuario" 
-                                       class="form-control" placeholder="Nombre de usuario" 
+                                       class="form-control" placeholder="Usuario" 
                                        required autofocus>
                                 <br />
-                                <label for="inputPassword" class="sr-only">Contraseña</label>
                                 <input type="password" id="inputPassword" name="inputPassword"
                                        class="form-control" placeholder="Contraseña" 
                                        required>
-                                <select class="form-control" name="selectTypeUser" id="selectTypeUser">
+                                <select class="form-control" name="selectTypeUser_registro" id="selectTypeUser_registro">
                                     <option value="">Tipo de Usuario</option>
                                     <option value="2">Autor</option>
                                     <option value="3">Cliente</option>
                                 </select>
                                 <br />
-                                
                                 <p class="lead">
                                     <input name="registrar" type="submit" value="Registrar" class="btn btn-lg btn-default">
                                 </p>

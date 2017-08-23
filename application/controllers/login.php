@@ -3,25 +3,26 @@
 session_start(); // Starting Session
 $error = ''; // Variable To Store Error Message
 if (isset($_POST['login'])) {
-    if (empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['selectTypeUser'])) {
+    if (empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['selectTypeUser_login'])) {
         $error = "Completa Todos los Campos!";
     } else {
-// Define $username and $password
-        $username = $_POST['inputEmail'];
-        $password = $_POST['inputPassword'];
-        $tipoUser = $_POST['selectTypeUser'];
-// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+        
+        $tipoUser = $_POST['selectTypeUser_login'];
+        
         $connection = mysql_connect("localhost", "root", "");
         //$connection = mysql_connect("localhost", "csystem", "csystem");
-// To protect MySQL injection for Security purpose
-        $username = stripslashes($username);
-        $password = stripslashes($password);
-        $username = mysql_real_escape_string($username);
-        $password = mysql_real_escape_string($password);
-// Selecting Database
+        
+        $username = mysql_real_escape_string(stripslashes($_POST['inputEmail']));
+        $password = mysql_real_escape_string(stripslashes($_POST['inputPassword']));
+        
         $db = mysql_select_db("csystem", $connection);
-// SQL query to fetch information of registerd users and finds user match.
-        $query = mysql_query("select * from tbl_usuario where password='$password' AND email='$username' or username='".$username."'", $connection);
+        
+        $query = mysql_query("select * from "
+                . "tbl_usuario "
+                . "where password='$password' "
+                . " AND email='$username' or username='".$username."' or nickname= '".$username."' "
+                , $connection);
+        
         $rows = mysql_num_rows($query);
         if ($rows == 1) {
             
@@ -30,7 +31,7 @@ if (isset($_POST['login'])) {
             $res = mysql_fetch_array($query, MYSQL_ASSOC);
             $_SESSION['rol_user'] = $res['rol'];
             $_SESSION['id_user'] = $res['id'];
-            $_SESSION['name_user'] = $res['username'];
+            $_SESSION['name_user'] = ($selectTypeUser==2?$res['nickname']:$res['username']);
             $_SESSION['rol_user'] = $res['rol'];
             $_SESSION['tipoUserx'] = $tipoUser;
             
@@ -41,10 +42,6 @@ if (isset($_POST['login'])) {
                     header("location: application/views/cliente/cliente.php"); // Redirecting To Other Page
                 }
             }
-//            else if ($_SESSION['rol_user'] == 1) {
-//                header("location: application/views/down_contenido.php"); // Redirecting To Other Page
-//            }
-            
         } else {
             $error = "Usuario o contraseña Invalida";
         }
@@ -52,7 +49,7 @@ if (isset($_POST['login'])) {
     }
 }
 else if (isset ($_POST['registrar'])) {
-    if (empty($_POST['nombreCompleto']) || empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['nombreUsuario']) || empty($_POST['selectTypeUser'])) {
+    if (empty($_POST['nombreCompleto']) || empty($_POST['inputEmail']) || empty($_POST['inputPassword']) || empty($_POST['nombreUsuario']) || empty($_POST['selectTypeUser_registro'])) {
         $error = "Completa todos los campos!";
     } else {
         $connection = mysql_connect("localhost", "root", "");
@@ -63,12 +60,19 @@ else if (isset ($_POST['registrar'])) {
         $inputEmail = $_POST['inputEmail'];
         $inputPassword = $_POST['inputPassword'];
         $nombreUsuario = $_POST['nombreUsuario'];
-        $selectTypeUser = $_POST['selectTypeUser'];
+        $selectTypeUser = $_POST['selectTypeUser_registro'];
         
-        $q = "INSERT INTO `tbl_usuario` (`username`, `password`, `rol`"
+        if ($selectTypeUser == 2) {
+            $q = "INSERT INTO `tbl_usuario` (`nickname`, `password`, `rol`"
                 . ", `email`, `nombre`) "
                 . " VALUES ('$nombreUsuario','$inputPassword' ,'$selectTypeUser'"
                 . ", '$inputEmail','$nombreCompleto')";
+        } else {
+            $q = "INSERT INTO `tbl_usuario` (`username`, `password`, `rol`"
+                . ", `email`, `nombre`) "
+                . " VALUES ('$nombreUsuario','$inputPassword' ,'$selectTypeUser'"
+                . ", '$inputEmail','$nombreCompleto')";
+        }
         
         $result_insert = mysql_query($q) or die(mysql_error());
         /**
@@ -76,7 +80,12 @@ else if (isset ($_POST['registrar'])) {
          */
         if ($result_insert) {
             
-            $query = mysql_query("select * from tbl_usuario where password='$inputPassword' AND email='$inputEmail' or username='".$nombreUsuario."'", $connection) or die(mysql_error());
+            $query = mysql_query(" select * "
+                    . " from tbl_usuario "
+                    . " where password='$inputPassword' "
+                    . " AND email='$inputEmail' or username='".$nombreUsuario."' or nickname= '".$nombreUsuario."' "
+                    , $connection) or die(mysql_error());
+            
             $rows = mysql_num_rows($query);
             if ($rows == 1) {
 
@@ -85,7 +94,7 @@ else if (isset ($_POST['registrar'])) {
                 $res = mysql_fetch_array($query, MYSQL_ASSOC);
                 $_SESSION['rol_user'] = $res['rol'];
                 $_SESSION['id_user'] = $res['id'];
-                $_SESSION['name_user'] = $res['username'];
+                $_SESSION['name_user'] = ($selectTypeUser==2?$res['nickname']:$res['username']);
                 $_SESSION['rol_user'] = $res['rol'];
 
                 if ($_SESSION['rol_user'] == 2) {
