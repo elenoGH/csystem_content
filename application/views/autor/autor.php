@@ -126,6 +126,20 @@ include('../../../application/models/session.php');
                                     <label for="cb3"><img src="../../../assets/images/icon-instagram2.png" width="44" height="44"></label>
                                 </li>
                             </ul>
+                            <div class="container mt-20">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <h4 style="font-weight: bold; box-sizing: border-box">Cuánto podrías ganar por tu articulo o serie en CONTENIDOS</h4>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" 
+                                                title="Estimación basada en los precios de ..... La cantidad real que podrías ganar variará en función de algunos factores, como el ..."  
+                                                style="background-color: #92628A; color: white;">
+                                            <strong>$500 MXN &nbsp;</strong><i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="profile">
@@ -168,11 +182,6 @@ include('../../../application/models/session.php');
                                         <select class="form-control" id="id_serie"
                                                 name="id_serie" required>
                                         </select>
-                                    </div>
-                                    <div class="container mt-20">
-                                        <label class="">Valor de mi Articulo</label>
-                                        <input type="number" class="form-control" placeholder="MX$" 
-                                               id="valor_precio" name="valor_precio" maxlength="4">
                                     </div>
                                     <div class="container mt-20 pull-right">
                                         <div class="col-md-6 mt-15">

@@ -11,6 +11,8 @@ $(document).on("ready", scripts_escritor);
 
 function scripts_escritor(event)
 {
+    $('[data-toggle="tooltip"]').tooltip();
+    
     globalEsArticuloEscritor = true;
     getSeries();
     function getSeries()
